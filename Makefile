@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/08/10 23:34:28 by pmolnar       #+#    #+#                  #
-#    Updated: 2022/08/11 00:35:33 by pmolnar       ########   odam.nl          #
+#    Updated: 2022/08/12 11:13:54 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@
 CC 			=	gcc
 CFLAGS 		=	-Wall -Wextra -Werror
 # CFLAGS		+=	-g
-CFLAGS		+=	-I$(INCLD)
-CFLAGS		+=	-lreadline -L$(shell brew --prefix readline)
+LIBS		=	-lreadline -L$(shell brew --prefix readline)
+HDR			=	-I$(INCLD)
 INCLD		=	include
 
 # PRINT FORMATTING
@@ -54,13 +54,13 @@ all:	print_info $(NAME)
 
 $(NAME):	$(P_OBJ) $(INCLD)
 	@printf "$(BOLD)%-52s$(DEF)" "compiling object file(s)"
-	@$(CC) $(CFLAGS) $(P_OBJ) -o $(P_OUT)
+	@$(CC) $(CFLAGS) $(HDR) $(LIBS) $(P_OBJ) -o $(P_OUT)
 	@printf "[$(GREEN)DONE$(DEF)]\n"
 
 $(OBJ_DIR)%.o:	$(SRC_DIR)%.c
 	@mkdir -p $(dir $@)
 	@printf "$(STATUS_FMT)" "generating" "$@"
-	$(CC) $(CFLAGS) $^ -c -o $@
+	@$(CC) $(CFLAGS) $(HDR) $^ -c -o $@
 	@printf "[$(GREEN)DONE$(DEF)]\n"
 
 clean:
