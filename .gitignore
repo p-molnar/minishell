@@ -50,3 +50,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Minishell specific rules
+minishell
+*.pdf
+*.DS_Store
