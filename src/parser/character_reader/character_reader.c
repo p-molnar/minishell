@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   character_reader.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/21 15:29:09 by pmolnar       ########   odam.nl         */
+/*   Created: 2023/02/21 14:40:20 by pmolnar       #+#    #+#                 */
+/*   Updated: 2023/02/21 14:40:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
-int	main(void)
+char	*read_prompt(char *prompt)
 {
-	char	*prompt;
+	char	*prompt_read;
 
-	while (1)
-	{
-		prompt = read_prompt(PROMPT_MSG);
-		printf("%s", prompt);
-		free(prompt);
-	}
-	return (0);
+	prompt_read = readline(prompt);
+	add_history(prompt_read);
+	return (prompt_read);
 }
