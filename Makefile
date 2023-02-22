@@ -6,21 +6,26 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/02/21 15:29:57 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/02/22 14:03:02 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
-CFLAGS 			= 	-Wall -Werror -Wextra -I$(INCL)
+CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 NAME			=	minishell
-INCL			=	includes
+INCL			=	includes libft/include
 SUBMODULE		=	libft
 LIBFT			=	$(SUBMODULE)/libft.a
 
 CHAR_READER		=	$(addprefix	character_reader/, character_reader.c)
+TOKENIZER		=	$(addprefix	tokenizer/, tokenizer.c)
 
+TOKENIZER_PATH	=	tokenizer/
 PARSER_PATH		=	parser/
-PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER))
+
+PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER) \
+												$(TOKENIZER))
+
 SRC				=	main.c $(PARSER)
 
 OBJ_PATH		=	obj/
