@@ -6,14 +6,14 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/02/27 16:16:20 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/02/27 17:10:59 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 NAME			=	minishell
-INCL			=	includes $(SUBMODULE)/include
+INCL			=	inc $(SUBMODULE)/inc
 SUBMODULE		=	libft
 LIBFT			=	$(SUBMODULE)/libft.a
 LDFLAGS			=	-L/Users/$(USER)/.brew/opt/readline/lib
