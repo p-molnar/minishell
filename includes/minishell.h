@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/22 16:15:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/02/27 16:46:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # define PROMPT_MSG "minishell$ "
 
 // character_reader.c
-char	*read_prompt(const char *prompt);
+char			*read_prompt(const char *prompt);
 
 // tokenizer.c
-t_token	tokenizer(const char *prompt);
+t_token_list	*tokenizer(const char *prompt);
 
 #endif
