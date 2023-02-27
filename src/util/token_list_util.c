@@ -6,13 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 15:49:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/27 16:31:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/02/27 22:43:49 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ms_data_types.h>
 #include <ms_macros.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 t_token_list	*new_node(char *content, int token_type)
 {
