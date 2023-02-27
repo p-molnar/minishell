@@ -6,22 +6,26 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/02/21 15:29:57 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/02/27 16:16:20 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
-CFLAGS 			= 	-Wall -Werror -Wextra -I$(INCL)
+CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 NAME			=	minishell
-INCL			=	includes
+INCL			=	includes $(SUBMODULE)/include
 SUBMODULE		=	libft
 LIBFT			=	$(SUBMODULE)/libft.a
+LDFLAGS			=	-L/Users/$(USER)/.brew/opt/readline/lib
 
 CHAR_READER		=	$(addprefix	character_reader/, character_reader.c)
-
+SIG_HANDLER		=	$(addprefix	signal/, signal_handler.c)
+ 
 PARSER_PATH		=	parser/
+SIG_PATH		=	signal/
 PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER))
-SRC				=	main.c $(PARSER)
+SIGNAL			=	$(addprefix $(SIG_PATH), $(SIG_HANDLER))
+SRC				=	main.c $(PARSER) $(SIGNAL)
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
@@ -31,7 +35,7 @@ all:	$(NAME)
 	@printf "All compiled into '$(NAME)' executable\n"
 
 $(NAME):	$(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) -lreadline $^ -o $(NAME)
+	$(CC) $(CFLAGS) $(LDFLAGS) -lreadline $^ -o $(NAME)
 
 $(LIBFT): $(SUBMODULE)
 	git submodule update --init
