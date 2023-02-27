@@ -6,14 +6,16 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/27 16:43:18 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/02/27 23:46:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <stdio.h>
 #include <ms_data_types.h>
+#include <minishell.h>
 #include <ms_macros.h>
+#include <stdlib.h>
 
 char	*get_string_end(char *start)
 {
@@ -42,6 +44,7 @@ t_token_list	*tokenizer(const char *prompt)
 	t_token_list	*tokens;
 
 	start_ptr = (char *) prompt;
+	tokens = NULL;
 	while (*start_ptr != '\0')
 	{
 		start_ptr = ft_strtrim(start_ptr, SPACES);
@@ -50,8 +53,6 @@ t_token_list	*tokenizer(const char *prompt)
 			end_ptr = start_ptr + ft_strlen(start_ptr) - 1;
 		content = ft_substr(start_ptr, 0, end_ptr - start_ptr + 1);
 		add_node_last(&tokens, new_node(content, UNDEFINED));
-		printf(":%s:\n", content);
-		free(content);
 		start_ptr += end_ptr - start_ptr + 1;
 	}
 	return (tokens);
