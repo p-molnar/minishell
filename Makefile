@@ -6,12 +6,13 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/02/22 14:03:02 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/02/27 16:45:15 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
+CFLAGS			+=	-g # debug
 NAME			=	minishell
 INCL			=	includes libft/include
 SUBMODULE		=	libft
@@ -26,7 +27,10 @@ PARSER_PATH		=	parser/
 PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER) \
 												$(TOKENIZER))
 
-SRC				=	main.c $(PARSER)
+UTIL_PATH		=	util/
+UTIL			=	$(addprefix $(UTIL_PATH), 	token_list_util.c)
+
+SRC				=	main.c $(PARSER) $(UTIL)
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
