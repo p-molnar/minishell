@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/22 15:47:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/02/27 17:20:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,30 @@
 # define MS_MACROS_H
 
 // operator symbols
-# define CHAR_PIPE "|"
-# define CHAR_AND '&'
-# define CHAR_SEMI ';'
-# define CHAR_LESS '<'
-# define CHAR_GREAT '>'
-# define CHAR_LPAREN '('
-# define CHAR_RPAREN ')'
-# define CHAR_DOLLAR '$'
-# define CHAR_BACKQUOTE '`'
-# define CHAR_BACKSLASH '\\'
-# define CHAR_DQUOTE '"'
-# define CHAR_QUOTE '\''
-# define CHAR_SPACE " "
-# define CHAR_TAB '\t'
-# define CHAR_NEWLINE '\n'
+# define PIPE "|"
+# define AND '&'
+# define SEMI ';'
+# define LESS '<'
+# define GREAT '>'
+# define LPAREN '('
+# define RPAREN ')'
+# define DOLLAR '$'
+# define BACKQUOTE '`'
+# define BACKSLASH '\\'
+# define DQUOTE '"'
+# define QUOTE '\''
+# define SPACE " "
+# define TAB '\t'
+# define NEWLINE '\n'
+
+# define META_CHARS " \t\n|&;()<>"
+# define OPERATORS "|&;()<>"
+# define SPACES	" \t\n"
+
+enum e_token_type {
+	UNDEFINED = -1,
+	WORD = 1,
+	OPERATOR = 2,
+};
 
 #endif
