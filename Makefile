@@ -6,15 +6,16 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/02/27 16:45:15 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/02/27 22:45:41 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 CFLAGS			+=	-g # debug
+CFLAGS			+=	-fsanitize=address
 NAME			=	minishell
-INCL			=	includes libft/include
+INCL			=	inc libft/inc
 SUBMODULE		=	libft
 LIBFT			=	$(SUBMODULE)/libft.a
 
