@@ -6,15 +6,31 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/27 16:23:28 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/02/28 13:05:17 by pmolnar       ########   odam.nl         */
+
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ms_data_types.h>
 #include <termios.h>
 #include <readline/history.h>
+
+void	print_tokens(t_token_list *list)
+{
+	int			i;
+	const char	*token[4] = {"UNDEF", "INVALID", "WORD", "OPERATOR"};
+
+	i = 0;
+	while (list)
+	{
+		printf("#%d :%s: -> %s\n", i + 1, list->content, token[list->type + 1]);
+		i++;
+		list = list->next;
+	}
+}
 
 void	cleanup_before_exit(struct termios *original_termios)
 {
@@ -25,15 +41,22 @@ void	cleanup_before_exit(struct termios *original_termios)
 int	main(void)
 {
 	char			*prompt;
-	struct termios	original_termios;
+	int				prog_running;
+	t_token_list	*tokens;
+  struct termios	original_termios;
 
-	setup_signal_handler(&original_termios);
-	while (1)
+	prog_running = 1;
+  setup_signal_handler(&original_termios);
+	while (prog_running)
 	{
 		prompt = read_prompt(PROMPT_MSG);
-		if (!prompt)
+    if (!prompt)
 			break ;
-		printf("%s", prompt);
+		printf("original prompt |%s|\n", prompt);
+		tokens = tokenizer(prompt);
+		classify_tokens(tokens);
+		print_tokens(tokens);
+		free_list(tokens);
 		free(prompt);
 	}
 	cleanup_before_exit(&original_termios);
