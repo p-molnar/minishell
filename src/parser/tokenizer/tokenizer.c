@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/28 12:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/02/28 16:26:36 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ char	*get_string_end(char *start)
 		return (ft_strchr((start + 1), *start));
 	while (*curr)
 	{
-		if (ft_isalpha(*curr) && ft_strchr(META_CHARS, *(curr + 1)))
+		if (!ft_strchr(OPERATORS, *curr) && ft_strchr(META_CHARS, *(curr + 1)))
 			return (curr);
 		else if (ft_strchr(OPERATORS, *curr)
-			&& (ft_strchr(SPACES, *(curr + 1)) || ft_isalpha(*(curr + 1))))
+			&& !ft_strchr(OPERATORS, *(curr + 1)))
 			return (curr);
 		else
 			curr++;
