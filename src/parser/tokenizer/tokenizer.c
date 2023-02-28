@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/27 23:46:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/02/28 12:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*get_string_end(char *start)
 	{
 		if (ft_isalpha(*curr) && ft_strchr(META_CHARS, *(curr + 1)))
 			return (curr);
-		else if (ft_strchr(OPERATORS, *curr) && (ft_strchr(SPACES, *(curr + 1)) || ft_isalpha(*(curr + 1))))
+		else if (ft_strchr(OPERATORS, *curr)
+			&& (ft_strchr(SPACES, *(curr + 1)) || ft_isalpha(*(curr + 1))))
 			return (curr);
 		else
 			curr++;
@@ -49,7 +50,7 @@ t_token_list	*tokenizer(const char *prompt)
 	{
 		start_ptr = ft_strtrim(start_ptr, SPACES);
 		end_ptr = get_string_end(start_ptr);
-		if (end_ptr == NULL)
+		if (end_ptr == NULL || *end_ptr == '\0')
 			end_ptr = start_ptr + ft_strlen(start_ptr) - 1;
 		content = ft_substr(start_ptr, 0, end_ptr - start_ptr + 1);
 		add_node_last(&tokens, new_node(content, UNDEFINED));
