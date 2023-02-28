@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/28 10:58:48 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/28 13:03:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/02/28 16:47:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,19 @@ static int	is_valid_quotation(char *s)
 
 static int	is_valid_operator_seq(char *s)
 {
-	if (ft_strncmp(DLESS, s, 2) || ft_strncmp(DGREAT, s, 2))
-		return (1);
-	else if (*s == LESS || *s == GREAT || *s == PIPE)
-		return (1);
-	else
+	int	len;
+
+	len = ft_strlen(s);
+	if (len < 1 || len > 2)
 		return (0);
+	return (ft_strncmp(DLESS, s, len) == 0
+		|| ft_strncmp(DGREAT, s, len) == 0
+		|| ft_strncmp("||", s, len) == 0);
 }
 
 static int	classify_token(char *s)
 {
-	if (ft_isalpha(*s) || (*s == DASH && ft_isalpha(*(s + 1))))
+	if (!ft_strchr(OPERATORS, *s))
 		return (WORD);
 	else if ((*s == QUOTE || *s == DQUOTE) && is_valid_quotation(s))
 		return (WORD);
