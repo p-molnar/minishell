@@ -6,13 +6,13 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/02/27 22:45:41 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/02/28 12:51:58 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
-CFLAGS			+=	-g # debug
+# CFLAGS			+=	-g # debug
 CFLAGS			+=	-fsanitize=address
 NAME			=	minishell
 INCL			=	inc libft/inc
@@ -20,7 +20,8 @@ SUBMODULE		=	libft
 LIBFT			=	$(SUBMODULE)/libft.a
 
 CHAR_READER		=	$(addprefix	character_reader/, character_reader.c)
-TOKENIZER		=	$(addprefix	tokenizer/, tokenizer.c)
+TOKENIZER		=	$(addprefix	tokenizer/,	tokenizer.c				\
+											token_classifier.c)
 
 TOKENIZER_PATH	=	tokenizer/
 PARSER_PATH		=	parser/
