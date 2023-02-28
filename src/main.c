@@ -7,6 +7,7 @@
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
 /*   Updated: 2023/02/28 13:05:17 by pmolnar       ########   odam.nl         */
+
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ms_data_types.h>
+#include <termios.h>
+#include <readline/history.h>
 
 void	print_tokens(t_token_list *list)
 {
@@ -29,16 +32,26 @@ void	print_tokens(t_token_list *list)
 	}
 }
 
+void	cleanup_before_exit(struct termios *original_termios)
+{
+	tcsetattr(0, 0, original_termios);
+	clear_history();
+}
+
 int	main(void)
 {
 	char			*prompt;
 	int				prog_running;
 	t_token_list	*tokens;
+  struct termios	original_termios;
 
 	prog_running = 1;
+  setup_signal_handler(&original_termios);
 	while (prog_running)
 	{
 		prompt = read_prompt(PROMPT_MSG);
+    if (!prompt)
+			break ;
 		printf("original prompt |%s|\n", prompt);
 		tokens = tokenizer(prompt);
 		classify_tokens(tokens);
@@ -46,5 +59,6 @@ int	main(void)
 		free_list(tokens);
 		free(prompt);
 	}
+	cleanup_before_exit(&original_termios);
 	return (0);
 }

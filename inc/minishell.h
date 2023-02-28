@@ -14,8 +14,12 @@
 # define MINISHELL_H
 
 # include <ms_data_types.h>
+# include <termios.h>
 
 # define PROMPT_MSG "minishell$ "
+
+//  readline
+void	rl_replace_line(const char *text, int clear_undo);
 
 //	character_reader.c
 char			*read_prompt(const char *prompt);
@@ -31,5 +35,8 @@ void			free_list(t_token_list *list);
 //	token_classifier.c
 void	classify_tokens(t_token_list *list);
 
+//  signal_handler.c
+void	setup_signal_handler(struct termios *original_termios);
+void	handle_signal(int signum);
 
 #endif

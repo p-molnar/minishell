@@ -18,6 +18,7 @@ NAME			=	minishell
 INCL			=	inc libft/inc
 SUBMODULE		=	libft
 LIBFT			=	$(SUBMODULE)/libft.a
+LDFLAGS			=	-L/Users/$(USER)/.brew/opt/readline/lib
 
 CHAR_READER		=	$(addprefix	character_reader/, character_reader.c)
 TOKENIZER		=	$(addprefix	tokenizer/,	tokenizer.c				\
@@ -25,14 +26,17 @@ TOKENIZER		=	$(addprefix	tokenizer/,	tokenizer.c				\
 
 TOKENIZER_PATH	=	tokenizer/
 PARSER_PATH		=	parser/
+SIG_PATH		=	signal/
 
 PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER) \
 												$(TOKENIZER))
+SIGNAL			=	$(addprefix $(SIG_PATH), $(SIG_HANDLER))
 
 UTIL_PATH		=	util/
 UTIL			=	$(addprefix $(UTIL_PATH), 	token_list_util.c)
+SIG_HANDLER		=	$(addprefix	signal/, signal_handler.c)
 
-SRC				=	main.c $(PARSER) $(UTIL)
+SRC				=	main.c $(PARSER) $(UTIL) $(SIGNAL)
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
@@ -42,7 +46,7 @@ all:	$(NAME)
 	@printf "All compiled into '$(NAME)' executable\n"
 
 $(NAME):	$(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) -lreadline $^ -o $(NAME)
+	$(CC) $(CFLAGS) $(LDFLAGS) -lreadline $^ -o $(NAME)
 
 $(LIBFT): $(SUBMODULE)
 	git submodule update --init
