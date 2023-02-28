@@ -6,14 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/28 12:10:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/02/28 12:30:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_MACROS_H
 # define MS_MACROS_H
 
-// unrequired operators
+//	unrequired operators
 // # define AND '&'
 // # define SEMI ';'
 // # define LPAREN '('
@@ -21,7 +21,7 @@
 // # define BACKQUOTE '`'
 // # define BACKSLASH '\\'
 
-// collections
+//	collections
 # define META_CHARS " \t\n|&;()<>"
 # define OPERATORS "|&;()<>"
 # define SPACES	" \t\n"
@@ -39,7 +39,7 @@
 # define TAB '\t'
 # define NEWLINE '\n'
 
-// token type classifiers
+//	token type classifiers
 enum e_token_type {
 	UNDEFINED = -1,
 	INVALID,
