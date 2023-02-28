@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 15:49:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/28 15:20:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/02/28 15:35:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,18 @@ void	add_node_last(t_token_list **list, t_token_list *node)
 				tmp_ptr = tmp_ptr->next;
 			tmp_ptr->next = node;
 		}
+	}
+}
+
+void	free_list(t_token_list *list)
+{
+	t_token_list	*tmp_ptr;
+
+	while (list)
+	{
+		tmp_ptr = list;
+		free(list->content);
+		free(list);
+		list = tmp_ptr;
 	}
 }
