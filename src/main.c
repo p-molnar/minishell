@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/27 23:20:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/02/28 13:05:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 
 void	print_tokens(t_token_list *list)
 {
-	int	i;
+	int			i;
+	const char	*token[4] = {"UNDEF", "INVALID", "WORD", "OPERATOR"};
 
 	i = 0;
 	while (list)
 	{
-		printf("#%d :%s:\n", i + 1, list->content);
+		printf("#%d :%s: -> %s\n", i + 1, list->content, token[list->type + 1]);
 		i++;
 		list = list->next;
 	}
@@ -40,7 +41,9 @@ int	main(void)
 		prompt = read_prompt(PROMPT_MSG);
 		printf("original prompt |%s|\n", prompt);
 		tokens = tokenizer(prompt);
+		classify_tokens(tokens);
 		print_tokens(tokens);
+		free_list(tokens);
 		free(prompt);
 	}
 	return (0);
