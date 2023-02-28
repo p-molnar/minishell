@@ -6,8 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/28 13:05:17 by pmolnar       ########   odam.nl         */
-
+/*   Updated: 2023/02/28 13:41:21 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +42,14 @@ int	main(void)
 	char			*prompt;
 	int				prog_running;
 	t_token_list	*tokens;
-  struct termios	original_termios;
+	struct termios	original_termios;
 
 	prog_running = 1;
-  setup_signal_handler(&original_termios);
+	setup_signal_handler(&original_termios);
 	while (prog_running)
 	{
 		prompt = read_prompt(PROMPT_MSG);
-    if (!prompt)
+		if (!prompt)
 			break ;
 		printf("original prompt |%s|\n", prompt);
 		tokens = tokenizer(prompt);
