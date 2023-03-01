@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/01 10:51:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/01 16:30:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*get_string_end(char *start)
 
 t_token_list	*tokenizer(const char *prompt)
 {
+	char			*tmp_ptr;
 	char			*tkn_start_ptr;
 	char			*tkn_end_ptr;
 	char			*content;
@@ -49,6 +50,7 @@ t_token_list	*tokenizer(const char *prompt)
 	while (*tkn_start_ptr != '\0')
 	{
 		tkn_start_ptr = ft_strtrim(tkn_start_ptr, SPACES);
+		tmp_ptr = tkn_start_ptr;
 		tkn_end_ptr = get_string_end(tkn_start_ptr);
 		if (tkn_end_ptr == NULL || *tkn_end_ptr == '\0')
 			tkn_end_ptr = tkn_start_ptr + ft_strlen(tkn_start_ptr) - 1;
