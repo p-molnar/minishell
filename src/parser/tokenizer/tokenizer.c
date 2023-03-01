@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/01 16:55:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/01 17:13:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_token_list	*tokenizer(const char *prompt)
 			if (tkn_end_ptr == NULL || *tkn_end_ptr == '\0')
 				tkn_end_ptr = tkn_start_ptr + ft_strlen(tkn_start_ptr) - 1;
 			content = ft_substr(tkn_start_ptr, 0, tkn_end_ptr - tkn_start_ptr + 1);
-			add_node_last(&tokens, new_node(content, UNDEFINED));
+			add_node_last(&tokens, new_node(content, tkn_start_ptr, UNDEFINED));
 			tkn_start_ptr += tkn_end_ptr - tkn_start_ptr;
 		}
 		tkn_start_ptr++;
