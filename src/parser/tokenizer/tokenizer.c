@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/28 16:26:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/01 10:51:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,22 @@ char	*get_string_end(char *start)
 
 t_token_list	*tokenizer(const char *prompt)
 {
-	char			*start_ptr;
-	char			*end_ptr;
+	char			*tkn_start_ptr;
+	char			*tkn_end_ptr;
 	char			*content;
 	t_token_list	*tokens;
 
-	start_ptr = (char *) prompt;
+	tkn_start_ptr = (char *) prompt;
 	tokens = NULL;
-	while (*start_ptr != '\0')
+	while (*tkn_start_ptr != '\0')
 	{
-		start_ptr = ft_strtrim(start_ptr, SPACES);
-		end_ptr = get_string_end(start_ptr);
-		if (end_ptr == NULL || *end_ptr == '\0')
-			end_ptr = start_ptr + ft_strlen(start_ptr) - 1;
-		content = ft_substr(start_ptr, 0, end_ptr - start_ptr + 1);
+		tkn_start_ptr = ft_strtrim(tkn_start_ptr, SPACES);
+		tkn_end_ptr = get_string_end(tkn_start_ptr);
+		if (tkn_end_ptr == NULL || *tkn_end_ptr == '\0')
+			tkn_end_ptr = tkn_start_ptr + ft_strlen(tkn_start_ptr) - 1;
+		content = ft_substr(tkn_start_ptr, 0, tkn_end_ptr - tkn_start_ptr + 1);
 		add_node_last(&tokens, new_node(content, UNDEFINED));
-		start_ptr += end_ptr - start_ptr + 1;
+		tkn_start_ptr += tkn_end_ptr - tkn_start_ptr + 1;
 	}
 	return (tokens);
 }
