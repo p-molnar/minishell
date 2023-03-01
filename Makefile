@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/02/28 21:59:53 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/01 16:54:07 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,17 +23,20 @@ LIBFT			=	$(SUBMODULE)/libft.a
 CHAR_READER		=	$(addprefix	character_reader/, character_reader.c)
 TOKENIZER		=	$(addprefix	tokenizer/,	tokenizer.c				\
 											token_classifier.c)
+CMD_PARSER		=	$(addprefix	command_list/, parse_commands.c)
 
 TOKENIZER_PATH	=	tokenizer/
 PARSER_PATH		=	parser/
 SIG_PATH		=	signal/
 
 PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER) \
-												$(TOKENIZER))
+												$(TOKENIZER)	\
+												$(CMD_PARSER))
 SIGNAL			=	$(addprefix $(SIG_PATH), $(SIG_HANDLER))
 
 UTIL_PATH		=	util/
-UTIL			=	$(addprefix $(UTIL_PATH), 	token_list_util.c)
+UTIL			=	$(addprefix $(UTIL_PATH), 	token_list_util.c	\
+												command_list_util.c)
 SIG_HANDLER		=	$(addprefix	signal/, signal_handler.c)
 
 SRC				=	main.c $(PARSER) $(UTIL) $(SIGNAL)
