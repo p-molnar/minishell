@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/01 18:26:51 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/03 16:42:25 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@
 #include <ms_data_types.h>
 #include <termios.h>
 #include <readline/history.h>
+
+void	print_tokens(t_token_list *list)
+{
+	int			i;
+	const char	*token[4] = {"UNDEF", "INVALID", "WORD", "OPERATOR"};
+
+	i = 0;
+	while (list)
+	{
+		printf("#%d :%s: -> %s\n", i + 1, list->content, token[list->type + 1]);
+		i++;
+		list = list->next;
+	}
+}
 
 void	print_commands(t_command_list *list)
 {
@@ -27,20 +41,7 @@ void	print_commands(t_command_list *list)
 	while (list)
 	{
 		printf("#%d : -> %s\n", i + 1, symbol[list->symbol]);
-		i++;
-		list = list->next;
-	}
-}
-
-void	print_tokens(t_token_list *list)
-{
-	int			i;
-	const char	*token[4] = {"UNDEF", "INVALID", "WORD", "OPERATOR"};
-
-	i = 0;
-	while (list)
-	{
-		printf("#%d :%s: -> %s\n", i + 1, list->content, token[list->type + 1]);
+		print_tokens(list->phrase);
 		i++;
 		list = list->next;
 	}
@@ -73,8 +74,8 @@ int	main(void)
 		commands = parse_commands(tokens);
 		print_tokens(tokens);
 		print_commands(commands);
+		free_command_list(commands);
 		free_list(tokens);
-		//free_command_list(commands);
 		free(prompt);
 	}
 	cleanup_before_exit(&original_termios);

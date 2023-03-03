@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 14:43:08 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/01 18:01:45 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/03 16:48:38 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 #include <ms_macros.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+void		copy_token(t_token_list **copy, t_token_list *original)
+{
+	if (original)
+		add_node_last(copy, new_node(ft_strdup(original->content), original->type));
+}
 
 void		copy_phrase(t_token_list **copy, t_token_list *original)
 {
@@ -37,7 +43,7 @@ t_command_list	*new_command_node(int symbol, t_token_list *phrase)
 	if (command == NULL)
 		return (NULL);
 	command->symbol = symbol;
-	command->phrase = &phrase;
+	command->phrase = phrase;
 	command->next = NULL;
 	return (command);
 }
@@ -49,7 +55,7 @@ void	add_command_back(t_command_list **list, t_command_list *node)
 	if (list && node)
 	{
 		if (!*list)
-			*list = new_command_node(node->symbol, *node->phrase);
+			*list = new_command_node(node->symbol, node->phrase);
 		else
 		{
 			tmp_ptr = *list;
@@ -67,8 +73,8 @@ void	free_command_list(t_command_list *list)
 	while (list)
 	{
 		tmp_ptr = list->next;
-		if (*list->phrase)
-			free_list(*list->phrase);
+		if (list->phrase)
+			free_list(list->phrase);
 		free(list);
 		list = tmp_ptr;
 	}
