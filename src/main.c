@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/28 13:41:21 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/01 17:14:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	print_tokens(t_token_list *list)
 	while (list)
 	{
 		printf("#%d :%s: -> %s\n", i + 1, list->content, token[list->type + 1]);
+		printf("	token_start -> :%s:\n", list->prompt_ptr);
 		i++;
 		list = list->next;
 	}
