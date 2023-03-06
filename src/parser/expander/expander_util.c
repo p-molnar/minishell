@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 09:50:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/06 12:51:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/06 13:03:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,5 @@ char	*find_replace(char *needle, char *nail, char *haystack)
 	offset = needle_ptr - haystack + ft_strlen(needle);
 	size = ft_strlen(&haystack[offset]);
 	ft_strlcpy(ft_strchr(dst, '\0'), &haystack[offset], size + 1);
-	free (haystack);
 	return (dst);
 }

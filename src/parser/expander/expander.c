@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/06 12:42:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/06 13:13:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ static void	replace_vars_with_values(char **s, t_var_list *l, int count)
 	int		i;
 	int		len;
 	char	*name;
+	char	*tmp;
 
 	i = 0;
+	tmp = *s;
 	while (i < count)
 	{
 		len = ft_strlen(l->name);
@@ -67,6 +69,7 @@ static void	replace_vars_with_values(char **s, t_var_list *l, int count)
 		name[0] = DOLLAR;
 		ft_strlcpy(&name[1], l->name, len + 1);
 		*s = find_replace(name, l->val, *s);
+		free (tmp);
 		free (name);
 		l++;
 		i++;
