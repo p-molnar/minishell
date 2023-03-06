@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/06 11:17:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/06 12:34:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <libft.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 
 static void	extract_var_names(char *s, t_var_list *list)
 {
@@ -53,30 +52,7 @@ static void	get_var_values(t_var_list *list, int var_count)
 	}
 }
 
-char	*find_replace(char *needle, char *nail, char *haystack)
-{
-	char	*dst;
-	int		size;
-	int		offset;
-	char	*needle_ptr;
-
-	size = ft_strlen(haystack) + ft_strlen(nail) - ft_strlen(needle) + 1;
-	dst = ft_calloc(size, sizeof(char));
-	if (!dst)
-		return (NULL);
-	needle_ptr = ft_strchr(haystack, *needle);
-	size = needle_ptr - haystack;
-	ft_strlcpy(dst, haystack, size + 1);
-	size = ft_strlen(nail) + 1;
-	ft_strlcpy(ft_strchr(dst, '\0'), nail, size);
-	offset = needle_ptr - haystack + ft_strlen(needle);
-	size = ft_strlen(&haystack[offset]);
-	ft_strlcpy(ft_strchr(dst, '\0'), &haystack[size], size + 1);
-	free (haystack);
-	return (dst);
-}
-
-void	replace_vars_with_values(char **s, t_var_list *l, int count)
+static void	replace_vars_with_values(char **s, t_var_list *l, int count)
 {
 	int		i;
 	int		len;
@@ -90,7 +66,7 @@ void	replace_vars_with_values(char **s, t_var_list *l, int count)
 		if (!name)
 			return ;
 		name[0] = DOLLAR;
-		ft_strlcpy(&name[1], l->name, len + 1); //??
+		ft_strlcpy(&name[1], l->name, len + 1);
 		*s = find_replace(name, l->val, *s);
 		free (name);
 		l++;
@@ -114,21 +90,14 @@ void	expand_tokens(t_token_list *list)
 			extract_var_names(list->content, var_list);
 			get_var_values(var_list, var_count);
 			replace_vars_with_values(&list->content, var_list, var_count);
-			printf("-new token-\n");
 			// printf("token: |%s|\n", list->content);
 			// for (int i = 0; i < var_count; i++)
 			// {
 			// 	printf("%d:\t%s=%s\n", i++, var_list->name, var_list->val);
 			// 	// printf("%d:\t%s\n", i, var_list[i].key);
 			// }
-
-			// while (var_list)
-			// {
-			// 	printf("%s\n", var_list->key);
-			// 	var_list++;
-			// }
 			free (var_list);
 		}
 		list = list->next;
 	}
-};
+}
