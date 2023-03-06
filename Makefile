@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/03 15:04:12 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/06 09:51:41 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ LIBFT			=	$(SUBMODULE)/libft.a
 CHAR_READER		=	$(addprefix	character_reader/, character_reader.c)
 TOKENIZER		=	$(addprefix	tokenizer/,	tokenizer.c				\
 											token_classifier.c)
-EXPANDER 		=	$(addprefix	expander/,	expander.c)
+EXPANDER 		=	$(addprefix	expander/,	expander.c				\
+											expander_util.c)
 
 TOKENIZER_PATH	=	tokenizer/
 EXPANDER_PATH	=	expander/
