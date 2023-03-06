@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/06 12:34:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/06 12:42:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	get_var_values(t_var_list *list, int var_count)
 	i = 0;
 	while (i < var_count)
 	{
-		printf("var name: %s\n", list[i].name);
 		val = getenv(list->name);
 		if (!val)
 			val = "";
