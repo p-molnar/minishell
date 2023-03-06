@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 09:50:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/06 12:39:54 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/06 12:51:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ char	*find_replace(char *needle, char *nail, char *haystack)
 	int		offset;
 	char	*needle_ptr;
 
-	size = ft_strlen(haystack) + ft_strlen(nail) - ft_strlen(needle) + 1;
-	dst = ft_calloc(size, sizeof(char));
+	size = ft_strlen(haystack) + ft_strlen(nail) - ft_strlen(needle);
+	dst = ft_calloc(size + 1, sizeof(char));
 	if (!dst)
 		return (NULL);
 	needle_ptr = ft_strchr(haystack, *needle);
 	size = needle_ptr - haystack;
 	ft_strlcpy(dst, haystack, size + 1);
-	size = ft_strlen(nail) + 1;
-	ft_strlcpy(ft_strchr(dst, '\0'), nail, size);
+	size = ft_strlen(nail);
+	ft_strlcpy(ft_strchr(dst, '\0'), nail, size + 1);
 	offset = needle_ptr - haystack + ft_strlen(needle);
 	size = ft_strlen(&haystack[offset]);
-	ft_strlcpy(ft_strchr(dst, '\0'), &haystack[size], size + 1);
+	ft_strlcpy(ft_strchr(dst, '\0'), &haystack[offset], size + 1);
 	free (haystack);
 	return (dst);
 }
