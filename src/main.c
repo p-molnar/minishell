@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/07 16:30:56 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/07 17:09:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,25 @@ void	cleanup_before_exit(struct termios *original_termios)
 
 int	main(void)
 {
-	char			*prompt;
 	int				prog_running;
-	t_token_list	*tokens;
+	t_shell_data	data;
+	// t_token_list	*tokens;
 	struct termios	original_termios;
 
 	prog_running = 1;
 	setup_signal_handler(&original_termios);
 	while (prog_running)
 	{
-		prompt = read_prompt(PROMPT_MSG);
-		if (!prompt)
+		data.prompt = read_prompt(PROMPT_MSG);
+		if (!data.prompt)
 			break ;
-		printf("original prompt |%s|\n", prompt);
-		tokens = tokenizer(prompt);
-		classify_tokens(tokens);
-		expand_tokens(tokens);
-		print_tokens(tokens);
-		free_list(tokens);
-		free(prompt);
+		printf("original prompt |%s|\n", data.prompt);
+		data.tokens = tokenizer(data.prompt);
+		classify_tokens(data.tokens);
+		expand_tokens(data.tokens);
+		print_tokens(data.tokens);
+		free_list(data.tokens);
+		free(data.prompt);
 	}
 	cleanup_before_exit(&original_termios);
 	return (0);
