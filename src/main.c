@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/01 17:14:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/07 11:58:01 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(void)
 		printf("original prompt |%s|\n", prompt);
 		tokens = tokenizer(prompt);
 		classify_tokens(tokens);
+		expand_tokens(tokens);
 		print_tokens(tokens);
 		free_list(tokens);
 		free(prompt);

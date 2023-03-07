@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/01 17:11:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/07 11:58:31 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ void			free_list(t_token_list *list);
 
 //	token_classifier.c
 void			classify_tokens(t_token_list *list);
+
+//	expander.c
+void			expand_tokens(t_token_list *list);
+
+//	expander_util.c
+int				count_var(char *s);
+char			*find_replace(char *needle, char *nail, char *haystack);
+
 
 //  signal_handler.c
 void			setup_signal_handler(struct termios *original_termios);
