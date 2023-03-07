@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/01 17:29:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/07 15:37:44 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,23 @@
 char	*get_token_end(char *start)
 {
 	char	*curr;
+	char	*next;
 
 	curr = start;
-	if (*curr == QUOTE || *curr == DQUOTE)
-		return (ft_strchr((start + 1), *start));
+	next = start + 1;
 	while (*curr)
 	{
-		if (!ft_strchr(OPERATORS, *curr) && ft_strchr(DELIM_CHARS, *(curr + 1)))
+		if (ft_strchr(QUOTES, *curr))
+			return (ft_strchr(next, *curr));
+		else if (!ft_strchr(META_CHARS, *curr) && ft_strchr(META_CHARS, *next))
 			return (curr);
-		else if (ft_strchr(OPERATORS, *curr)
-			&& !ft_strchr(OPERATORS, *(curr + 1)))
+		else if (ft_strchr(OPERATORS, *curr) && !ft_strchr(OPERATORS, *next))
 			return (curr);
 		else
+		{
 			curr++;
+			next++;
+		}
 	}
 	return (curr);
 }
