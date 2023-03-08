@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/07 11:58:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/08 12:05:40 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ void			expand_tokens(t_token_list *list);
 int				count_var(char *s);
 char			*find_replace(char *needle, char *nail, char *haystack);
 
-
 //  signal_handler.c
 void			setup_signal_handler(struct termios *original_termios);
 void			handle_signal(int signum);
+
+//	variable_interpreter.c
+void			parse_variable(t_shell_data *data);
 
 #endif
