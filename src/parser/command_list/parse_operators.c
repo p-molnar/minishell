@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 14:59:33 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/06 17:26:44 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/08 16:44:24 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,50 +15,64 @@
 #include <ms_macros.h>
 #include <stdio.h>
 
-//any syntax error should cause immediate cleanup and return to the prompt
-
-void	parse_redirect_out(t_token_list *token, t_command_list **command_list,
-						t_token_list *start_phrase, int append_flag)
+int		parse_redirect_out(t_command_list **command_list,
+						t_token_list *token, int append_flag)
 {
 	t_token_list	*copy;
 
 	copy = NULL;
-	add_command(command_list, start_phrase);
-	add_command_back(command_list, new_command_node(D_REDIRECT_OUT, NULL));
 	if (!token->next)
+	{
 		printf("Syntax error, unexpected end of token list\n");
+		return (2);
+	}
 	token = token->next;
 	if (token->type != WORD)
+	{
 		printf("Syntax error, unexpected token %s\n", token->content);
+		return (2);
+	}
 	copy_token(&copy, token);
 	if (append_flag == 0)
 		add_command_back(command_list, new_command_node(OUTFILE, copy));
 	if (append_flag == 1)
 		add_command_back(command_list, new_command_node(OUTFILE_APP, copy));
-	if (token->next)
-		printf("Syntax error, unexpected token %s\n", token->next->content);
+	return (0);
 }
 
-void	parse_pipe(t_token_list *token, t_command_list **command_list,
-						t_token_list *start_phrase)
+int		parse_redirect_in(t_command_list **command_list,
+						t_token_list *token)
 {
-	add_command(command_list, start_phrase);
-	add_command_back(command_list, new_command_node(D_PIPE, NULL));
+	t_token_list	*copy;
+
+	copy = NULL;
 	if (!token->next)
+	{
 		printf("Syntax error, unexpected end of token list\n");
+		return (2);
+	}
+	token = token->next;
+	if (token->type != WORD)
+	{
+		printf("Syntax error, unexpected token %s\n", token->content);
+		return (2);
+	}
+	copy_token(&copy, token);
+		add_command_back(command_list, new_command_node(INFILE, copy));
+	return (0);
 }
 
-void	parse_operator(t_token_list *token, t_command_list **command_list,
-						t_token_list *start_phrase)
+int		parse_operator(t_command_list **command_list, t_token_list *token)
 {
 	if (ft_strncmp(token->content, "|", 1) == 0)
-		parse_pipe(token, command_list, start_phrase);
-	else if (ft_strncmp(token->content, ">", 1) == 0)
-		parse_redirect_out(token, command_list, start_phrase, 0);
-	// else if (ft_strncmp(token->content, "<", 1) == 0)
-	// 	parse_redirect_in(token, command_list, start_phrase);
+		return (1);
 	else if (ft_strncmp(token->content, ">>", 2) == 0)
-		parse_redirect_out(token, command_list, start_phrase, 1);
+		return (parse_redirect_out(command_list, token, 1));
 	// else if (ft_strncmp(token->content, "<<", 2) == 0)
-	// 	parse_redirect_in(token, command_list, start_phrase);
+	// 	return parse_redirect_in_delimiter(command_list, token);
+	else if (ft_strncmp(token->content, ">", 1) == 0)
+		return (parse_redirect_out(command_list, token, 0));
+	else if (ft_strncmp(token->content, "<", 1) == 0)
+		return (parse_redirect_in(command_list, token));
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 14:43:08 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/03 16:48:38 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/08 14:09:04 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,7 @@ void		copy_token(t_token_list **copy, t_token_list *original)
 		add_node_last(copy, new_node(ft_strdup(original->content), original->type));
 }
 
-void		copy_phrase(t_token_list **copy, t_token_list *original)
-{
-	while (original)
-	{
-		if (original->type == WORD)
-			add_node_last(copy, new_node(ft_strdup(original->content), original->type));
-		else
-			break ;
-		original = original->next;
-	}
-}
-
-t_command_list	*new_command_node(int symbol, t_token_list *phrase)
+t_command_list	*new_command_node(int symbol, t_token_list *token)
 {
 	t_command_list	*command;
 
@@ -43,7 +31,7 @@ t_command_list	*new_command_node(int symbol, t_token_list *phrase)
 	if (command == NULL)
 		return (NULL);
 	command->symbol = symbol;
-	command->phrase = phrase;
+	command->token = token;
 	command->next = NULL;
 	return (command);
 }
@@ -55,7 +43,7 @@ void	add_command_back(t_command_list **list, t_command_list *node)
 	if (list && node)
 	{
 		if (!*list)
-			*list = new_command_node(node->symbol, node->phrase);
+			*list = new_command_node(node->symbol, node->token);
 		else
 		{
 			tmp_ptr = *list;
@@ -73,8 +61,8 @@ void	free_command_list(t_command_list *list)
 	while (list)
 	{
 		tmp_ptr = list->next;
-		if (list->phrase)
-			free_list(list->phrase);
+		if (list->token)
+			free_list(list->token);
 		free(list);
 		list = tmp_ptr;
 	}
