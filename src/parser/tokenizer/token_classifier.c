@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/28 10:58:48 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/02/28 16:47:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/01 16:57:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	is_valid_operator_seq(char *s)
 
 static int	classify_token(char *s)
 {
-	if (!ft_strchr(OPERATORS, *s))
+	if (!ft_strchr(DELIM_CHARS, *s))
 		return (WORD);
 	else if ((*s == QUOTE || *s == DQUOTE) && is_valid_quotation(s))
 		return (WORD);
