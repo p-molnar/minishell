@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/08 15:12:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/08 15:27:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_list	*find_var_by_name(t_var *var, t_list *list)
 	return (NULL);
 }
 
-void	extract_var_parts(char *s, t_var *var)
+void	extract_var_from_token(char *s, t_var *var)
 {
 	char	**splitted_str;
 

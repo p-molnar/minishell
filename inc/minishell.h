@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/08 15:17:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/08 15:27:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void			setup_signal_handler(struct termios *original_termios);
 void			handle_signal(int signum);
 
 //	variable_interpreter.c
-void			parse_variable(t_shell_data *data);
+void			parse_shell_variable(t_shell_data *data);
 
 //	variable_parser_util.c
-void			extract_var_parts(char *s, t_var *var);
+void			extract_var_from_token(char *s, t_var *var);
 int				is_valid_var_definition(char *s);
 t_list			*find_var_by_name(t_var *var, t_list *list);
 
