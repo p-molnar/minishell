@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/08 15:27:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/08 15:43:35 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void			handle_signal(int signum);
 
 //	variable_interpreter.c
 void			parse_shell_variable(t_shell_data *data);
+void			parse_env_variable(char **env, t_list **list);
 
 //	variable_parser_util.c
 void			extract_var_from_token(char *s, t_var *var);
