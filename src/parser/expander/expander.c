@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/06 13:13:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/08 12:06:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void	extract_var_names(char *s, t_var_list *list)
+static void	extract_var_names(char *s, t_var *list)
 {
 	char	*start_ptr;
 	char	*end_ptr;
@@ -35,7 +35,7 @@ static void	extract_var_names(char *s, t_var_list *list)
 	}
 }
 
-static void	get_var_values(t_var_list *list, int var_count)
+static void	get_var_values(t_var *list, int var_count)
 {
 	int		i;
 	char	*val;
@@ -51,7 +51,7 @@ static void	get_var_values(t_var_list *list, int var_count)
 	}
 }
 
-static void	replace_vars_with_values(char **s, t_var_list *l, int count)
+static void	replace_vars_with_values(char **s, t_var *l, int count)
 {
 	int		i;
 	int		len;
@@ -78,7 +78,7 @@ static void	replace_vars_with_values(char **s, t_var_list *l, int count)
 
 void	expand_tokens(t_token_list *list)
 {
-	t_var_list	*var_list;
+	t_var	*var_list;
 	int			var_count;
 
 	while (list)
@@ -86,7 +86,7 @@ void	expand_tokens(t_token_list *list)
 		var_count = count_var(list->content);
 		if (var_count)
 		{
-			var_list = malloc(var_count * sizeof(t_var_list));
+			var_list = malloc(var_count * sizeof(t_var));
 			if (!var_list)
 				return ;
 			extract_var_names(list->content, var_list);
