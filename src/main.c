@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/08 14:39:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/08 16:46:44 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,14 @@ void	print_variables(t_list *list, char *title)
 	int		i;
 
 	i = 0;
+	(void) title;
 	while (list)
 	{
-		if (!i)
-			printf("%s\n", title);
+		// if (!i)
+		// 	printf("%s\n", title);
 		var = list->content;
-		printf("#%i\t%s=%s\n", i++ + 1, var->name, var->val);
+		// printf("#%i\t%s=%s\n", i++ + 1, var->name, var->val);
+		printf("%s=%s\n", var->name, var->val);
 		list = list->next;
 	}
 }
@@ -54,15 +56,19 @@ void	cleanup_before_exit(struct termios *original_termios)
 	tcsetattr(0, 0, original_termios);
 	clear_history();
 }
-
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
 	int				prog_running;
 	t_shell_data	data;
 	struct termios	original_termios;
+	(void) argc;
+	(void) argv;
+	(void) envp;
 
-	prog_running = 1;
+	prog_running = 0;
 	setup_signal_handler(&original_termios);
+	parse_env_variable(envp, &data.env_vars);
+	print_variables(data.env_vars, "ENV VARS");
 	while (prog_running)
 	{
 		data.prompt = read_prompt(PROMPT_MSG);
@@ -70,9 +76,8 @@ int	main(void)
 			break ;
 		// printf("original prompt |%s|\n", data.prompt);
 		data.tokens = tokenizer(data.prompt);
-		parse_variable(&data);
+		parse_shell_variable(&data);
 		print_variables(data.shell_vars, "SHELL VARS");
-		// print_variables(data.env_vars, "ENV VARS");
 		classify_tokens(data.tokens);
 		expand_tokens(data.tokens);
 		// print_tokens(data.tokens);
