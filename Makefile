@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/06 09:51:41 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/08 10:43:25 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,15 @@ TOKENIZER		=	$(addprefix	tokenizer/,	tokenizer.c				\
 											token_classifier.c)
 EXPANDER 		=	$(addprefix	expander/,	expander.c				\
 											expander_util.c)
+VAR_INTERPRETER	=	$(addprefix	variable_interpreter/,	variable_interpreter.c)
 
-TOKENIZER_PATH	=	tokenizer/
-EXPANDER_PATH	=	expander/
 PARSER_PATH		=	parser/
 SIG_PATH		=	signal/
 
-PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER)	\
-												$(TOKENIZER)	\
-												$(EXPANDER))
+PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER)		\
+												$(TOKENIZER)		\
+												$(EXPANDER)			\
+												$(VAR_INTERPRETER))
 
 SIGNAL			=	$(addprefix $(SIG_PATH), $(SIG_HANDLER))
 
