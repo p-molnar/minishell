@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/08 15:27:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/08 18:20:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ t_list	*find_var_by_name(t_var *var, t_list *list)
 {
 	char	*lookup_name;
 	char	*declared_name;
+	int		len;
 
 	lookup_name = var->name;
 	while (list)
 	{
 		declared_name = ((t_var *)list->content)->name;
-		if (!ft_strncmp(lookup_name, declared_name, ft_strlen(lookup_name)))
+		len = ft_strlen(lookup_name);
+		if (!ft_strncmp(lookup_name, declared_name, len + 1))
 			return (list);
 		list = list->next;
 	}
