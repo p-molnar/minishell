@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/07 14:54:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/08 10:24:28 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 
 //	argument symbol
 # define DASH '-'
+
+//	variable definition
+# define EQUAL '='
 
 // operator symbols
 # define PIPE '|'
