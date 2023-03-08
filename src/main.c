@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/07 17:09:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/08 14:39:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@ void	print_tokens(t_token_list *list)
 	}
 }
 
+void	print_variables(t_list *list, char *title)
+{
+	t_var	*var;
+	int		i;
+
+	i = 0;
+	while (list)
+	{
+		if (!i)
+			printf("%s\n", title);
+		var = list->content;
+		printf("#%i\t%s=%s\n", i++ + 1, var->name, var->val);
+		list = list->next;
+	}
+}
+
 void	cleanup_before_exit(struct termios *original_termios)
 {
 	tcsetattr(0, 0, original_termios);
@@ -43,7 +59,6 @@ int	main(void)
 {
 	int				prog_running;
 	t_shell_data	data;
-	// t_token_list	*tokens;
 	struct termios	original_termios;
 
 	prog_running = 1;
@@ -53,11 +68,14 @@ int	main(void)
 		data.prompt = read_prompt(PROMPT_MSG);
 		if (!data.prompt)
 			break ;
-		printf("original prompt |%s|\n", data.prompt);
+		// printf("original prompt |%s|\n", data.prompt);
 		data.tokens = tokenizer(data.prompt);
+		parse_variable(&data);
+		print_variables(data.shell_vars, "SHELL VARS");
+		// print_variables(data.env_vars, "ENV VARS");
 		classify_tokens(data.tokens);
 		expand_tokens(data.tokens);
-		print_tokens(data.tokens);
+		// print_tokens(data.tokens);
 		free_list(data.tokens);
 		free(data.prompt);
 	}
