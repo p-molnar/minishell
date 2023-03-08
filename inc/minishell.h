@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/08 17:14:28 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/08 15:38:11 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char			*read_prompt(const char *prompt);
 t_token_list	*tokenizer(const char *prompt);
 
 //	token_list_util.c
-t_token_list	*new_node(char *content, char *tkn_start, int token_type);
+t_token_list	*new_node(char *content, int token_type);
 void			add_node_last(t_token_list **list, t_token_list *node);
 void			free_list(t_token_list *list);
 
@@ -44,14 +44,6 @@ void			copy_token(t_token_list **copy, t_token_list *original);
 t_command_list	*new_command_node(int symbol, t_token_list *phrase);
 void			add_command_back(t_command_list **list, t_command_list *node);
 void			free_command_list(t_command_list *list);
-
-//	expander.c
-void			expand_tokens(t_token_list *list);
-
-//	expander_util.c
-int				count_var(char *s);
-char			*find_replace(char *needle, char *nail, char *haystack);
-
 
 //  signal_handler.c
 void			setup_signal_handler(struct termios *original_termios);

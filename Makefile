@@ -6,14 +6,14 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/08 17:13:45 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/03/06 17:11:21 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix readline)/lib
-CFLAGS			+=	-g # debug
+# CFLAGS			+=	-g # debug
 CFLAGS			+=	-fsanitize=address
 NAME			=	minishell
 INCL			=	inc libft/inc
@@ -25,19 +25,14 @@ TOKENIZER		=	$(addprefix	tokenizer/,	tokenizer.c				\
 											token_classifier.c)
 CMD_PARSER		=	$(addprefix	command_list/,	parse_commands.c	\
 												parse_operators.c)
-EXPANDER 		=	$(addprefix	expander/,	expander.c				\
-											expander_util.c)
 
 TOKENIZER_PATH	=	tokenizer/
-EXPANDER_PATH	=	expander/
 PARSER_PATH		=	parser/
 SIG_PATH		=	signal/
 
-PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER)	\
+PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER) \
 												$(TOKENIZER)	\
-												$(CMD_PARSER)	\
-												$(EXPANDER))
-
+												$(CMD_PARSER))
 SIGNAL			=	$(addprefix $(SIG_PATH), $(SIG_HANDLER))
 
 UTIL_PATH		=	util/

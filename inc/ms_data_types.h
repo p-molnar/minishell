@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 15:01:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/08 17:15:29 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/08 14:09:04 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,9 @@ typedef int	t_token_type;
 typedef struct s_token_list
 {
 	char				*content;
-	char				*prompt_ptr;
 	t_token_type		type;
 	struct s_token_list	*next;
 }	t_token_list;
-
-typedef struct s_var_list
-{
-	char	*name;
-	char	*val;
-}	t_var_list;
 
 typedef struct s_command_list
 {
