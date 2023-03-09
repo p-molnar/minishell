@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/09 13:48:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/09 13:51:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,6 @@ void	print_tokens(t_token_list *list)
 		// printf("#%d\t:%s: ->%s\n", i + 1, list->content, token[list->type + 1]);
 		printf("%s\n", list->content);
 		// printf("token_start -> :%s:\n", list->prompt_ptr);
-		i++;
-		list = list->next;
-	}
-}
-
-void	print_commands(t_command_list *list)
-{
-	int			i;
-	const char	*symbol[7] = {"COMMAND", "ARGUMENTS", "ASSIGNMENT", "OUTFILE",
-								"OUTFILE_APPEND", "INFILE", "PIPE"};
-
-	i = 0;
-	while (list)
-	{
-		printf("#%d : -> %s\n", i + 1, symbol[list->symbol]);
-		print_tokens(list->token);
 		i++;
 		list = list->next;
 	}
