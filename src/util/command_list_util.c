@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 14:43:08 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/09 14:06:53 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/09 16:02:44 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@
 #include <ms_macros.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-void		copy_token(t_token_list **copy, t_token_list *original)
-{
-	if (original)
-		add_node_last(copy, new_node(ft_strdup(original->content), original->prompt_ptr, original->type));
-}
 
 t_command_list	*new_command_node(int symbol, t_token_list *token)
 {
@@ -61,8 +55,6 @@ void	free_command_list(t_command_list *list)
 	while (list)
 	{
 		tmp_ptr = list->next;
-		if (list->token)
-			free_list(list->token);
 		free(list);
 		list = tmp_ptr;
 	}

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 14:59:33 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/08 16:44:24 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/09 16:01:47 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 int		parse_redirect_out(t_command_list **command_list,
 						t_token_list *token, int append_flag)
 {
-	t_token_list	*copy;
-
-	copy = NULL;
 	if (!token->next)
 	{
 		printf("Syntax error, unexpected end of token list\n");
@@ -32,20 +29,16 @@ int		parse_redirect_out(t_command_list **command_list,
 		printf("Syntax error, unexpected token %s\n", token->content);
 		return (2);
 	}
-	copy_token(&copy, token);
 	if (append_flag == 0)
-		add_command_back(command_list, new_command_node(OUTFILE, copy));
+		add_command_back(command_list, new_command_node(OUTFILE, token));
 	if (append_flag == 1)
-		add_command_back(command_list, new_command_node(OUTFILE_APP, copy));
+		add_command_back(command_list, new_command_node(OUTFILE_APP, token));
 	return (0);
 }
 
 int		parse_redirect_in(t_command_list **command_list,
 						t_token_list *token)
 {
-	t_token_list	*copy;
-
-	copy = NULL;
 	if (!token->next)
 	{
 		printf("Syntax error, unexpected end of token list\n");
@@ -57,8 +50,7 @@ int		parse_redirect_in(t_command_list **command_list,
 		printf("Syntax error, unexpected token %s\n", token->content);
 		return (2);
 	}
-	copy_token(&copy, token);
-		add_command_back(command_list, new_command_node(INFILE, copy));
+		add_command_back(command_list, new_command_node(INFILE, token));
 	return (0);
 }
 

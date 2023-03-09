@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/09 14:30:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/09 16:08:34 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,15 @@ void	print_variables(t_list *list, char *title)
 void	print_commands(t_command_list *list)
 {
 	int			i;
-	const char	*symbol[7] = {"COMMAND", "ARGUMENTS", "ASSIGNMENT", "OUTFILE",
+	const char	*symbol[7] = {"COMMAND", "ARGUMENT", "ASSIGNMENT", "OUTFILE",
 								"OUTFILE_APPEND", "INFILE", "PIPE"};
 
 	i = 0;
 	while (list)
 	{
 		printf("#%d : -> %s\n", i + 1, symbol[list->symbol]);
-		print_tokens(list->token);
+		if (list->token)
+			printf("%s\n", list->token->content);
 		i++;
 		list = list->next;
 	}
@@ -82,10 +83,10 @@ int	main(int argc, char *argv[], char *envp[])
 	(void) argv;
 	(void) envp;
 
-	prog_running = 0;
+	prog_running = 1;
 	setup_signal_handler(&original_termios);
 	parse_env_variable(envp, &data.env_vars);
-	print_variables(data.env_vars, "ENV VARS");
+	//print_variables(data.env_vars, "ENV VARS");
 	while (prog_running)
 	{
 		data.prompt = read_prompt(PROMPT_MSG);

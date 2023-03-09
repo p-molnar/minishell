@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:33:38 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/08 16:40:41 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/09 16:01:47 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,14 @@
 
 int		add_command(t_command_list **command_list, t_token_list *token)
 {
-	t_token_list	*copy;
-
-	copy = NULL;
-	copy_token(&copy, token);
 	// if (token->flag == assignment_flag_placeholder)
 	// {
-	// 	add_command_back(command_list, new_command_node(ASSIGNMENT, copy));
+	// 	add_command_back(command_list, new_command_node(ASSIGNMENT, token));
 	// 	return (0);
 	// }
 	// else
-	add_command_back(command_list, new_command_node(CMD, copy));
+	add_command_back(command_list, new_command_node(CMD, token));
 	return (1);
-}
-
-void	add_argument(t_command_list **command_list, t_token_list *token)
-{
-	t_token_list	*copy;
-
-	copy = NULL;
-	copy_token(&copy, token);
-	add_command_back(command_list, new_command_node(ARG, copy));
 }
 
 int		add_simple_command(t_command_list **command_list, t_token_list *token)
@@ -71,7 +58,7 @@ int		add_simple_command(t_command_list **command_list, t_token_list *token)
 			token = token->next;
 		}
 		else if (token->type == WORD)
-			add_argument(command_list, token);
+			add_command_back(command_list, new_command_node(ARG, token));
 		token = token->next;
 	}
 	return (0);
