@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 14:59:33 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/09 16:01:47 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/09 16:17:13 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		parse_redirect_out(t_command_list **command_list,
 }
 
 int		parse_redirect_in(t_command_list **command_list,
-						t_token_list *token)
+						t_token_list *token, int heredoc_flag)
 {
 	if (!token->next)
 	{
@@ -50,7 +50,10 @@ int		parse_redirect_in(t_command_list **command_list,
 		printf("Syntax error, unexpected token %s\n", token->content);
 		return (2);
 	}
+	if (heredoc_flag == 0)
 		add_command_back(command_list, new_command_node(INFILE, token));
+	if (heredoc_flag == 1)
+		add_command_back(command_list, new_command_node(HEREDOC_DELIMITER, token));
 	return (0);
 }
 
@@ -60,11 +63,11 @@ int		parse_operator(t_command_list **command_list, t_token_list *token)
 		return (1);
 	else if (ft_strncmp(token->content, ">>", 2) == 0)
 		return (parse_redirect_out(command_list, token, 1));
-	// else if (ft_strncmp(token->content, "<<", 2) == 0)
-	// 	return parse_redirect_in_delimiter(command_list, token);
+	else if (ft_strncmp(token->content, "<<", 2) == 0)
+		return parse_redirect_in(command_list, token, 1);
 	else if (ft_strncmp(token->content, ">", 1) == 0)
 		return (parse_redirect_out(command_list, token, 0));
 	else if (ft_strncmp(token->content, "<", 1) == 0)
-		return (parse_redirect_in(command_list, token));
+		return (parse_redirect_in(command_list, token, 0));
 	return (0);
 }

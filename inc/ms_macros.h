@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/09 14:29:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/09 16:14:19 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ enum	e_command_symbol
 	OUTFILE,
 	OUTFILE_APP,
 	INFILE,
+	HEREDOC_DELIMITER,
 	D_PIPE,
 };
 

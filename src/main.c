@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/09 16:08:34 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/09 16:18:12 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	print_variables(t_list *list, char *title)
 void	print_commands(t_command_list *list)
 {
 	int			i;
-	const char	*symbol[7] = {"COMMAND", "ARGUMENT", "ASSIGNMENT", "OUTFILE",
-								"OUTFILE_APPEND", "INFILE", "PIPE"};
+	const char	*symbol[8] = {"COMMAND", "ARGUMENT", "ASSIGNMENT", "OUTFILE",
+								"OUTFILE_APPEND", "INFILE", "HEREDOC DELIMITER", "PIPE"};
 
 	i = 0;
 	while (list)
