@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/09 13:51:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/09 14:30:23 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,24 @@ void	print_tokens(t_token_list *list)
 	}
 }
 
+void	print_variables(t_list *list, char *title)
+{
+	t_var	*var;
+	int		i;
+
+	i = 0;
+	(void) title;
+	while (list)
+	{
+		// if (!i)
+		// 	printf("%s\n", title);
+		var = list->content;
+		// printf("#%i\t%s=%s\n", i++ + 1, var->name, var->val);
+		printf("%s=%s\n", var->name, var->val);
+		list = list->next;
+	}
+}
+
 void	print_commands(t_command_list *list)
 {
 	int			i;
@@ -54,32 +72,37 @@ void	cleanup_before_exit(struct termios *original_termios)
 	tcsetattr(0, 0, original_termios);
 	clear_history();
 }
-
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
-	char			*prompt;
 	int				prog_running;
-	t_token_list	*tokens;
+	t_shell_data	data;
 	t_command_list	*commands;
 	struct termios	original_termios;
+	(void) argc;
+	(void) argv;
+	(void) envp;
 
-	prog_running = 1;
+	prog_running = 0;
 	setup_signal_handler(&original_termios);
+	parse_env_variable(envp, &data.env_vars);
+	print_variables(data.env_vars, "ENV VARS");
 	while (prog_running)
 	{
-		prompt = read_prompt(PROMPT_MSG);
-		if (!prompt)
+		data.prompt = read_prompt(PROMPT_MSG);
+		if (!data.prompt)
 			break ;
-		printf("original prompt |%s|\n", prompt);
-		tokens = tokenizer(prompt);
-		classify_tokens(tokens);
+		// printf("original prompt |%s|\n", data.prompt);
+		data.tokens = tokenizer(data.prompt);
+		parse_shell_variable(&data);
+		print_variables(data.shell_vars, "SHELL VARS");
+		classify_tokens(data.tokens);
 		commands = parse_commands(tokens);
-		expand_tokens(tokens);
-		print_tokens(tokens);
+		expand_tokens(data.tokens);
+		// print_tokens(data.tokens);
 		print_commands(commands);
 		free_command_list(commands);
-		free_list(tokens);
-		free(prompt);
+		free_list(data.tokens);
+		free(data.prompt);
 	}
 	cleanup_before_exit(&original_termios);
 	return (0);
