@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/09 13:50:00 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/09 14:23:01 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,10 @@ EXPANDER_PATH	=	expander/
 PARSER_PATH		=	parser/
 SIG_PATH		=	signal/
 
-PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER) \
+PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER)	\
 												$(TOKENIZER)	\
-												$(CMD_PARSER))
+												$(CMD_PARSER)	\
+												$(EXPANDER))
 SIGNAL			=	$(addprefix $(SIG_PATH), $(SIG_HANDLER))
 
 UTIL_PATH		=	util/

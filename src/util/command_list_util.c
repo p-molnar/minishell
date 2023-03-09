@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 14:43:08 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/08 14:09:04 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/09 14:06:53 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 void		copy_token(t_token_list **copy, t_token_list *original)
 {
 	if (original)
-		add_node_last(copy, new_node(ft_strdup(original->content), original->type));
+		add_node_last(copy, new_node(ft_strdup(original->content), original->prompt_ptr, original->type));
 }
 
 t_command_list	*new_command_node(int symbol, t_token_list *token)
