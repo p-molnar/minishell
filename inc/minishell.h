@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/07 11:58:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/09 13:49:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ void			free_list(t_token_list *list);
 
 //	token_classifier.c
 void			classify_tokens(t_token_list *list);
+
+//	parse_commands.c
+t_command_list	*parse_commands(t_token_list *token);
+int				parse_operator(t_command_list **command_list, t_token_list *token);
+
+//	command_list_util.c
+void			copy_token(t_token_list **copy, t_token_list *original);
+t_command_list	*new_command_node(int symbol, t_token_list *phrase);
+void			add_command_back(t_command_list **list, t_command_list *node);
+void			free_command_list(t_command_list *list);
 
 //	expander.c
 void			expand_tokens(t_token_list *list);

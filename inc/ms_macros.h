@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/07 14:54:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/09 13:49:38 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ enum e_token_type {
 	INVALID,
 	WORD,
 	OPERATOR,
+};
+
+//	command list symbols
+enum	e_command_symbol
+{
+	CMD,
+	ARG,
+	ASSIGNMENT,
+	OUTFILE,
+	OUTFILE_APP,
+	INFILE,
+	D_PIPE,
 };
 
 #endif
