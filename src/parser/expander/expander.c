@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/08 12:06:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/10 23:21:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	replace_vars_with_values(char **s, t_var *l, int count)
 void	expand_tokens(t_token_list *list)
 {
 	t_var	*var_list;
-	int			var_count;
+	int		var_count;
 
 	while (list)
 	{
@@ -92,12 +92,6 @@ void	expand_tokens(t_token_list *list)
 			extract_var_names(list->content, var_list);
 			get_var_values(var_list, var_count);
 			replace_vars_with_values(&list->content, var_list, var_count);
-			// printf("token: |%s|\n", list->content);
-			// for (int i = 0; i < var_count; i++)
-			// {
-			// 	printf("%d:\t%s=%s\n", i++, var_list->name, var_list->val);
-			// 	// printf("%d:\t%s\n", i, var_list[i].key);
-			// }
 			free (var_list);
 		}
 		list = list->next;
