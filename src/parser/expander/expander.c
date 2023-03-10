@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/10 23:29:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/10 23:49:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	get_var_values(t_var *list, int var_count)
 	i = 0;
 	while (i < var_count)
 	{
-		val = getenv(list->name);
+		val = getenv(list[i].name);
 		if (!val)
 			val = "";
 		list[i].val = val;
@@ -62,16 +62,15 @@ static void	replace_vars_with_values(char **s, t_var *l, int count)
 	while (i < count)
 	{
 		tmp = *s;
-		len = ft_strlen(l->name);
+		len = ft_strlen(l[i].name);
 		name = malloc((len + 2) * sizeof(char));
 		if (!name)
 			return ;
 		name[0] = DOLLAR;
-		ft_strlcpy(&name[1], l->name, len + 1);
-		*s = find_replace(name, l->val, *s);
+		ft_strlcpy(&name[1], l[i].name, len + 1);
+		*s = find_replace(name, l[i].val, *s);
 		free (tmp);
 		free (name);
-		l++;
 		i++;
 	}
 }
