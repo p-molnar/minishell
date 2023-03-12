@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/10 23:49:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/12 15:36:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void	extract_var_names(char *s, t_var *list)
+static void	parse_var_names(char *s, t_var *list)
 {
 	char	*start_ptr;
 	char	*end_ptr;
@@ -35,18 +35,26 @@ static void	extract_var_names(char *s, t_var *list)
 	}
 }
 
-static void	get_var_values(t_var *list, int var_count)
+static void	get_var_values(t_var *var_list, t_shell_data *data, int var_count)
 {
 	int		i;
-	char	*val;
+	t_list	*var_node;
 
 	i = 0;
 	while (i < var_count)
 	{
-		val = getenv(list[i].name);
-		if (!val)
-			val = "";
-		list[i].val = val;
+		var_node = find_var_by_name(&var_list[i], data->env_vars);
+		if (var_node == NULL)
+		{
+			var_node = find_var_by_name(&var_list[i], data->shell_vars);
+			if (var_node == NULL)
+			{
+				var_list[i].val = ""; // read-only, probelmatic for free
+				i++;
+				continue ;
+			}
+		}
+		var_list[i].val = ((t_var *)var_node->content)->val;
 		i++;
 	}
 }
@@ -75,24 +83,26 @@ static void	replace_vars_with_values(char **s, t_var *l, int count)
 	}
 }
 
-void	expand_tokens(t_token_list *list)
+void	expand_tokens(t_shell_data *data)
 {
-	t_var	*var_list;
-	int		var_count;
+	t_token_list	*token;
+	int				var_count;
+	t_var			*tmp_var_arr;
 
-	while (list)
+	token = data->tokens;
+	while (token)
 	{
-		var_count = count_var(list->content);
-		if (var_count)
+		var_count = count_var(token->content);
+		if (var_count > 0)
 		{
-			var_list = malloc(var_count * sizeof(t_var));
-			if (!var_list)
+			tmp_var_arr = malloc(var_count * sizeof(t_var));
+			if (!tmp_var_arr)
 				return ;
-			extract_var_names(list->content, var_list);
-			get_var_values(var_list, var_count);
-			replace_vars_with_values(&list->content, var_list, var_count);
-			free (var_list);
+			parse_var_names(token->content, tmp_var_arr);
+			get_var_values(tmp_var_arr, data, var_count);
+			replace_vars_with_values(&token->content, tmp_var_arr, var_count);
+			free (tmp_var_arr);
 		}
-		list = list->next;
+		token = token->next;
 	}
 }
