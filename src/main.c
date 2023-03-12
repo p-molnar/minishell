@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/09 16:18:12 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/12 16:02:28 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	print_variables(t_list *list, char *title)
 	int		i;
 
 	i = 0;
-	(void) title;
+	// (void) title;
 	while (list)
 	{
-		// if (!i)
-		// 	printf("%s\n", title);
+		if (!i)
+			printf("%s\n", title);
 		var = list->content;
-		// printf("#%i\t%s=%s\n", i++ + 1, var->name, var->val);
+		printf("#%i\t%s=%s\n", i++ + 1, var->name, var->val);
 		printf("%s=%s\n", var->name, var->val);
 		list = list->next;
 	}
@@ -98,7 +98,7 @@ int	main(int argc, char *argv[], char *envp[])
 		print_variables(data.shell_vars, "SHELL VARS");
 		classify_tokens(data.tokens);
 		commands = parse_commands(data.tokens);
-		expand_tokens(data.tokens);
+		expand_tokens(&data);
 		// print_tokens(data.tokens);
 		print_commands(commands);
 		free_command_list(commands);
