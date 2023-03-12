@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/12 17:00:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/12 17:45:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,23 @@ static void	parse_var_names(char *s, t_var *list)
 {
 	char	*start_ptr;
 	char	*end_ptr;
+	char	*var_name;
 
 	start_ptr = s;
 	while (*start_ptr && ft_strchr(start_ptr, DOLLAR))
 	{
 		start_ptr = ft_strchr(start_ptr, DOLLAR) + 1;
-		end_ptr = start_ptr + 1;
+		end_ptr = start_ptr;
 		while (ft_isalnum(*end_ptr))
 			end_ptr++;
-		list->name = ft_substr(start_ptr, 0, end_ptr - start_ptr);
-		list++;
+		var_name = ft_substr(start_ptr, 0, end_ptr - start_ptr);
+		if (*var_name == '\0')
+			free (var_name);
+		else
+		{
+			list->name = var_name;
+			list++;
+		}
 		start_ptr += end_ptr - start_ptr;
 	}
 }
