@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/08 18:20:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/13 10:17:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	is_valid_var_definition(char *s)
 		return (0);
 	while (ft_isalnum(s[i]))
 		i++;
-	if (s[i++] != EQUAL)
+	if (s[i] != EQUAL)
 		return (0);
-	while (s[i] && ft_isalnum(s[i]))
-		i++;
+	// while (s[i] && ft_isalnum(s[i]))
+	// 	i++;
 	return (1);
 }
 
@@ -50,11 +50,13 @@ t_list	*find_var_by_name(t_var *var, t_list *list)
 
 void	extract_var_from_token(char *s, t_var *var)
 {
-	char	**splitted_str;
+	char	*separator;
+	int		size;
 
-	splitted_str = ft_split(s, EQUAL);
-	if (splitted_str[0])
-		var->name = splitted_str[0];
-	if (splitted_str[1])
-		var->val = splitted_str[1];
+	separator = ft_strchr(s, EQUAL);
+	size = separator - s;
+	var->name = ft_substr(s, 0, size);
+	s += size + 1;
+	size = ft_strlen(s);
+	var->val = ft_substr(s, 0, size);
 }
