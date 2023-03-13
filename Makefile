@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/09 14:28:15 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/13 13:45:12 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,32 +20,46 @@ INCL			=	inc libft/inc
 SUBMODULE		=	libft
 LIBFT			=	$(SUBMODULE)/libft.a
 
+
+# PARSER
 CHAR_READER		=	$(addprefix	character_reader/, character_reader.c)
+
 TOKENIZER		=	$(addprefix	tokenizer/,	tokenizer.c				\
 											token_classifier.c)
+
 EXPANDER 		=	$(addprefix	expander/,	expander.c				\
 											expander_util.c)
+											
 VAR_INTERPRETER	=	$(addprefix	variable_parser/,	variable_parser.c	\
-														variable_parser_util.c)
+													variable_parser_util.c)
+
 CMD_PARSER		=	$(addprefix	command_list/,	parse_commands.c	\
 												parse_operators.c)
 
-PARSER_PATH		=	parser/
-SIG_PATH		=	signal/
+PARSER			=	$(addprefix parser/,	$(CHAR_READER)		\
+											$(TOKENIZER)		\
+											$(CMD_PARSER)	\
+											$(EXPANDER)			\
+											$(VAR_INTERPRETER))
 
-PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER)		\
-												$(TOKENIZER)		\
-												$(CMD_PARSER)	\
-												$(EXPANDER)			\
-												$(VAR_INTERPRETER))
-SIGNAL			=	$(addprefix $(SIG_PATH), $(SIG_HANDLER))
+# SIGNAL HANDLER
+SIGNAL			=	$(addprefix signal/, $(SIG_HANDLER))
 
+SIG_HANDLER		=	$(addprefix	signal/, signal_handler.c)
+
+
+# BUILTINS
+EXPORT			=	$(addprefix export/, export.c)
+
+BUILTIN			=	$(addprefix builtin/, $(EXPORT))
+
+# UTILS
 UTIL_PATH		=	util/
 UTIL			=	$(addprefix $(UTIL_PATH), 	token_list_util.c	\
 												command_list_util.c)
-SIG_HANDLER		=	$(addprefix	signal/, signal_handler.c)
 
-SRC				=	main.c $(PARSER) $(UTIL) $(SIGNAL)
+# ALL SOURCE FILES
+SRC				=	main.c $(PARSER) $(UTIL) $(SIGNAL) $(BUILTIN)
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
