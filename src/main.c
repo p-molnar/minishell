@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/12 16:02:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/13 15:24:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,29 @@ void	print_tokens(t_token_list *list)
 	while (list)
 	{
 		// printf("#%d\t:%s: ->%s\n", i + 1, list->content, token[list->type + 1]);
-		printf("%s\n", list->content);
+		// printf("%s\n", list->content);
 		// printf("token_start -> :%s:\n", list->prompt_ptr);
 		i++;
 		list = list->next;
 	}
 }
 
-void	print_variables(t_list *list, char *title)
+void	print_variables(t_list *list, char *heading)
 {
 	t_var	*var;
 	int		i;
 
 	i = 0;
-	// (void) title;
+	// (void) heading;
 	while (list)
 	{
 		if (!i)
-			printf("%s\n", title);
+			printf("\n%s\n", heading);
 		var = list->content;
-		printf("#%i\t%s=%s\n", i++ + 1, var->name, var->val);
+		// printf("#%i\t%s=%s\n", i + 1, var->name, var->val);
 		printf("%s=%s\n", var->name, var->val);
 		list = list->next;
+		i++;
 	}
 }
 
@@ -95,12 +96,18 @@ int	main(int argc, char *argv[], char *envp[])
 		// printf("original prompt |%s|\n", data.prompt);
 		data.tokens = tokenizer(data.prompt);
 		parse_shell_variable(&data);
-		print_variables(data.shell_vars, "SHELL VARS");
+		// print_variables(data.shell_vars, "SHELL VARS");
 		classify_tokens(data.tokens);
 		commands = parse_commands(data.tokens);
 		expand_tokens(&data);
+		if (ft_strncmp(data.prompt, "export", ft_strlen("export")) == 0)
+			export(data.tokens->next, &data);
+		else if (ft_strncmp(data.prompt, "env", ft_strlen("env")) == 0)
+			print_variables(data.env_vars, "ENV VARS");
+		else if (ft_strncmp(data.prompt, "set", ft_strlen("set")) == 0)
+			print_variables(data.shell_vars, "SHELL VARS");
 		// print_tokens(data.tokens);
-		print_commands(commands);
+		// print_commands(commands);
 		free_command_list(commands);
 		free_list(data.tokens);
 		free(data.prompt);
