@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/12 14:10:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/13 14:46:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,11 @@ void			parse_env_variable(char **env, t_list **list);
 void			extract_var_from_token(char *s, t_var *var);
 int				is_valid_var_definition(char *s);
 t_list			*find_var_by_name(t_var *var, t_list *list);
+void			add_var(t_var *new_var, t_list **list);
+
+//	BUILTINS
+
+//	export.c
+void			export(t_token_list *token, t_shell_data *data);
 
 #endif
