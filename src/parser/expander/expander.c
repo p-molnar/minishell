@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/12 17:45:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/14 12:34:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static void	get_var_values(t_var *var_list, t_shell_data *data, int var_count)
 	i = 0;
 	while (i < var_count)
 	{
-		var_node = find_var_by_name(&var_list[i], data->env_vars);
+		var_node = find_var_by_name(var_list[i].name, data->env_vars);
 		if (var_node == NULL)
 		{
-			var_node = find_var_by_name(&var_list[i], data->shell_vars);
+			var_node = find_var_by_name(var_list[i].name, data->shell_vars);
 			if (var_node == NULL)
 			{
 				var_list[i].val = ""; // read-only, problematic for free

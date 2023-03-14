@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/13 10:17:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/14 12:30:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ int	is_valid_var_definition(char *s)
 	return (1);
 }
 
-t_list	*find_var_by_name(t_var *var, t_list *list)
+t_list	*find_var_by_name(char *lookup_name, t_list *list)
 {
-	char	*lookup_name;
 	char	*declared_name;
 	int		len;
 
-	lookup_name = var->name;
 	while (list)
 	{
 		declared_name = ((t_var *)list->content)->name;
