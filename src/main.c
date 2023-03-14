@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/14 10:42:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/14 10:52:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ int	main(int argc, char *argv[], char *envp[])
 			print_variables(data.shell_vars, "SHELL VARS");
 		else if (ft_strncmp(data.prompt, "unset", ft_strlen("unset")) == 0)
 			unset(data.tokens->next->content, &data);
+		else if (ft_strncmp(data.prompt, "pwd", ft_strlen("pwd")) == 0)
+			pwd(&data);
 		// print_tokens(data.tokens);
 		// print_commands(commands);
 		free_command_list(commands);

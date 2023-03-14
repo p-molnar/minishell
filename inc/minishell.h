@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/14 10:41:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/14 10:53:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,6 @@ void			env(t_list *var_list);
 
 //	unset.c
 void			unset(char *var_name, t_shell_data *data);
+void			pwd(t_shell_data *data);
+
 #endif
