@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/13 15:22:58 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/03/14 14:08:17 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,10 @@ VAR_INTERPRETER	=	$(addprefix	variable_parser/,	variable_parser.c	\
 														variable_parser_util.c)
 CMD_PARSER		=	$(addprefix	command_list/,	parse_commands.c	\
 												parse_operators.c)
-EXECUTE			=	$(addprefix executor/,		executor.c)
+EXECUTE			=	$(addprefix executor/,		executor.c		\
+												exec_commands.c \
+												exec_utils.c	\
+												redirect.c)
 
 PARSER_PATH		=	parser/
 SIG_PATH		=	signal/
@@ -37,7 +40,7 @@ EXEC_PATH		=	executor/
 
 PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER)		\
 												$(TOKENIZER)		\
-												$(CMD_PARSER)	\
+												$(CMD_PARSER)		\
 												$(EXPANDER)			\
 												$(VAR_INTERPRETER))
 SIGNAL			=	$(addprefix $(SIG_PATH), $(SIG_HANDLER))

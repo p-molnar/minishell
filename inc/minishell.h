@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/13 15:12:30 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/14 17:56:11 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void			free_list(t_token_list *list);
 //	token_classifier.c
 void			classify_tokens(t_token_list *list);
 
-//	parse_commands.c
+//	parse_commands
 t_command_list	*parse_commands(t_token_list *token);
 int				parse_operator(t_command_list **command_list, t_token_list *token);
 
@@ -65,7 +65,12 @@ void			extract_var_from_token(char *s, t_var *var);
 int				is_valid_var_definition(char *s);
 t_list			*find_var_by_name(t_var *var, t_list *list);
 
-//	executor.c
+//	executor
 void			executor(t_shell_data *data, t_command_list *commands);
+void			execute_commands(t_command_list *current, t_pipe_fd **pipe_fd, pid_t *process, t_shell_data *data);
+int				count_symbols(int symbol, t_command_list *current);
+int				count_symbols_simple_cmd(int symbol, t_command_list *current);
+void			redirect_pipes(t_pipe_fd *in_pipe, t_pipe_fd *out_pipe);
+void			close_pipe(t_pipe_fd *pipe);
 
 #endif
