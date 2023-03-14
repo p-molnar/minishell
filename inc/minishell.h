@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/13 16:05:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/14 10:41:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,10 @@ void			add_var(t_var *new_var, t_list **list);
 
 //	export.c
 void			export(t_token_list *token, t_shell_data *data);
+
+//	env.c
 void			env(t_list *var_list);
+
+//	unset.c
+void			unset(char *var_name, t_shell_data *data);
 #endif

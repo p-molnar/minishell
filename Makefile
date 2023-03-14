@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/13 16:06:22 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/14 10:42:52 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,8 +51,10 @@ SIG_HANDLER		=	$(addprefix	signal/, signal_handler.c)
 # BUILTINS
 EXPORT			=	$(addprefix export/, export.c)
 ENV				=	$(addprefix env/, env.c)
+UNSET			=	$(addprefix unset/, unset.c)
 
-BUILTIN			=	$(addprefix builtin/,	$(EXPORT)				\
+BUILTIN			=	$(addprefix builtin/, 	$(EXPORT)			\
+											$(UNSET)			\
 											$(ENV))
 
 # UTILS
