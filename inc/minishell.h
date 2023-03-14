@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/14 12:49:17 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/14 14:46:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,6 @@ void			unset(char *var_name, t_shell_data *data);
 //	pwd.c
 void			pwd(t_shell_data *data);
 
+//	echo.c
+void			echo(char *flag, char *s);
 #endif
