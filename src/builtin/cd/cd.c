@@ -6,42 +6,30 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 11:59:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/15 14:47:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <ms_macros.h>
+#include <libft.h>
 
 void	cd(char *dir, t_shell_data *data)
 {
-	t_var	*home_env_var;
-	t_var	*cdpath_env_var;
-	t_var	*var;
-	char	*home_val;
+	t_var	*var[SIZE];
 
-	home_env_var = get_var("HOME", data->env_vars);
-	cdpath_env_var = get_var("CDPATH", data->env_vars);
 	if (!dir || *dir == '\0')
 	{
-		if (home_env_var == NULL || home_env_var->val == '\0')
+		var[HOME] = get_var("HOME", data->env_vars);
+		if (var[HOME] == NULL || var[HOME]->val == '\0')
 			return ;
-		home_val = home_env_var->val;
-		cd (home_val, data);
-
+		cd (var[HOME]->val, data);
 	}
 	else if (*dir == '/')
 	{
-		var = get_var("PWD", data->env_vars);
-		if (var)
-			var->val = dir;
+		var[PWD] = get_var("PWD", data->env_vars);
+		if (var[PWD])
+			update_wdirs(ft_strdup(dir), var, data);
 	}
-
-	// 	if (!tmp)
-	// 		return ;
-	// 	// free tmp somehow!
-	// 	tmp = ft_strjoin(tmp, "/");
-	// 	tmp = ft_strjoin(tmp, dir);
-	// 	cd(tmp, data);
-	// }
 }
 
