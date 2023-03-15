@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/09 16:14:19 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 14:30:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ enum	e_command_symbol
 	INFILE,
 	HEREDOC_DELIMITER,
 	D_PIPE,
+};
+
+enum	e_env_var {
+	HOME,
+	PWD,
+	OLDPWD,
+	SIZE
 };
 
 #endif
