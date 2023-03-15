@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 11:18:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/15 11:22:36 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void	cd(char *dir, t_shell_data *data)
 {
-	t_list	*home_env_var;
-	t_list	*cdpath_env_var;
-	t_list	*var;
+	t_var	*home_env_var;
+	t_var	*cdpath_env_var;
+	t_var	*var;
 	char	*home_val;
 
 	home_env_var = get_var_by_name("HOME", data->env_vars);
 	cdpath_env_var = get_var_by_name("CDPATH", data->env_vars);
 	if (!dir || *dir == '\0')
 	{
-		if (home_env_var == NULL || *((t_var *) home_env_var->content)->val == '\0')
+		if (home_env_var == NULL || home_env_var->val == '\0')
 			return ;
-		home_val = ((t_var *) home_env_var->content)->val;
+		home_val = home_env_var->val;
 		cd (home_val, data);
 
 	}
@@ -33,7 +33,7 @@ void	cd(char *dir, t_shell_data *data)
 	{
 		var = get_var_by_name("PWD", data->env_vars);
 		if (var)
-			((t_var *)var->content)->val = dir;
+			var->val = dir;
 	}
 
 	// 	if (!tmp)

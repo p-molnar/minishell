@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 11:18:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/15 11:31:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 void	export(t_token_list *token, t_shell_data *data)
 {
 	t_var	tmp_var;
-	t_list	*var_node;
+	t_var	*var;
 
 	if (is_valid_var_definition(token->content))
 		parse_var(token->content, &tmp_var);
 	else
 		tmp_var.name = token->content;
-	var_node = get_var_by_name(tmp_var.name, data->shell_vars);
-	if (!var_node)
+	var = get_var_by_name(tmp_var.name, data->shell_vars);
+	if (!var)
 		return ;
-	add_var((t_var *) var_node->content, &data->env_vars);
+	add_var(var, &data->env_vars);
 }

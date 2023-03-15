@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 09:15:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 11:18:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/15 11:45:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void	add_var(t_var *new_var, t_list **list)
 {
 	t_list	*new_node;
-	t_list	*defined_var;
+	t_var	*defined_var;
 	t_var	*old_var;
 	int		len;
 
@@ -33,7 +33,7 @@ void	add_var(t_var *new_var, t_list **list)
 	}
 	else
 	{
-		old_var = defined_var->content;
+		old_var = defined_var;
 		len = ft_strlen(new_var->val);
 		if (!ft_strncmp(new_var->val, old_var->val, len + 1))
 			return ;
