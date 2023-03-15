@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/15 15:59:10 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 16:19:29 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**path_builder(void)
 
 char	**compound_args(t_command_list *current)
 {
-	char 	**arguments;
+	char	**arguments;
 	int		arg_n;
 	int		i;
 
@@ -87,9 +87,11 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	exit(0);
 }
 
-void	execute_cmd(t_command_list *current, t_shell_data *data, t_pipe_fd *in_pipe, t_pipe_fd *out_pipe)
+void	execute_cmd(t_command_list *current, t_shell_data *data,
+						t_pipe_fd *in_pipe, t_pipe_fd *out_pipe)
 {
 	char	**arguments;
+
 	redirect_pipes(in_pipe, out_pipe);
 	redirect_files(current);
 	while (current)
@@ -108,12 +110,13 @@ void	execute_cmd(t_command_list *current, t_shell_data *data, t_pipe_fd *in_pipe
 	exit(0);
 }
 
-void	execute_commands(t_command_list *current, t_pipe_fd **pipe_fd, pid_t *process, t_shell_data *data)
+void	execute_commands(t_command_list *current, t_pipe_fd **pipe_fd,
+							pid_t *process, t_shell_data *data)
 {
 	int				i;
 	int				pipe_n;
-	t_pipe_fd 		*in_pipe;
-	t_pipe_fd 		*out_pipe;
+	t_pipe_fd		*in_pipe;
+	t_pipe_fd		*out_pipe;
 	t_command_list	*start_of_simple_cmd;
 
 	i = 0;
@@ -144,8 +147,8 @@ void	execute_commands(t_command_list *current, t_pipe_fd **pipe_fd, pid_t *proce
 	while (i >= 0)
 	{
 		printf("waiting for: %d\n", process[i]);
-		int k = waitpid(process[i], NULL, 0);
-		printf("finished: %d\n", k);
+		waitpid(process[i], NULL, 0);
+		printf("finished: %d\n", process[i]);
 		i--;
 	}
 }

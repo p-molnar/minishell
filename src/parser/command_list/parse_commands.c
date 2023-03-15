@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:33:38 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/13 15:25:43 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 16:13:00 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stddef.h>
 
-int		add_command(t_command_list **command_list, t_token_list *token)
+int	add_command(t_command_list **command_list, t_token_list *token)
 {
 	if (is_valid_var_definition(token->content))
 	{
@@ -28,7 +28,7 @@ int		add_command(t_command_list **command_list, t_token_list *token)
 	return (1);
 }
 
-int		add_simple_command(t_command_list **command_list, t_token_list *token)
+int	add_simple_command(t_command_list **command_list, t_token_list *token)
 {
 	int		command_flag;
 	int		ret;
@@ -85,21 +85,22 @@ t_command_list	*parse_commands(t_token_list *token)
 			return (command_list);
 		while (token->next)
 		{
-			if (!(token->type == OPERATOR && ft_strncmp(token->content, "|", 1) == 0))
+			if (!(token->type == OPERATOR
+					&& ft_strncmp(token->content, "|", 1) == 0))
 				token = token->next;
 			else
-				break;
+				break ;
 		}
-			if (token->type == OPERATOR && ft_strncmp(token->content, "|", 1) == 0)
+		if (token->type == OPERATOR && ft_strncmp(token->content, "|", 1) == 0)
+		{
+			add_command_back(&command_list, new_command_node(D_PIPE, NULL));
+			if (!token->next)
 			{
-				add_command_back(&command_list, new_command_node(D_PIPE, NULL));
-				if (!token->next)
-				{
-					printf("Syntax error, unexpected end of token list\n");
-					return (command_list);
-				}
+				printf("Syntax error, unexpected end of token list\n");
+				return (command_list);
 			}
-			token = token->next;
+		}
+		token = token->next;
 	}
 	return (command_list);
 }

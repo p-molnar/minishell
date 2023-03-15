@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/15 15:34:51 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 16:14:11 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	open_redirect_outfile(t_command_list *current)
 
 void	redirect_files(t_command_list *current)
 {
-
 	while (current)
 	{
 		if (current->symbol == D_PIPE)

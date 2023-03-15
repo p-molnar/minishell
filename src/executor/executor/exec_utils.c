@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/14 13:45:55 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 16:15:06 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <ms_data_types.h>
 #include <ms_macros.h>
 
-int		count_symbols(int symbol, t_command_list *current)
+int	count_symbols(int symbol, t_command_list *current)
 {
 	int		count;
 
@@ -28,7 +28,7 @@ int		count_symbols(int symbol, t_command_list *current)
 	return (count);
 }
 
-int		count_symbols_simple_cmd(int symbol, t_command_list *current)
+int	count_symbols_simple_cmd(int symbol, t_command_list *current)
 {
 	int		count;
 
