@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/14 15:04:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/15 11:02:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,13 @@ int	main(int argc, char *argv[], char *envp[])
 			unset(data.tokens->next->content, &data);
 		else if (ft_strncmp(data.prompt, "pwd", ft_strlen("pwd")) == 0)
 			pwd(&data);
+		else if (ft_strncmp(data.prompt, "cd", ft_strlen("cd")) == 0)
+		{
+			if (!data.tokens->next)
+				cd(NULL, &data);
+			else
+				cd(data.tokens->next->content, &data);
+		}
 		// else if (ft_strncmp(data.prompt, "echo", ft_strlen("echo")) == 0)
 		// {
 		// 	char *f = data.tokens->next->content;
