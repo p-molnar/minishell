@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:48:13 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/15 16:15:06 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 16:54:32 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_pipe_fd	**setup_pipes(int pipe_n)
 	int			i;
 
 	i = 0;
-	if (pipe_n == 0)
+	if (pipe_n <= 0)
 		return (NULL);
 	pipe_fd = malloc(sizeof(t_pipe_fd *) * pipe_n);
 	while (i < pipe_n)

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 16:40:44 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 16:49:57 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@ void	print_variables(t_list *list, char *heading)
 	t_var	*var;
 	//int		i;
 
-	i = 0;
-	// (void) heading;
+	//i = 0;
+	(void) heading;
 	while (list)
 	{
-		if (!i)
-			printf("\n%s\n", heading);
+		// if (!i)
+		// 	printf("\n%s\n", heading);
 		var = list->content;
 		// printf("#%i\t%s=%s\n", i + 1, var->name, var->val);
 		printf("%s=%s\n", var->name, var->val);
 		list = list->next;
-		i++;
+		// i++;
 	}
 }
 
@@ -110,16 +110,16 @@ int	main(int argc, char *argv[], char *envp[])
 		classify_tokens(data.tokens);
 		commands = parse_commands(data.tokens);
 		expand_tokens(&data);
-		if (ft_strncmp(data.prompt, "export", ft_strlen("export")) == 0)
-			export(data.tokens->next, &data);
-		else if (ft_strncmp(data.prompt, "env", ft_strlen("env")) == 0)
-			print_variables(data.env_vars, "ENV VARS");
-		else if (ft_strncmp(data.prompt, "set", ft_strlen("set")) == 0)
-			print_variables(data.shell_vars, "SHELL VARS");
-		else if (ft_strncmp(data.prompt, "unset", ft_strlen("unset")) == 0)
-			unset(data.tokens->next->content, &data);
-		else if (ft_strncmp(data.prompt, "pwd", ft_strlen("pwd")) == 0)
-			pwd(&data);
+		// if (ft_strncmp(data.prompt, "export", ft_strlen("export")) == 0)
+		// 	export(data.tokens->next, &data);
+		// else if (ft_strncmp(data.prompt, "env", ft_strlen("env")) == 0)
+		// 	print_variables(data.env_vars, "ENV VARS");
+		// else if (ft_strncmp(data.prompt, "set", ft_strlen("set")) == 0)
+		// 	print_variables(data.shell_vars, "SHELL VARS");
+		// else if (ft_strncmp(data.prompt, "unset", ft_strlen("unset")) == 0)
+		// 	unset(data.tokens->next->content, &data);
+		// else if (ft_strncmp(data.prompt, "pwd", ft_strlen("pwd")) == 0)
+		// 	pwd(&data);
 		// else if (ft_strncmp(data.prompt, "echo", ft_strlen("echo")) == 0)
 		// {
 		// 	char *f = data.tokens->next->content;
@@ -128,6 +128,7 @@ int	main(int argc, char *argv[], char *envp[])
 		// }
 		print_tokens(data.tokens);
 		// print_commands(commands);
+		executor(&data, commands);
 		free_command_list(commands);
 		free_list(data.tokens);
 		free(data.prompt);

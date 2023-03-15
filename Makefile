@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/15 16:42:03 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/03/15 16:47:00 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,31 @@ EXECUTE			=	$(addprefix executor/,		executor.c		\
 												exec_commands.c \
 												exec_utils.c	\
 												redirect.c)
+
+PARSER			=	$(addprefix parser/,	$(CHAR_READER)		\
+											$(TOKENIZER)		\
+											$(CMD_PARSER)	\
+											$(EXPANDER)			\
+											$(VAR_INTERPRETER))
+
+# SIGNAL HANDLER
+SIGNAL			=	$(addprefix signal/, $(SIG_HANDLER))
+
+SIG_HANDLER		=	$(addprefix	signal/, signal_handler.c)
+
+# BUILTINS
+EXPORT			=	$(addprefix export/,	export.c)
+ENV				=	$(addprefix env/, env.c)
+UNSET			=	$(addprefix unset/,		unset.c)
+PWD				=	$(addprefix pwd/,		pwd.c)
+ECHO			=	$(addprefix echo/,		echo.c)
+
+BUILTIN			=	$(addprefix builtin/, 	$(EXPORT)			\
+											$(UNSET)			\
+											$(PWD)				\
+											$(ENV)				\
+											$(ECHO)				\
+													)
 
 PARSER_PATH		=	parser/
 SIG_PATH		=	signal/

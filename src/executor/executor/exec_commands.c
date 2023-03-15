@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/15 16:19:29 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 16:50:32 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,9 @@ void	execute_commands(t_command_list *current, t_pipe_fd **pipe_fd,
 	i--;
 	while (i >= 0)
 	{
-		printf("waiting for: %d\n", process[i]);
+		// printf("waiting for: %d\n", process[i]);
 		waitpid(process[i], NULL, 0);
-		printf("finished: %d\n", process[i]);
+		// printf("finished: %d\n", process[i]);
 		i--;
 	}
 }
