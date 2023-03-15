@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:48:13 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/15 17:20:30 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 17:36:09 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-void	close_free_pipes(t_pipe_fd *pipe_fd, int pipe_n)
-{
-	if (pipe_fd)
-	{
-		while (pipe_n > 0)
-		{
-			close(pipe_fd[pipe_n - 1].pipe_end[0]);
-			close(pipe_fd[pipe_n - 1].pipe_end[1]);
-			pipe_n--;
-		}
-		free(pipe_fd);
-	}
-}
 
 t_pipe_fd	*setup_pipes(int pipe_n)
 {
@@ -59,5 +45,5 @@ void	executor(t_shell_data *data, t_command_list *commands)
 	process = malloc(sizeof(pid_t) * cmd_n);
 	execute_commands(commands, pipe_fd, process, data);
 	free(process);
-	close_free_pipes(pipe_fd, cmd_n - 1);
+	free(pipe_fd);
 }
