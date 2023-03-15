@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/14 15:04:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/15 16:40:44 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_tokens(t_token_list *list)
 void	print_variables(t_list *list, char *heading)
 {
 	t_var	*var;
-	int		i;
+	//int		i;
 
 	i = 0;
 	// (void) heading;

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 14:59:33 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/09 16:17:13 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 16:06:09 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <ms_macros.h>
 #include <stdio.h>
 
-int		parse_redirect_out(t_command_list **command_list,
+int	parse_redirect_out(t_command_list **command_list,
 						t_token_list *token, int append_flag)
 {
 	if (!token->next)
@@ -36,7 +36,7 @@ int		parse_redirect_out(t_command_list **command_list,
 	return (0);
 }
 
-int		parse_redirect_in(t_command_list **command_list,
+int	parse_redirect_in(t_command_list **command_list,
 						t_token_list *token, int heredoc_flag)
 {
 	if (!token->next)
@@ -53,18 +53,19 @@ int		parse_redirect_in(t_command_list **command_list,
 	if (heredoc_flag == 0)
 		add_command_back(command_list, new_command_node(INFILE, token));
 	if (heredoc_flag == 1)
-		add_command_back(command_list, new_command_node(HEREDOC_DELIMITER, token));
+		add_command_back(command_list,
+			new_command_node(HEREDOC_DELIMITER, token));
 	return (0);
 }
 
-int		parse_operator(t_command_list **command_list, t_token_list *token)
+int	parse_operator(t_command_list **command_list, t_token_list *token)
 {
 	if (ft_strncmp(token->content, "|", 1) == 0)
 		return (1);
 	else if (ft_strncmp(token->content, ">>", 2) == 0)
 		return (parse_redirect_out(command_list, token, 1));
 	else if (ft_strncmp(token->content, "<<", 2) == 0)
-		return parse_redirect_in(command_list, token, 1);
+		return (parse_redirect_in(command_list, token, 1));
 	else if (ft_strncmp(token->content, ">", 1) == 0)
 		return (parse_redirect_out(command_list, token, 0));
 	else if (ft_strncmp(token->content, "<", 1) == 0)
