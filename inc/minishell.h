@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/14 17:56:11 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 14:40:49 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ int				count_symbols(int symbol, t_command_list *current);
 int				count_symbols_simple_cmd(int symbol, t_command_list *current);
 void			redirect_pipes(t_pipe_fd *in_pipe, t_pipe_fd *out_pipe);
 void			close_pipe(t_pipe_fd *pipe);
+void			redirect_files(t_command_list *current);
 
 #endif

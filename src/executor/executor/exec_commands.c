@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/15 12:45:18 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 15:59:10 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	**path_builder(void)
 
 	i = 0;
 	//getenv should be replaced with our own function so we get the local PATH
+	//shell data should be passed to this function for that
 	path = ft_split(getenv("PATH"), ':');
 	while (path[i])
 	{
@@ -90,25 +91,39 @@ void	execute_cmd(t_command_list *current, t_shell_data *data, t_pipe_fd *in_pipe
 {
 	char	**arguments;
 	redirect_pipes(in_pipe, out_pipe);
-	//handle file redirects here, they overwrite the pipe redirects
+	redirect_files(current);
+	while (current)
+	{
+		if (current->symbol == CMD || current->symbol == D_PIPE)
+			break ;
+		current = current->next;
+	}
 	arguments = compound_args(current);
-	//check for builtin, execute builtin
-	execute_bin(current->token->content, data, arguments);
+	if (current)
+	{
+		//todo: check for builtins, execute builtin
+		if (current->symbol == CMD)
+			execute_bin(current->token->content, data, arguments);
+	}
 	exit(0);
 }
 
 void	execute_commands(t_command_list *current, t_pipe_fd **pipe_fd, pid_t *process, t_shell_data *data)
 {
-	int			i;
-	int			pipe_n;
-	t_pipe_fd *in_pipe;
-	t_pipe_fd *out_pipe;
+	int				i;
+	int				pipe_n;
+	t_pipe_fd 		*in_pipe;
+	t_pipe_fd 		*out_pipe;
+	t_command_list	*start_of_simple_cmd;
 
 	i = 0;
 	pipe_n = count_symbols(D_PIPE, current);
 	in_pipe = NULL;
+	start_of_simple_cmd = current;
 	while (current)
 	{
+		if (current->symbol == D_PIPE)
+			start_of_simple_cmd = current->next;
 		if (i < pipe_n && pipe_fd)
 			out_pipe = pipe_fd[i];
 		else
@@ -117,7 +132,7 @@ void	execute_commands(t_command_list *current, t_pipe_fd **pipe_fd, pid_t *proce
 		{
 			process[i] = fork();
 			if (process[i] == 0)
-				execute_cmd(current, data, in_pipe, out_pipe);
+				execute_cmd(start_of_simple_cmd, data, in_pipe, out_pipe);
 			i++;
 			close_pipe(in_pipe);
 			if (out_pipe)
