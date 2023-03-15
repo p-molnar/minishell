@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/14 17:58:47 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 12:45:18 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,11 @@ void	execute_commands(t_command_list *current, t_pipe_fd **pipe_fd, pid_t *proce
 				execute_cmd(current, data, in_pipe, out_pipe);
 			i++;
 			close_pipe(in_pipe);
+			if (out_pipe)
+				in_pipe = out_pipe;
 		}
-		if (out_pipe)
-			in_pipe = out_pipe;
 		current = current->next;
 	}
-	//int j = 0;
 	i--;
 	while (i >= 0)
 	{
