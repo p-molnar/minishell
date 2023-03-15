@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/15 10:51:49 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/15 14:22:41 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,8 @@ ENV				=	$(addprefix env/, env.c)
 UNSET			=	$(addprefix unset/,		unset.c)
 PWD				=	$(addprefix pwd/,		pwd.c)
 ECHO			=	$(addprefix echo/,		echo.c)
-CD				=	$(addprefix cd/,		cd.c)
+CD				=	$(addprefix cd/,		cd.c				\
+											update_working_dirs.c)
 
 BUILTIN			=	$(addprefix builtin/, 	$(EXPORT)			\
 											$(UNSET)			\
