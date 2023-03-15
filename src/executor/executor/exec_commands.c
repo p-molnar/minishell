@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/15 16:50:32 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/15 17:18:43 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 	exit(0);
 }
 
-void	execute_commands(t_command_list *current, t_pipe_fd **pipe_fd,
+void	execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
 							pid_t *process, t_shell_data *data)
 {
 	int				i;
@@ -128,7 +128,7 @@ void	execute_commands(t_command_list *current, t_pipe_fd **pipe_fd,
 		if (current->symbol == D_PIPE)
 			start_of_simple_cmd = current->next;
 		if (i < pipe_n && pipe_fd)
-			out_pipe = pipe_fd[i];
+			out_pipe = &pipe_fd[i];
 		else
 			out_pipe = NULL;
 		if (current->symbol == CMD)
