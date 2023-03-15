@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/14 14:46:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/15 10:51:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,7 @@ void			pwd(t_shell_data *data);
 
 //	echo.c
 void			echo(char *flag, char *s);
+
+//	cd.c
+void			cd(char *dir, t_shell_data *data);
 #endif
