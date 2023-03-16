@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:48:13 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/15 17:36:09 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/16 16:52:19 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ t_pipe_fd	*setup_pipes(int pipe_n)
 
 void	executor(t_shell_data *data, t_command_list *commands)
 {
-	int			cmd_n;
+	int			pipe_n;
 	t_pipe_fd	*pipe_fd;
 	pid_t		*process;
 
-	cmd_n = count_symbols(CMD, commands);
-	pipe_fd = setup_pipes(cmd_n - 1);
-	process = malloc(sizeof(pid_t) * cmd_n);
+	pipe_n = count_symbols(D_PIPE, commands);
+	pipe_fd = setup_pipes(pipe_n);
+	process = malloc(sizeof(pid_t) * (pipe_n + 1));
 	execute_commands(commands, pipe_fd, process, data);
 	free(process);
 	free(pipe_fd);
