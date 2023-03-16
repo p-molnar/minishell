@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/15 16:47:00 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/03/16 18:16:58 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,25 +35,32 @@ VAR_INTERPRETER	=	$(addprefix	variable_parser/,	variable_parser.c	\
 
 CMD_PARSER		=	$(addprefix	command_list/,	parse_commands.c	\
 												parse_operators.c)
-EXECUTE			=	$(addprefix executor/,		executor.c		\
-												exec_commands.c \
-												exec_utils.c	\
-												redirect.c)
 
 PARSER			=	$(addprefix parser/,	$(CHAR_READER)		\
 											$(TOKENIZER)		\
-											$(CMD_PARSER)	\
+											$(CMD_PARSER)		\
 											$(EXPANDER)			\
 											$(VAR_INTERPRETER))
 
 # SIGNAL HANDLER
+SIG_HANDLER		=	$(addprefix	signal/, signal_handler.c)
+
 SIGNAL			=	$(addprefix signal/, $(SIG_HANDLER))
 
-SIG_HANDLER		=	$(addprefix	signal/, signal_handler.c)
+# EXECUTOR
+EXECUTE			=	$(addprefix executor/,		executor.c		\
+												exec_commands.c \
+												exec_utils.c)
+
+REDIRECT		=	$(addprefix redirect/,		redirect.c		\
+												heredoc.c)
+
+EXECUTOR		=	$(addprefix executor/,		$(EXECUTE)	\
+												$(REDIRECT))
 
 # BUILTINS
 EXPORT			=	$(addprefix export/,	export.c)
-ENV				=	$(addprefix env/, env.c)
+ENV				=	$(addprefix env/, 		env.c)
 UNSET			=	$(addprefix unset/,		unset.c)
 PWD				=	$(addprefix pwd/,		pwd.c)
 ECHO			=	$(addprefix echo/,		echo.c)
@@ -64,18 +71,6 @@ BUILTIN			=	$(addprefix builtin/, 	$(EXPORT)			\
 											$(ENV)				\
 											$(ECHO)				\
 													)
-
-PARSER_PATH		=	parser/
-SIG_PATH		=	signal/
-EXEC_PATH		=	executor/
-
-PARSER			=	$(addprefix $(PARSER_PATH), $(CHAR_READER)		\
-												$(TOKENIZER)		\
-												$(CMD_PARSER)		\
-												$(EXPANDER)			\
-												$(VAR_INTERPRETER))
-SIGNAL			=	$(addprefix $(SIG_PATH), $(SIG_HANDLER))
-EXECUTOR		=	$(addprefix $(EXEC_PATH), $(EXECUTE))
 
 # UTILS
 UTIL_PATH		=	util/

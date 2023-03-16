@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/15 16:14:11 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/16 17:49:49 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,6 @@ void	redirect_files(t_command_list *current)
 		// if (current->symbol == HEREDOC_DELIMITER)
 		// 	open_heredoc(current->token->content);
 		current = current->next;
-	}
-}
-
-void	close_pipe(t_pipe_fd *pipe)
-{
-	if (pipe)
-	{
-		close(pipe->pipe_end[0]);
-		close(pipe->pipe_end[1]);
 	}
 }
 

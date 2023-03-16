@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:48:13 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/16 16:52:19 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/16 17:49:49 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+void	close_pipe(t_pipe_fd *pipe)
+{
+	if (pipe)
+	{
+		close(pipe->pipe_end[0]);
+		close(pipe->pipe_end[1]);
+	}
+}
 
 t_pipe_fd	*setup_pipes(int pipe_n)
 {
