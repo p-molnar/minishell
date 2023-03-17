@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 14:39:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/16 13:09:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <ms_data_types.h>
+# include <ms_macros.h>
 # include <termios.h>
 
 # define PROMPT_MSG "minishell$ "
@@ -88,5 +89,5 @@ void			echo(char *flag, char *s);
 void			cd(char *dir, t_shell_data *data);
 
 //	updaet_working_dirs.c
-void			update_wdirs(char *dir, t_var **var, t_shell_data *data);
+void			update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data);
 #endif
