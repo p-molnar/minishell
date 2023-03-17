@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 14:30:09 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/17 13:51:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ enum	e_env_var {
 	HOME,
 	PWD,
 	OLDPWD,
-	SIZE
+	CDPATH,
+	ENV_SIZE
 };
 
 #endif
