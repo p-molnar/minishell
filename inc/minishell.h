@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/16 13:09:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/20 14:13:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@ void			pwd(t_shell_data *data);
 void			echo(char *flag, char *s);
 
 //	cd.c
-void			cd(char *dir, t_shell_data *data);
+int				cd(char *dir, t_shell_data *data);
+int				exec_step_1(t_var **env_var, char **dir, t_shell_data *data);
 
 //	updaet_working_dirs.c
-void			update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data);
+int				update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data);
 #endif
