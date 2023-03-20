@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/17 10:06:58 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/20 14:12:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <ms_macros.h>
 #include <libft.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 
 void	update_oldpwd(t_var	*var[ENV_SIZE], t_shell_data *data)
@@ -43,8 +44,16 @@ void	update_pwd(char *dir, t_var *var[ENV_SIZE])
 	var[PWD]->val = dir;
 }
 
-void	update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data)
+int	update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data)
 {
-	update_oldpwd(var, data);
-	update_pwd(dir, var);
+	if (access(dir, (F_OK | X_OK)))
+	{
+		update_oldpwd(var, data);
+		update_pwd(dir, var);
+		return (0);
+	}
+	{
+		perror(strerror(errno));
+		return (1);
+	}
 }
