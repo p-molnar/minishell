@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:03:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/21 14:55:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/21 15:40:36 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,6 @@ char	*yield_valid_cdpath(char *dir, char **path_comp)
 		}
 	}
 	return (NULL);
-}
-
-void	free_arr(void **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr && arr[i])
-		free (arr[i++]);
-	if (arr)
-		free (arr);
 }
 
 void	exec_step_5(char *dir, char **curpath, t_var **var, int *step)
