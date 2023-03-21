@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:33:38 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/21 16:22:59 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 16:59:10 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	add_simple_command(t_command_list **command_list, t_token_list *token)
 	int		ret;
 
 	command_flag = 0;
-	ret = 0;
+	ret = RET_END;
 	while (command_flag == 0 && token)
 	{
 		if (token->type == OPERATOR)
@@ -61,7 +61,7 @@ int	add_simple_command(t_command_list **command_list, t_token_list *token)
 			add_command_back(command_list, new_command_node(ARG, token));
 		token = token->next;
 	}
-	return (0);
+	return (ret);
 }
 
 t_command_list	*parse_commands(t_token_list *token)
@@ -83,7 +83,7 @@ t_command_list	*parse_commands(t_token_list *token)
 			free_command_list(command_list);
 			return (command_list);
 		}
-		if (add_simple_command(&command_list, token) == 2)
+		if (add_simple_command(&command_list, token) == RET_SYNTAX_ERR)
 			return (NULL);
 		while (token->next)
 		{

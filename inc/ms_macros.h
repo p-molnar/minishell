@@ -6,12 +6,17 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/09 16:14:19 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 16:55:26 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_MACROS_H
 # define MS_MACROS_H
+
+//	command parser returns
+# define RET_END 0
+# define RET_PIPE 1
+# define RET_SYNTAX_ERR 2
 
 //	unrequired operators
 // # define AND '&'
