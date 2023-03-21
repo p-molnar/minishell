@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/16 17:50:14 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/20 17:22:22 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 12:29:16 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <signal.h>
 #include <readline/readline.h>
 
-void	open_heredoc(char *delimiter)
+void	open_heredoc(char *delimiter, int og_stdin)
 {
 	int		here_pipe[2];
 	int		d_len;
@@ -26,6 +26,7 @@ void	open_heredoc(char *delimiter)
 	d_len = ft_strlen(delimiter);
 	buf = NULL;
 	pipe(here_pipe);
+	dup2(og_stdin, 0);
 	signal(SIGINT, SIG_DFL);
 	buf = readline("> ");
 	while (buf && ft_strncmp(buf, delimiter, d_len + 1))

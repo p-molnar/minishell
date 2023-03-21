@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/16 17:04:06 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 12:29:16 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 						t_pipe_fd *in_pipe, t_pipe_fd *out_pipe)
 {
 	char	**arguments;
+	int		original_stdin;
 
+	original_stdin = dup(0);
 	redirect_pipes(in_pipe, out_pipe);
-	redirect_files(current);
+	redirect_files(current, original_stdin);
 	while (current)
 	{
 		if (current->symbol == CMD || current->symbol == D_PIPE)
