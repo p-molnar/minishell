@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/20 14:12:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/21 14:49:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
+#include <errno.h>
 
 void	update_oldpwd(t_var	*var[ENV_SIZE], t_shell_data *data)
 {
@@ -23,7 +25,6 @@ void	update_oldpwd(t_var	*var[ENV_SIZE], t_shell_data *data)
 
 	if (!var[OLDPWD])
 	{
-		// printf("oldpwd not exists\n");
 		new_var = ft_calloc(1, sizeof(t_var));
 		if (!new_var)
 			return ;
@@ -41,19 +42,21 @@ void	update_oldpwd(t_var	*var[ENV_SIZE], t_shell_data *data)
 void	update_pwd(char *dir, t_var *var[ENV_SIZE])
 {
 	free(var[PWD]->val);
-	var[PWD]->val = dir;
+	var[PWD]->val = ft_strdup(dir);
 }
 
 int	update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data)
 {
-	if (access(dir, (F_OK | X_OK)))
+	printf("update dir with: %s\n", dir);
+	if (access(dir, (X_OK)) != -1)
 	{
 		update_oldpwd(var, data);
 		update_pwd(dir, var);
 		return (0);
 	}
+	else
 	{
-		perror(strerror(errno));
+		printf("%s:%d: error: %s\n", __FILE__, __LINE__, strerror(errno));
 		return (1);
 	}
 }
