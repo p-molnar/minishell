@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/21 15:27:11 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 17:51:37 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,18 @@
 #include <signal.h>
 #include <sys/wait.h>
 
-char	**path_builder(void)
+char	**path_builder(t_shell_data *data)
 {
+	t_list	*list;
+	t_var	*var;
 	char	**path;
 	char	*finalpath;
 	int		i;
 
 	i = 0;
-	//getenv should be replaced with our own function so we get the local PATH
-	//shell data should be passed to this function for that
-	path = ft_split(getenv("PATH"), ':');
+	list = find_var_by_name("PATH", data->env_vars);
+	var = list->content;
+	path = ft_split(var->val, ':');
 	while (path[i])
 	{
 		finalpath = ft_strjoin(path[i], "/");
@@ -70,10 +72,8 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	char	*commandpath;
 	int		i;
 
-	path = path_builder();
+	path = path_builder(data);
 	i = 0;
-	//shouldn't set data to null, this is for testing only (prevent compilation error)
-	data = NULL;
 	while (path[i])
 	{
 		commandpath = ft_strjoin(path[i], command);
