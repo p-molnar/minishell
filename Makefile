@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/21 08:57:16 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/21 15:59:10 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,8 +55,15 @@ UNSET			=	$(addprefix unset/,		unset.c)
 PWD				=	$(addprefix pwd/,		pwd.c)
 ECHO			=	$(addprefix echo/,		echo.c)
 CD				=	$(addprefix cd/,		cd.c				\
-											step_1.c			\
-											update_working_dirs.c)
+											step_1_2.c			\
+											step_3.c			\
+											step_4.c			\
+											step_5.c			\
+											step_6.c			\
+											step_7.c			\
+											step_8.c			\
+											cd_utils.c			\
+											update_working_dirs.c)	\
 
 BUILTIN			=	$(addprefix builtin/, 	$(EXPORT)			\
 											$(UNSET)			\
