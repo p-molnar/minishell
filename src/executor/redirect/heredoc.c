@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/16 17:50:14 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/21 12:45:04 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 13:00:34 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	open_heredoc(char *delimiter, int og_stdin)
 		ft_putendl_fd(buf, here_pipe[1]);
 		free(buf);
 		buf = readline("> ");
+		//variables in buf should be expanded here
 	}
 	free(buf);
 	dup2(here_pipe[0], 0);
