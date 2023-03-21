@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:33:38 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/15 16:42:32 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 16:22:59 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,17 @@ t_command_list	*parse_commands(t_token_list *token)
 		if (token->type == OPERATOR && ft_strncmp(token->content, "|", 1) == 0)
 		{
 			printf("Syntax error, unexpected token %s\n", token->content);
+			free_command_list(command_list);
 			return (command_list);
 		}
 		if (token->type == INVALID || token->type == UNDEFINED)
 		{
 			printf("Syntax error, unexpected token %s\n", token->content);
+			free_command_list(command_list);
 			return (command_list);
 		}
 		if (add_simple_command(&command_list, token) == 2)
-			return (command_list);
+			return (NULL);
 		while (token->next)
 		{
 			if (!(token->type == OPERATOR
@@ -97,7 +99,8 @@ t_command_list	*parse_commands(t_token_list *token)
 			if (!token->next)
 			{
 				printf("Syntax error, unexpected end of token list\n");
-				return (command_list);
+				free_command_list(command_list);
+				return (NULL);
 			}
 		}
 		token = token->next;
