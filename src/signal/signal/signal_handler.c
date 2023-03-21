@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 14:42:26 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/21 13:37:26 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 15:48:16 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ void	handle_int_signal(int signum)
 	}
 }
 
-void	setup_signal_handler(struct termios *original_termios)
+void	setup_signal_handler(t_shell_data *data)
 {
 	struct termios	my_termios;
 
 	signal(SIGINT, handle_int_signal);
 	signal(SIGQUIT, SIG_IGN);
-	tcgetattr(0, original_termios);
-	my_termios = *original_termios;
+	my_termios = data->original_termios;
 	my_termios.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, 0, &my_termios);
 }

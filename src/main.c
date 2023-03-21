@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 16:49:57 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 15:48:29 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ void	print_commands(t_command_list *list)
 	}
 }
 
-void	cleanup_before_exit(struct termios *original_termios)
+void	cleanup_before_exit(t_shell_data *data)
 {
-	tcsetattr(0, 0, original_termios);
+	tcsetattr(0, 0, &data->original_termios);
 	clear_history();
 }
 
@@ -81,6 +81,7 @@ void	initialise_data(t_shell_data *data)
 	data->shell_vars = NULL;
 	data->prompt = NULL;
 	data->tokens = NULL;
+	tcgetattr(0, &data->original_termios);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -88,18 +89,17 @@ int	main(int argc, char *argv[], char *envp[])
 	int				prog_running;
 	t_shell_data	data;
 	t_command_list	*commands;
-	struct termios	original_termios;
 	(void) argc;
 	(void) argv;
 	// (void) envp;
 
 	prog_running = 1;
-	setup_signal_handler(&original_termios);
 	initialise_data(&data);
 	parse_env_variable(envp, &data.env_vars);
 	//print_variables(data.env_vars, "ENV VARS");
 	while (prog_running)
 	{
+		setup_signal_handler(&data);
 		data.prompt = read_prompt(PROMPT_MSG);
 		if (!data.prompt)
 			break ;
@@ -133,6 +133,6 @@ int	main(int argc, char *argv[], char *envp[])
 		free_list(data.tokens);
 		free(data.prompt);
 	}
-	cleanup_before_exit(&original_termios);
+	cleanup_before_exit(&data);
 	return (0);
 }

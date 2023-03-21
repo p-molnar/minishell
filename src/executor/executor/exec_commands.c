@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/21 12:29:16 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 15:27:11 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <signal.h>
 #include <sys/wait.h>
 
 char	**path_builder(void)
@@ -94,6 +95,8 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 	int		original_stdin;
 
 	original_stdin = dup(0);
+	signal(SIGINT, SIG_DFL);
+	tcsetattr(0, 0, &data->original_termios);
 	redirect_pipes(in_pipe, out_pipe);
 	redirect_files(current, original_stdin);
 	while (current)

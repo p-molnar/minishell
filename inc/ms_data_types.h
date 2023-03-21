@@ -6,13 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 15:01:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/13 16:29:30 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/21 15:31:24 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_DATA_TYPES_H
 # define MS_DATA_TYPES_H
 # include <libft.h>
+# include <termios.h>
 
 typedef int	t_token_type;
 
@@ -48,6 +49,7 @@ typedef struct s_shell_data
 	t_token_list	*tokens;
 	t_list			*env_vars;
 	t_list			*shell_vars;
+	struct termios	original_termios;
 }	t_shell_data;
 
 #endif
