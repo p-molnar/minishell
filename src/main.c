@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 11:10:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/22 12:25:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,13 +133,12 @@ int	main(int argc, char *argv[], char *envp[])
 			}
 			else if (ft_strncmp(data.prompt, "echo", ft_strlen("echo")) == 0)
 			{
-				char *f = data.tokens->next->content;
-				char *s = data.tokens->next->next->content;
-				echo(f, s);
+				t_token_list *tokens = data.tokens;
+				echo(tokens);
 			}
 			// print_tokens(data.tokens);
-			print_commands(commands);
-			executor(&data, commands);
+			// print_commands(commands);
+			// executor(&data, commands);
 			free_command_list(commands);
 		}
 		free_list(data.tokens);
