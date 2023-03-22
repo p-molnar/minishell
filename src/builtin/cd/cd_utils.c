@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:18:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 09:40:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/22 10:36:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*n_arr_to_str(char **arr, char *el_delim, int n)
 
 	i = 0;
 	str = ft_strdup("");
-	while (arr && arr[i] && n)
+	while (arr && arr[i] && n > 0)
 	{
 		if (i > 0)
 		{
@@ -84,6 +84,9 @@ char	*n_arr_to_str(char **arr, char *el_delim, int n)
 		n--;
 	}
 	if (str[0] == '\0')
-		return (NULL);
+	{
+		free(str);
+		str = ft_strdup("/");
+	}
 	return (str);
 }
