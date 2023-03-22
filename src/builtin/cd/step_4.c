@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   step_4.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/03/13 16:02:38 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/18 19:58:24 by pmolnar       ########   odam.nl         */
+/*   Created: 2023/03/21 10:16:04 by pmolnar       #+#    #+#                 */
+/*   Updated: 2023/03/21 12:08:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
-#include <stdio.h>
+/*
+4. If the first component of the directory operand is dot or
+dot-dot, proceed to step 6.
+*/
 
-void	env(t_list *var_list)
+void	exec_step_4(char *dir, int *step)
 {
-	t_var	*var;
-
-	while (var_list)
-	{
-		var = var_list->content;
-		if (var->name && var->val)
-			printf("%s=%s\n", var->name, var->val);
-		var_list = var_list->next;
-	}
+	if (dir[0] == '.')
+		*step = 6;
+	else
+		*step += 1;
 }

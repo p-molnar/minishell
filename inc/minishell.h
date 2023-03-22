@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/21 16:31:01 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/22 11:07:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <ms_data_types.h>
+# include <ms_macros.h>
 # include <termios.h>
 
 # define PROMPT_MSG "minishell$ "
@@ -63,7 +64,8 @@ void			parse_env_variable(char **env, t_list **list);
 //	variable_parser_util.c
 void			parse_var(char *s, t_var *var);
 int				is_valid_var_definition(char *s);
-t_list			*find_var_by_name(char *lookup_name, t_list *list);
+t_var			*get_var(char *lookup_name, t_list *list);
+t_list			*get_node(void *lookup_content, t_list *list);
 
 //	executor
 void			executor(t_shell_data *data, t_command_list *commands);
@@ -95,4 +97,25 @@ void			pwd(t_shell_data *data);
 
 //	echo.c
 void			echo(char *flag, char *s);
+
+
+//	CD
+//	cd.c
+int				cd(char *dir, t_shell_data *data);
+int				exec_step_1_2(t_var **env_var, char **dir, int *step);
+void			exec_step_3(char *dir, char **curpath, int *step);
+void			exec_step_4(char *dir, int *step);
+void			exec_step_5(char *dir, char **curpath, t_var **var, int *step);
+void			exec_step_6(char *dir, char **curpath, int *step);
+void			exec_step_7(char **curpath, t_var **env_var, int *step);
+int				exec_step_8(char **curpath, int *step);
+
+//	update_working_dirs.c
+int				update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data);
+
+//	cd_utils.c
+int				get_arr_size(void **arr);
+char			*path_concat(char *basepath, char *relpath);
+void			free_arr(void **arr);
+char    *n_arr_to_str(char **arr, char *c, int n);
 #endif

@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   step_6.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/03/13 16:02:38 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/18 19:58:24 by pmolnar       ########   odam.nl         */
+/*   Created: 2023/03/21 14:57:15 by pmolnar       #+#    #+#                 */
+/*   Updated: 2023/03/21 15:03:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
-#include <stdio.h>
+/*
+6. Set curpath to the directory operand.
+*/
 
-void	env(t_list *var_list)
+void	exec_step_6(char *dir, char **curpath, int *step)
 {
-	t_var	*var;
-
-	while (var_list)
-	{
-		var = var_list->content;
-		if (var->name && var->val)
-			printf("%s=%s\n", var->name, var->val);
-		var_list = var_list->next;
-	}
+	if (curpath && dir)
+		*curpath = dir;
+	*step += 1;
 }
