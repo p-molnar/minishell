@@ -6,19 +6,26 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:41:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/14 14:47:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/22 12:25:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <minishell.h>
 
-void	echo(char *flag, char *s)
+
+void	echo(t_token_list *token)
 {
-	if (!s)
+	if (!token)
 		return ;
-	if (flag && (ft_strncmp(flag, "-n", ft_strlen("-n") + 1) == 0))
-		ft_putstr_fd(s, 1);
+	if (token->content && ft_strncmp(token->content, "echo", 4 + 1) == 0)
+	{
+		token = token->next;
+		if (!token)
+			return ;
+	}
+	if (token->content && ft_strncmp(token->content, "-n", 2 + 1) == 0)
+		iter_tokens(token->next, 1, &ft_putstr_fd);
 	else
-		ft_putendl_fd(s, 1);
+		iter_tokens(token, 1, &ft_putendl_fd);
 }
