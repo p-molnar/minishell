@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 11:08:44 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/22 11:10:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	print_tokens(t_token_list *list)
 {
-	int			i;
+	int i;
 	// const char	*token[4] = {"UNDEF", "INVALID", "WORD", "OPERATOR"};
 
 	i = 0;
@@ -35,11 +35,11 @@ void	print_tokens(t_token_list *list)
 
 void	print_variables(t_list *list, char *heading)
 {
-	t_var	*var;
-	//int		i;
+	t_var *var;
+	// int		i;
 
-	//i = 0;
-	(void) heading;
+	// i = 0;
+	(void)heading;
 	while (list)
 	{
 		// if (!i)
@@ -54,9 +54,9 @@ void	print_variables(t_list *list, char *heading)
 
 void	print_commands(t_command_list *list)
 {
-	int			i;
-	const char	*symbol[8] = {"COMMAND", "ARGUMENT", "ASSIGNMENT", "OUTFILE",
-								"OUTFILE_APPEND", "INFILE", "HEREDOC DELIMITER", "PIPE"};
+	int i;
+	const char *symbol[8] = {"COMMAND", "ARGUMENT", "ASSIGNMENT", "OUTFILE",
+							 "OUTFILE_APPEND", "INFILE", "HEREDOC DELIMITER", "PIPE"};
 
 	i = 0;
 	while (list)
@@ -86,23 +86,23 @@ void	initialise_data(t_shell_data *data)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	int				prog_running;
-	t_shell_data	data;
-	t_command_list	*commands;
-	(void) argc;
-	(void) argv;
+	int prog_running;
+	t_shell_data data;
+	t_command_list *commands;
+	(void)argc;
+	(void)argv;
 	// (void) envp;
 
 	prog_running = 1;
 	initialise_data(&data);
 	parse_env_variable(envp, &data.env_vars);
-	//print_variables(data.env_vars, "ENV VARS");
+	// print_variables(data.env_vars, "ENV VARS");
 	while (prog_running)
 	{
 		setup_signal_handler(&data);
 		data.prompt = read_prompt(PROMPT_MSG);
 		if (!data.prompt)
-			break ;
+			break;
 		// printf("original prompt |%s|\n", data.prompt);
 		data.tokens = tokenizer(data.prompt);
 		parse_shell_variable(&data);
@@ -112,33 +112,33 @@ int	main(int argc, char *argv[], char *envp[])
 		if (commands)
 		{
 			expand_tokens(&data);
-			// if (ft_strncmp(data.prompt, "export", ft_strlen("export")) == 0)
-			// 	export(data.tokens->next, &data);
-			// else if (ft_strncmp(data.prompt, "env", ft_strlen("env")) == 0)
-			// 	env(data.env_vars);
-			// else if (ft_strncmp(data.prompt, "set", ft_strlen("set")) == 0)
-			// 	print_variables(data.shell_vars, "SHELL VARS");
-			// else if (ft_strncmp(data.prompt, "unset", ft_strlen("unset")) == 0)
-			// 	unset(data.tokens->next->content, &data);
-			// else if (ft_strncmp(data.prompt, "pwd", ft_strlen("pwd")) == 0)
-			// 	pwd(&data);
+			if (ft_strncmp(data.prompt, "export", ft_strlen("export")) == 0)
+				export(data.tokens->next, &data);
+			else if (ft_strncmp(data.prompt, "env", ft_strlen("env")) == 0)
+				env(data.env_vars);
+			else if (ft_strncmp(data.prompt, "set", ft_strlen("set")) == 0)
+				print_variables(data.shell_vars, "SHELL VARS");
+			else if (ft_strncmp(data.prompt, "unset", ft_strlen("unset")) == 0)
+				unset(data.tokens->next->content, &data);
+			else if (ft_strncmp(data.prompt, "pwd", ft_strlen("pwd")) == 0)
+				pwd(&data);
 			else if (ft_strncmp(data.prompt, "cd", ft_strlen("cd")) == 0)
-		{
-			if (!data.tokens->next)
-				cd(NULL, &data);
-			else
 			{
-				cd(data.tokens->next->content, &data);
+				if (!data.tokens->next)
+					cd(NULL, &data);
+				else
+				{
+					cd(data.tokens->next->content, &data);
+				}
 			}
-		}
-		// else if (ft_strncmp(data.prompt, "echo", ft_strlen("echo")) == 0)
-			// {
-			// 	char *f = data.tokens->next->content;
-			// 	char *s = data.tokens->next->next->content;
-			// 	echo(f, s);
-			// }
-			// // print_tokens(data.tokens);
-			// print_commands(commands);
+			else if (ft_strncmp(data.prompt, "echo", ft_strlen("echo")) == 0)
+			{
+				char *f = data.tokens->next->content;
+				char *s = data.tokens->next->next->content;
+				echo(f, s);
+			}
+			// print_tokens(data.tokens);
+			print_commands(commands);
 			executor(&data, commands);
 			free_command_list(commands);
 		}
