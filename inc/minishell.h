@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 11:07:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/22 12:12:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_token_list	*tokenizer(const char *prompt);
 t_token_list	*new_node(char *content, char *tkn_start, int token_type);
 void			add_node_last(t_token_list **list, t_token_list *node);
 void			free_list(t_token_list *list);
+void			iter_tokens(t_token_list *l, int fd, void (*f)(char *, int));
 
 //	token_classifier.c
 void			classify_tokens(t_token_list *list);
@@ -96,7 +97,7 @@ void			unset(char *var_name, t_shell_data *data);
 void			pwd(t_shell_data *data);
 
 //	echo.c
-void			echo(char *flag, char *s);
+void			echo(t_token_list *token);
 
 
 //	CD
