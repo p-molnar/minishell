@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 15:49:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/01 17:12:35 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/22 12:18:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,14 @@ void	free_list(t_token_list *list)
 		free(list->content);
 		free(list);
 		list = tmp_ptr;
+	}
+}
+
+void	iter_tokens(t_token_list *l, int fd, void (*f)(char *, int))
+{
+	while (l)
+	{
+		f(l->content, fd);
+		l = l->next;
 	}
 }
