@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 15:28:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/21 23:21:01 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/22 10:51:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,29 +102,52 @@ char	**dir_move_up(char **arr, int dd_comp_index)
 	return (NULL);
 }
 
+char	**move_up_dir(char **arr, int i)
+{
+	char	**new_arr;
+	int		j;
+	int		k;
+
+	new_arr = ft_calloc(get_arr_size((void **)arr), sizeof(char *));
+	if (!new_arr)
+		return (NULL);
+	j = 0;
+	k = 0;
+	while (arr && arr[j])
+	{
+		if (j == i - 1 || j == i)
+		{
+			j++;
+			continue ;
+		}
+		new_arr[k++] = arr[j++];
+		new_arr[k] = NULL;
+	}
+	return (new_arr);
+}
+
 char	*process_dotdot_comp(char **arr)
 {
 	int		i;
 	char	*path;
-	char	**path_comps;
 
 	i = 0;
-	path_comps = arr;
-	while (path_comps && path_comps[i])
+	while (arr && arr[i])
 	{
-		if (ft_strncmp(path_comps[i], "..", 3) == 0)
+		if (ft_strncmp(arr[i], "..", 3) == 0)
 		{
-			path_comps = dir_move_up(path_comps, i);
-			i = 0;
-			continue ;
+			path = n_arr_to_str(arr, "/", i - 1);
+			if (access(path, F_OK) != -1)
+			{
+				arr = move_up_dir(arr, i);
+				i = 0;
+				continue ;
+			}
 		}
 		i++;
 	}
-	path = n_arr_to_str(path_comps, "/", get_arr_size((void **)path_comps));
-	printf("path: %s\n", path);
-	if (access(path, F_OK) != -1)
-		return (path);
-	return (NULL);
+	path = n_arr_to_str(arr, "/", get_arr_size((void **)arr));
+	return (path);
 }
 
 int	exec_step_8(char **curpath, int *step)
@@ -141,6 +164,8 @@ int	exec_step_8(char **curpath, int *step)
 		i++;
 	}
 	*curpath = process_dotdot_comp(comps);
+	if (curpath == NULL)
+		return (1);
 	*step += 1;
 	return (0);
 }
