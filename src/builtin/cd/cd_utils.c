@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:18:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/21 16:53:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/22 09:40:14 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	free_arr(void **arr)
 		free (arr);
 }
 
-char	*n_arr_to_str(char **arr, char *c, int n)
+char	*n_arr_to_str(char **arr, char *el_delim, int n)
 {
 	int		i;
 	char	*str;
@@ -77,7 +77,7 @@ char	*n_arr_to_str(char **arr, char *c, int n)
 			free(tmp2);
 		}
 		tmp = str;
-		str = ft_strjoin(tmp, c);
+		str = ft_strjoin(tmp, el_delim);
 		tmp2 = str;
 		str = ft_strjoin(tmp2, arr[i]);
 		i++;
