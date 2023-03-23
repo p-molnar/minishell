@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 14:36:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/23 17:27:36 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_token_end(char *start)
 
 	quoted = 0;
 	curr = start;
-	while (*curr != '\0' && (*curr != ' ' || quoted))
+	while (*curr != '\0' && (*(curr + 1) != ' ' || quoted))
 	{
 		if (*curr == QUOTE || *curr == DQUOTE)
 		{
