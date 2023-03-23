@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 12:25:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/23 13:23:00 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	main(int argc, char *argv[], char *envp[])
 			}
 			// print_tokens(data.tokens);
 			// print_commands(commands);
-			// executor(&data, commands);
+			executor(&data, commands);
 			free_command_list(commands);
 		}
 		free_list(data.tokens);

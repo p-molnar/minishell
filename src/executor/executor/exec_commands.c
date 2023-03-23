@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/22 11:13:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/23 13:22:13 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,13 @@
 
 char	**path_builder(t_shell_data *data)
 {
-	t_list	*list;
 	t_var	*var;
 	char	**path;
 	char	*finalpath;
 	int		i;
 
 	i = 0;
-	list = get_node(get_var("PATH", data->env_vars), data->env_vars);
-	var = list->content;
+	var = get_var("PATH", data->env_vars);
 	path = ft_split(var->val, ':');
 	while (path[i])
 	{
