@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 13:27:33 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/23 16:19:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,26 @@
 #include <minishell.h>
 #include <libft.h>
 #include <stdlib.h>
+#include <stdio.h>
+
+void	add_variable(t_list **str_list, char **s, t_shell_data *data)
+{
+	char	*var_name;
+	t_var	*var;
+
+	var_name = parse_var_name(*s);
+	var = get_var(var_name, data->env_vars);
+	if (var != NULL)
+		ft_lstadd_back(str_list, ft_lstnew(ft_strdup(var->val)));
+	*s += ft_strlen(var_name) + 1;
+	free(var_name);
+}
 
 char	*expand_token(char *s, t_shell_data *data)
 {
 	t_list	*str_list;
-	t_var	*var;
-	char	*tmp;
 	char	quoted;
+	char	*expanded_s;
 
 	str_list = NULL;
 	quoted = 0;
@@ -33,32 +46,29 @@ char	*expand_token(char *s, t_shell_data *data)
 			quoted = 0;
 		else if (*s == DOLLAR && (!quoted || quoted == DQUOTE))
 		{
-			tmp = parse_var_name(s);
-			var = get_var(tmp, data->env_vars);
-			if (var != NULL)
-				ft_lstadd_back(&str_list, ft_lstnew(var->val));
-			s += ft_strlen(tmp) + 1;
-			free(tmp);
+			add_variable(&str_list, &s, data);
 			continue ;
 		}
 		else
-		{
-			tmp = chardup(s);
-			ft_lstadd_back(&str_list, ft_lstnew(tmp));
-		}
+			ft_lstadd_back(&str_list, ft_lstnew(chardup(s)));
 		s++;
 	}
-	return (list_to_str(str_list));
+	expanded_s = list_to_str(str_list);
+	free_list(str_list);
+	return (expanded_s);
 }
 
 void	expand_tokens(t_shell_data *data)
 {
 	t_token_list	*curr_token;
+	char			*tmp_ptr;
 
 	curr_token = data->tokens;
 	while (curr_token)
 	{
+		tmp_ptr = curr_token->content;
 		curr_token->content = expand_token(curr_token->content, data);
+		free(tmp_ptr);
 		curr_token = curr_token->next;
 	}
 }
