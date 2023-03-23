@@ -6,46 +6,76 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 09:50:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/12 18:25:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/23 13:23:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <ms_data_types.h>
 #include <ms_macros.h>
+#include <minishell.h>
 #include <libft.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-int	count_var(char *s)
+char	*parse_var_name(char *s)
 {
-	int	count;
+	char	*start_ptr;
+	char	*end_ptr;
+	char	*var_name;
 
-	count = 0;
-	while (*(s + 1))
-	{
-		if (*s == DOLLAR && ft_isalpha(*(s + 1)))
-			count++;
-		s++;
-	}
-	return (count);
+	start_ptr = s + 1;
+	end_ptr = start_ptr;
+	while (!ft_strchr(DELIM_CHARS, *end_ptr))
+		end_ptr++;
+	var_name = ft_substr(start_ptr, 0, end_ptr - start_ptr);
+	if (*var_name == '\0')
+		free (var_name);
+	return (var_name);
 }
 
-char	*find_replace(char *needle, char *repl, char *haystack)
+char	*chardup(char *s)
 {
-	char	*dst;
-	int		size;
-	int		offset;
-	char	*needle_ptr;
+	char	*new_s;
 
-	size = ft_strlen(haystack) + ft_strlen(repl) - ft_strlen(needle);
-	dst = ft_calloc(size + 1, sizeof(char));
-	if (!dst)
+	if (!s)
 		return (NULL);
-	needle_ptr = ft_strnstr(haystack, needle, ft_strlen(haystack));
-	size = needle_ptr - haystack;
-	ft_strlcpy(dst, haystack, size + 1);
-	size = ft_strlen(repl);
-	ft_strlcpy(ft_strchr(dst, '\0'), repl, size + 1);
-	offset = needle_ptr - haystack + ft_strlen(needle);
-	size = ft_strlen(&haystack[offset]);
-	ft_strlcpy(ft_strchr(dst, '\0'), &haystack[offset], size + 1);
-	return (dst);
+	new_s = ft_calloc(2, sizeof(char));
+	new_s[0] = *s;
+	return (new_s);
+}
+
+int	get_total_strlen(t_list *l)
+{
+	int	len;
+
+	len = 0;
+	while (l)
+	{
+		if (l->content)
+			len += ft_strlen(l->content);
+		l = l->next;
+	}
+	return (len);
+}
+
+char	*list_to_str(t_list *l)
+{
+	int		total_len;
+	char	*curr_content;
+	char	*str;
+	int		i;
+
+	total_len = get_total_strlen(l);
+	str = ft_calloc(total_len + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (l)
+	{
+		curr_content = l->content;
+		while (curr_content && *curr_content)
+			str[i++] = *curr_content++;
+		l = l->next;
+	}
+	return (str);
 }
