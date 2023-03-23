@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/21 12:29:16 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/23 13:31:15 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-void	open_redirect_infile(t_command_list *current)
+int		open_redirect_infile(t_command_list *current)
 {
 	static int	fd;
 
@@ -26,12 +26,13 @@ void	open_redirect_infile(t_command_list *current)
 	{
 		ft_putstr_fd("Could not open file ", 2);
 		ft_putendl_fd(current->token->content, 2);
-		exit(0);
+		return (1);
 	}
 	dup2(fd, 0);
+	return (0);
 }
 
-void	open_redirect_outfile(t_command_list *current)
+int		open_redirect_outfile(t_command_list *current)
 {
 	static int	fd;
 
@@ -44,25 +45,30 @@ void	open_redirect_outfile(t_command_list *current)
 	{
 		ft_putstr_fd("Could not open file ", 2);
 		ft_putendl_fd(current->token->content, 2);
-		exit(0);
+		return (1);
 	}
 	dup2(fd, 1);
+	return (0);
 }
 
-void	redirect_files(t_command_list *current, int og_stdin)
+int		redirect_files(t_command_list *current, int og_stdin)
 {
+	int		ret;
+
+	ret = 0;
 	while (current)
 	{
 		if (current->symbol == D_PIPE)
 			break ;
 		if (current->symbol == OUTFILE || current->symbol == OUTFILE_APP)
-			open_redirect_outfile(current);
+			ret = open_redirect_outfile(current);
 		if (current->symbol == INFILE)
-			open_redirect_infile(current);
+			ret = open_redirect_infile(current);
 		if (current->symbol == HEREDOC_DELIMITER)
 			open_heredoc(current->token->content, og_stdin);
 		current = current->next;
 	}
+	return (ret);
 }
 
 void	redirect_pipes(t_pipe_fd *in_pipe, t_pipe_fd *out_pipe)
