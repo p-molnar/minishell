@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 13:31:15 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/23 14:37:33 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_list			*get_node(void *lookup_content, t_list *list);
 void			executor(t_shell_data *data, t_command_list *commands);
 void			execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
 					pid_t *process, t_shell_data *data);
+void			execute_builtin(char *cmd, t_shell_data *data, char **args);
 int				count_symbols(int symbol, t_command_list *current);
 int				count_symbols_simple_cmd(int symbol, t_command_list *current);
 void			close_pipe(t_pipe_fd *pipe);
@@ -97,7 +98,7 @@ void			unset(char *var_name, t_shell_data *data);
 void			pwd(t_shell_data *data);
 
 //	echo.c
-void			echo(t_token_list *token);
+void			echo(char **args);
 
 
 //	CD

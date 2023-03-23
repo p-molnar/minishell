@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/22 12:35:43 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/23 14:16:02 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SIGNAL			=	$(addprefix signal/, $(SIG_HANDLER))
 
 # EXECUTOR
 EXECUTE			=	$(addprefix executor/,		executor.c		\
-												exec_commands.c \
+												exec_commands.c	\
+												exec_builtins.c	\
 												exec_utils.c)
 
 REDIRECT		=	$(addprefix redirect/,		redirect.c		\

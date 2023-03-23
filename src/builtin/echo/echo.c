@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:41:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 12:25:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/23 14:49:55 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,25 @@
 #include <minishell.h>
 
 
-void	echo(t_token_list *token)
+void	echo(char **args)
 {
-	if (!token)
-		return ;
-	if (token->content && ft_strncmp(token->content, "echo", 4 + 1) == 0)
+	int	i;
+	int	n_flag;
+
+	i = 1;
+	n_flag = 0;
+	while (args[i] && ft_strncmp(args[i], "-n", 2 + 1) == 0)
 	{
-		token = token->next;
-		if (!token)
-			return ;
+		n_flag = 1;
+		i++;
 	}
-	if (token->content && ft_strncmp(token->content, "-n", 2 + 1) == 0)
-		iter_tokens(token->next, 1, &ft_putstr_fd);
-	else
-		iter_tokens(token, 1, &ft_putendl_fd);
+	while (args[i])
+	{
+		ft_putstr_fd(args[i], 1);
+		i++;
+		if (args[i])
+			ft_putchar_fd(' ', 1);
+	}
+	if (!n_flag)
+		ft_putchar_fd('\n', 1);
 }

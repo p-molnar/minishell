@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 13:23:00 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/23 14:47:15 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,30 +112,30 @@ int	main(int argc, char *argv[], char *envp[])
 		if (commands)
 		{
 			expand_tokens(&data);
-			if (ft_strncmp(data.prompt, "export", ft_strlen("export")) == 0)
-				export(data.tokens->next, &data);
-			else if (ft_strncmp(data.prompt, "env", ft_strlen("env")) == 0)
-				env(data.env_vars);
-			else if (ft_strncmp(data.prompt, "set", ft_strlen("set")) == 0)
-				print_variables(data.shell_vars, "SHELL VARS");
-			else if (ft_strncmp(data.prompt, "unset", ft_strlen("unset")) == 0)
-				unset(data.tokens->next->content, &data);
-			else if (ft_strncmp(data.prompt, "pwd", ft_strlen("pwd")) == 0)
-				pwd(&data);
-			else if (ft_strncmp(data.prompt, "cd", ft_strlen("cd")) == 0)
-			{
-				if (!data.tokens->next)
-					cd(NULL, &data);
-				else
-				{
-					cd(data.tokens->next->content, &data);
-				}
-			}
-			else if (ft_strncmp(data.prompt, "echo", ft_strlen("echo")) == 0)
-			{
-				t_token_list *tokens = data.tokens;
-				echo(tokens);
-			}
+			// if (ft_strncmp(data.prompt, "export", ft_strlen("export")) == 0)
+			// 	export(data.tokens->next, &data);
+			// else if (ft_strncmp(data.prompt, "env", ft_strlen("env")) == 0)
+			// 	env(data.env_vars);
+			// else if (ft_strncmp(data.prompt, "set", ft_strlen("set")) == 0)
+			// 	print_variables(data.shell_vars, "SHELL VARS");
+			// else if (ft_strncmp(data.prompt, "unset", ft_strlen("unset")) == 0)
+			// 	unset(data.tokens->next->content, &data);
+			// else if (ft_strncmp(data.prompt, "pwd", ft_strlen("pwd")) == 0)
+			// 	pwd(&data);
+			// else if (ft_strncmp(data.prompt, "cd", ft_strlen("cd")) == 0)
+			// {
+			// 	if (!data.tokens->next)
+			// 		cd(NULL, &data);
+			// 	else
+			// 	{
+			// 		cd(data.tokens->next->content, &data);
+			// 	}
+			// }
+			// else if (ft_strncmp(data.prompt, "echo", ft_strlen("echo")) == 0)
+			// {
+			// 	t_token_list *tokens = data.tokens;
+			// 	echo(tokens);
+			// }
 			// print_tokens(data.tokens);
 			// print_commands(commands);
 			executor(&data, commands);

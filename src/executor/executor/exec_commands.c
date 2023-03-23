@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/23 13:31:15 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/23 14:28:45 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,12 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 	arguments = compound_args(current);
 	if (current)
 	{
-		//todo: check for builtins, execute builtin
 		if (current->symbol == CMD)
+		{
+			execute_builtin(current->token->content, data, arguments);
 			execute_bin(current->token->content, data, arguments);
+		}
+		free(arguments);
 	}
 	exit(0);
 }
