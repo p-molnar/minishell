@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:48:13 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/16 17:49:49 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/23 16:10:34 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,18 @@ t_pipe_fd	*setup_pipes(int pipe_n)
 void	executor(t_shell_data *data, t_command_list *commands)
 {
 	int			pipe_n;
+	int			ret;
 	t_pipe_fd	*pipe_fd;
 	pid_t		*process;
 
+	ret = 0;
 	pipe_n = count_symbols(D_PIPE, commands);
 	pipe_fd = setup_pipes(pipe_n);
 	process = malloc(sizeof(pid_t) * (pipe_n + 1));
-	execute_commands(commands, pipe_fd, process, data);
+	if (pipe_n == 0)
+		ret = check_parent_builtin(commands, data);
+	if (ret == 0)
+		execute_commands(commands, pipe_fd, process, data);
 	free(process);
 	free(pipe_fd);
 }

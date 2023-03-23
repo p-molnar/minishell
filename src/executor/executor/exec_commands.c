@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/23 14:28:45 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/23 16:30:07 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	**path_builder(t_shell_data *data)
 
 	i = 0;
 	var = get_var("PATH", data->env_vars);
+	if (!var)
+		return (NULL);
 	path = ft_split(var->val, ':');
 	while (path[i])
 	{
@@ -72,16 +74,19 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 
 	path = path_builder(data);
 	i = 0;
-	while (path[i])
+	if (path)
 	{
-		commandpath = ft_strjoin(path[i], command);
-		//env vars should be turned into array of strings and passed instead of NULL
-		execve(commandpath, arguments, NULL);
+		while (path[i])
+		{
+			commandpath = ft_strjoin(path[i], command);
+			//env vars should be turned into array of strings and passed instead of NULL
+			execve(commandpath, arguments, NULL);
+			free(commandpath);
+			commandpath = NULL;
+			i++;
+		}
 		free(commandpath);
-		commandpath = NULL;
-		i++;
 	}
-	free(commandpath);
 	ft_putstr_fd("Command not found\n", 2);
 	exit(0);
 }
