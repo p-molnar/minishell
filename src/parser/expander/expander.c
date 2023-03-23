@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 11:59:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/23 16:19:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,102 +14,61 @@
 #include <ms_macros.h>
 #include <minishell.h>
 #include <libft.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-static void	parse_var_names(char *s, t_var *list)
+void	add_variable(t_list **str_list, char **s, t_shell_data *data)
 {
-	char	*start_ptr;
-	char	*end_ptr;
 	char	*var_name;
-
-	start_ptr = s;
-	while (*start_ptr && ft_strchr(start_ptr, DOLLAR))
-	{
-		start_ptr = ft_strchr(start_ptr, DOLLAR) + 1;
-		end_ptr = start_ptr;
-		while (ft_isalnum(*end_ptr))
-			end_ptr++;
-		var_name = ft_substr(start_ptr, 0, end_ptr - start_ptr);
-		if (*var_name == '\0')
-			free (var_name);
-		else
-		{
-			list->name = var_name;
-			list++;
-		}
-		start_ptr += end_ptr - start_ptr;
-	}
-}
-
-static void	get_var_values(t_var *var_arr, t_shell_data *data, int var_count)
-{
-	int		i;
 	t_var	*var;
 
-	i = 0;
-	while (i < var_count)
-	{
-		var = get_var(var_arr[i].name, data->env_vars);
-		if (var == NULL)
-		{
-			var = get_var(var_arr[i].name, data->shell_vars);
-			if (var == NULL)
-			{
-				var_arr[i].val = ""; // read-only, problematic for free
-				i++;
-				continue ;
-			}
-		}
-		var_arr[i].val = var->val;
-		i++;
-	}
+	var_name = parse_var_name(*s);
+	var = get_var(var_name, data->env_vars);
+	if (var != NULL)
+		ft_lstadd_back(str_list, ft_lstnew(ft_strdup(var->val)));
+	*s += ft_strlen(var_name) + 1;
+	free(var_name);
 }
 
-static void	replace_vars_with_values(char **s, t_var *var_arr, int count)
+char	*expand_token(char *s, t_shell_data *data)
 {
-	int		i;
-	int		len;
-	char	*dollar_prefixed_name;
-	char	*ptr;
+	t_list	*str_list;
+	char	quoted;
+	char	*expanded_s;
 
-	i = 0;
-	while (i < count)
+	str_list = NULL;
+	quoted = 0;
+	while (s && *s != '\0')
 	{
-		ptr = *s;
-		len = ft_strlen(var_arr[i].name);
-		dollar_prefixed_name = malloc((len + 2) * sizeof(char));
-		if (!dollar_prefixed_name)
-			return ;
-		dollar_prefixed_name[0] = DOLLAR;
-		ft_strlcpy(&dollar_prefixed_name[1], var_arr[i].name, len + 1);
-		*s = find_replace(dollar_prefixed_name, var_arr[i].val, *s);
-		free (ptr);
-		free (dollar_prefixed_name);
-		i++;
+		if ((*s == QUOTE || *s == DQUOTE) && !quoted)
+			quoted = *s;
+		else if (*s == quoted)
+			quoted = 0;
+		else if (*s == DOLLAR && (!quoted || quoted == DQUOTE))
+		{
+			add_variable(&str_list, &s, data);
+			continue ;
+		}
+		else
+			ft_lstadd_back(&str_list, ft_lstnew(chardup(s)));
+		s++;
 	}
+	expanded_s = list_to_str(str_list);
+	free_list(str_list);
+	return (expanded_s);
 }
 
 void	expand_tokens(t_shell_data *data)
 {
-	t_token_list	*token;
-	int				var_count;
-	t_var			*tmp_var_arr;
+	t_token_list	*curr_token;
+	char			*tmp_ptr;
 
-	token = data->tokens;
-	while (token)
+	curr_token = data->tokens;
+	while (curr_token)
 	{
-		var_count = count_var(token->content);
-		if (var_count > 0)
-		{
-			tmp_var_arr = malloc(var_count * sizeof(t_var));
-			if (!tmp_var_arr)
-				return ;
-			parse_var_names(token->content, tmp_var_arr);
-			get_var_values(tmp_var_arr, data, var_count);
-			replace_vars_with_values(&token->content, tmp_var_arr, var_count);
-			free (tmp_var_arr);
-		}
-		token = token->next;
+		tmp_ptr = curr_token->content;
+		curr_token->content = expand_token(curr_token->content, data);
+		free(tmp_ptr);
+		curr_token = curr_token->next;
 	}
 }

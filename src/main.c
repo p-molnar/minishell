@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 14:47:15 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/23 16:56:56 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	int prog_running;
 	t_shell_data data;
-	t_command_list *commands;
+	// t_command_list *commands;
 	(void)argc;
 	(void)argv;
 	// (void) envp;
@@ -145,5 +145,7 @@ int	main(int argc, char *argv[], char *envp[])
 		free(data.prompt);
 	}
 	cleanup_before_exit(&data);
+	free_var_list(data.env_vars);
+	free_var_list(data.shell_vars);
 	return (0);
 }

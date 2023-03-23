@@ -6,14 +6,14 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/23 16:45:46 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/03/23 16:56:10 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix readline)/lib
-# CFLAGS			+=	-g # debug
+CFLAGS			+=	-g # debug
 # CFLAGS			+=	-fsanitize=address
 NAME			=	minishell
 INCL			=	inc libft/inc
@@ -91,8 +91,10 @@ BUILTIN			=	$(addprefix builtin/, 	$(EXPORT)			\
 
 # UTILS
 UTIL_PATH		=	util/
-UTIL			=	$(addprefix $(UTIL_PATH), 	token_list_util.c	\
-												command_list_util.c)
+UTIL			=	$(addprefix $(UTIL_PATH), 	token_list_util.c		\
+												command_list_util.c		\
+												free_objects.c			\
+												)
 
 # ALL SOURCE FILES
 SRC				=	main.c $(PARSER) $(UTIL) $(SIGNAL) $(BUILTIN) $(EXECUTOR)
