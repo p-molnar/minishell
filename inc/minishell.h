@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 13:24:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/23 15:48:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 //  readline
 void			rl_replace_line(const char *text, int clear_undo);
 
+//	free_objects.c
+void			free_var_list(t_list *var_list);
+void			free_token_list(t_token_list *list);
+void			free_list(t_list *list);
+
 //	character_reader.c
 char			*read_prompt(const char *prompt);
 
@@ -31,8 +36,7 @@ t_token_list	*tokenizer(const char *prompt);
 //	token_list_util.c
 t_token_list	*new_node(char *content, char *tkn_start, int token_type);
 void			add_node_last(t_token_list **list, t_token_list *node);
-void			free_list(t_token_list *list);
-void			iter_tokens(t_token_list *l, int fd, void (*f)(char *, nt));
+void			iter_tokens(t_token_list *l, int fd, void (*f)(char *, int));
 
 //	token_classifier.c
 void			classify_tokens(t_token_list *list);
