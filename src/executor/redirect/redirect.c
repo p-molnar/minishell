@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/23 13:31:15 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/23 18:13:08 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-int		open_redirect_infile(t_command_list *current)
+int	open_redirect_infile(t_command_list *current)
 {
 	static int	fd;
 
@@ -32,7 +32,7 @@ int		open_redirect_infile(t_command_list *current)
 	return (0);
 }
 
-int		open_redirect_outfile(t_command_list *current)
+int	open_redirect_outfile(t_command_list *current)
 {
 	static int	fd;
 
@@ -51,7 +51,7 @@ int		open_redirect_outfile(t_command_list *current)
 	return (0);
 }
 
-int		redirect_files(t_command_list *current, int og_stdin)
+int	redirect_files(t_command_list *current, int og_stdin)
 {
 	int		ret;
 

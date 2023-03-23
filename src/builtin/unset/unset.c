@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:17:39 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 11:59:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/23 18:09:37 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	unset(char *var_name, t_shell_data *data)
 	t_list	*shell_ptr;
 	t_list	*ptr;
 
+	if (!var_name)
+		return ;
 	shell_ptr = get_node(get_var(var_name, data->shell_vars), data->shell_vars);
 	env_ptr = get_node(get_var(var_name, data->env_vars), data->env_vars);
 	ptr = shell_ptr;
