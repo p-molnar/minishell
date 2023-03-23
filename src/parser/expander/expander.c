@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 17:01:56 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/23 11:30:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,63 +81,96 @@ char	*parse_var_name(char *s)
 // 	}
 // }
 
+char	*chardup(char *s)
+{
+	char	*new_s;
+
+	if (!s)
+		return (NULL);
+	new_s = ft_calloc(2, sizeof(char));
+	new_s[0] = *s;
+	return (new_s);
+}
+
+int	get_total_strlen(t_list *l)
+{
+	int	len;
+
+	len = 0;
+	while (l)
+	{
+		if (l->content)
+			len += ft_strlen(l->content);
+		l = l->next;
+	}
+	return (len);
+}
+
+char	*list_to_str(t_list *l)
+{
+	int		total_len;
+	char	*curr_content;
+	char	*str;
+	int		i;
+
+	total_len = get_total_strlen(l);
+	str = ft_calloc(total_len + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (l)
+	{
+		curr_content = l->content;
+		while (curr_content && *curr_content)
+			str[i++] = *curr_content++;
+		l = l->next;
+	}
+	return (str);
+}
+
+char	*expand_token(char *s, t_shell_data *data)
+{
+	t_list	*str_list;
+	t_var	*var;
+	char	*tmp;
+	char	quoted;
+
+	str_list = NULL;
+	quoted = 0;
+	while (s && *s != '\0')
+	{
+		if ((*s == QUOTE || *s == DQUOTE) && !quoted)
+			quoted = *s;
+		else if (*s == quoted)
+			quoted = 0;
+		else if (*s == DOLLAR && (!quoted || quoted == DQUOTE))
+		{
+			tmp = parse_var_name(s);
+			var = get_var(tmp, data->env_vars);
+			if (var != NULL)
+				ft_lstadd_back(&str_list, ft_lstnew(var->val));
+			s += ft_strlen(tmp) + 1;
+			free(tmp);
+			continue ;
+		}
+		else
+		{
+			tmp = chardup(s);
+			ft_lstadd_back(&str_list, ft_lstnew(tmp));
+		}
+		s++;
+	}
+	return (list_to_str(str_list));
+}
+
 void	expand_tokens(t_shell_data *data)
 {
-	t_token_list	*token;
-	// int				var_count;
-	// t_var			*tmp_var_arr;
-	char			*s;
-	char			quoted;
-	char			*expanded_s;
-	int				i;
+	t_token_list	*curr_token;
 
-	token = data->tokens;
-	while (token)
+	curr_token = data->tokens;
+	while (curr_token)
 	{
-		s = token->content;
-		quoted = 0;
-		expanded_s = ft_calloc(ft_strlen(s) + 1, sizeof(char));
-		if (!expanded_s)
-			return ;
-		i = 0;
-		while (*s != '\0')
-		{
-			if (*s == QUOTE || *s == DQUOTE)
-			{
-				if (!quoted)
-					quoted = *s;
-				else if (*s == quoted)
-					quoted = 0;
-				else if (*s != quoted)
-					expanded_s[i++] = *s;
-				s++;
-				continue ;
-			}
-			else if (*s == DOLLAR && (!quoted || quoted == DQUOTE))
-			{
-				char *var = parse_var_name(s);
-				printf("var: |%s|\n", var);
-				t_var *varobj = get_var(var, data->env_vars);
-				expanded_s = ft_strjoin(expanded_s, varobj->name);
-				// replace_vars_with_values(&token->content, tmp_var_arr, var_count);
-				// free(tmp_var_arr);
-			}
-			expanded_s[i] = *s;
-			i++;
-			s++;
-		}
-		token->content = expanded_s;
-		// var_count = count_var(token->content);
-		// if (var_count > 0)
-		// {
-		// 	tmp_var_arr = malloc(var_count * sizeof(t_var));
-		// 	if (!tmp_var_arr)
-		// 		return ;
-		// 	parse_var_name(token->content, tmp_var_arr);
-		// 	get_var_values(tmp_var_arr, data, var_count);
-		// 	replace_vars_with_values(&token->content, tmp_var_arr, var_count);
-		// 	free(tmp_var_arr);
-		// }
-		token = token->next;
+		curr_token->content = expand_token(curr_token->content, data);
+		curr_token = curr_token->next;
 	}
 }
