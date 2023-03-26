@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 09:15:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 14:32:33 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/26 23:13:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,19 @@ void	parse_shell_variable(t_shell_data *data)
 	}
 }
 
-void	parse_env_variable(char **env, t_list **list)
+void	parse_env_variable(char **env_arr, t_list **list)
 {
-	char	*var_definition;
-	t_var	*var;
+	char	*var_def;
+	t_var	*var_parsed;
 
-	while (*env)
+	while (env_arr && *env_arr)
 	{
-		var = ft_calloc(1, sizeof(t_var));
-		if (!var)
+		var_parsed = ft_calloc(1, sizeof(t_var));
+		if (!var_parsed)
 			return ;
-		var_definition = *env;
-		parse_var(var_definition, var);
-		add_var(var, list);
-		env++;
+		var_def = *env_arr;
+		parse_var(var_def, var_parsed);
+		add_var(var_parsed, list);
+		env_arr++;
 	}
 }

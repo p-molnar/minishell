@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/15 11:59:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/26 23:23:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ void	parse_var(char *s, t_var *var)
 	char	*separator;
 	int		size;
 
+	if (s)
+		return ;
 	separator = ft_strchr(s, EQUAL);
+	if (!separator)
+		return ;
 	size = separator - s;
 	var->name = ft_substr(s, 0, size);
 	s += size + 1;
