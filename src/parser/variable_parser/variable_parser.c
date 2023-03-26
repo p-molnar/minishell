@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 09:15:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/26 23:24:47 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/26 23:34:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	add_var(t_var *new_var, t_list **list)
+void	add_var(t_var *new_var, t_list **var_list)
 {
 	t_list	*new_node;
 	t_var	*var_defined;
 	t_var	*old_var;
 
-	var_defined = get_var(new_var->name, *list);
+	var_defined = get_var(new_var->name, *var_list);
 	if (!var_defined)
-	{
-		new_node = ft_lstnew(new_var);
-		if (!new_node)
-			return ;
-		ft_lstadd_back(list, new_node);
-	}
+		ft_lstadd_back(var_list, ft_lstnew(new_var));
 	else
 	{
 		old_var = var_defined;
