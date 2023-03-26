@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/26 23:23:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/26 23:33:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,23 @@ int	is_valid_var_definition(char *s)
 	return (1);
 }
 
-t_var	*get_var(char *lookup_name, t_list *list)
+t_var	*get_var(char *var_name, t_list *var_list)
 {
-	char	*declared_name;
+	t_var	*var_declared;
+	char	*name_declared;
 	int		len;
 
-	while (list)
+	while (var_name && var_list)
 	{
-		declared_name = ((t_var *)list->content)->name;
-		len = ft_strlen(lookup_name);
-		if (!ft_strncmp(lookup_name, declared_name, len + 1))
-			return (list->content);
-		list = list->next;
+		var_declared = var_list->content;
+		if (var_declared && var_declared->name)
+		{
+			name_declared = var_declared->name;
+			len = ft_strlen(var_name);
+			if (ft_strncmp(var_name, name_declared, len + 1) == 0)
+				return (var_list->content);
+		}
+		var_list = var_list->next;
 	}
 	return (NULL);
 }
