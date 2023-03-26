@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/23 18:13:08 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/26 22:47:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ int	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 int	check_parent_builtin(t_command_list *current, t_shell_data *data)
 {
 	char			*cmd;
-	t_command_list	*start;
 
-	start = current;
 	while (current)
 	{
 		if (current->symbol == CMD)

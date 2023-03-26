@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 15:28:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 12:36:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/26 22:47:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ char	**remove_dot_comp(char **arr, int size)
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
 	new_arr = ft_calloc(size + 1, sizeof(char *));
 	if (!new_arr)
 		return (NULL);
+	i = 0;
+	j = 0;
 	while (arr && arr[j])
 	{
 		if (ft_strncmp(arr[j], ".", 2) != 0)
@@ -153,16 +153,9 @@ char	*process_dotdot_comp(char **arr)
 int	exec_step_8(char **curpath, int *step)
 {
 	char	**comps;
-	int		i;
 
 	comps = ft_split(*curpath, '/');
 	comps = remove_dot_comp(comps, get_arr_size((void **)comps));
-	i = 0;
-	// while (comps && comps[i])
-	// {
-	// 	printf("comps[%d]=%s\n", i, comps[i]);
-	// 	i++;
-	// }
 	*curpath = process_dotdot_comp(comps);
 	if (curpath == NULL)
 		return (1);
