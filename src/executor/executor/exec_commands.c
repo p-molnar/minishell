@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/23 16:30:07 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/27 16:02:18 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 		free(commandpath);
 	}
 	ft_putstr_fd("Command not found\n", 2);
-	exit(0);
 }
 
 void	execute_cmd(t_command_list *current, t_shell_data *data,
@@ -96,12 +95,16 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 {
 	char	**arguments;
 	int		original_stdin;
+	int		fd_in;
+	int		fd_out;
 
+	fd_in = 0;
+	fd_out = 1;
 	original_stdin = dup(0);
 	signal(SIGINT, SIG_DFL);
 	tcsetattr(0, 0, &data->original_termios);
 	redirect_pipes(in_pipe, out_pipe);
-	if (redirect_files(current, original_stdin))
+	if (redirect_files(current, original_stdin, fd_in, fd_out))
 		exit (0);
 	while (current)
 	{
@@ -118,6 +121,9 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 			execute_bin(current->token->content, data, arguments);
 		}
 		free(arguments);
+		close(fd_in);
+		close(fd_out);
+		close(original_stdin);
 	}
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/23 18:13:08 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/27 16:36:17 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,38 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-int	open_redirect_infile(t_command_list *current)
+int	open_redirect_infile(t_command_list *current, int *fd)
 {
-	static int	fd;
-
-	close(fd);
-	fd = open(current->token->content, O_RDONLY);
-	if (fd < 0)
+	close(*fd);
+	*fd = open(current->token->content, O_RDONLY);
+	if (*fd < 0)
 	{
 		ft_putstr_fd("Could not open file ", 2);
 		ft_putendl_fd(current->token->content, 2);
 		return (1);
 	}
-	dup2(fd, 0);
+	dup2(*fd, 0);
 	return (0);
 }
 
-int	open_redirect_outfile(t_command_list *current)
+int	open_redirect_outfile(t_command_list *current, int *fd)
 {
-	static int	fd;
-
-	close(fd);
+	close(*fd);
 	if (current->symbol == OUTFILE)
-		fd = open(current->token->content, O_RDWR | O_CREAT, 0644);
+		*fd = open(current->token->content, O_RDWR | O_CREAT, 0644);
 	else
-		fd = open(current->token->content, O_RDWR | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
+		*fd = open(current->token->content, O_RDWR | O_CREAT | O_APPEND, 0644);
+	if (*fd < 0)
 	{
 		ft_putstr_fd("Could not open file ", 2);
 		ft_putendl_fd(current->token->content, 2);
 		return (1);
 	}
-	dup2(fd, 1);
+	dup2(*fd, 1);
 	return (0);
 }
 
-int	redirect_files(t_command_list *current, int og_stdin)
+int	redirect_files(t_command_list *current, int og_stdin, int *fd_in, int *fd_out)
 {
 	int		ret;
 
@@ -61,9 +57,9 @@ int	redirect_files(t_command_list *current, int og_stdin)
 		if (current->symbol == D_PIPE)
 			break ;
 		if (current->symbol == OUTFILE || current->symbol == OUTFILE_APP)
-			ret = open_redirect_outfile(current);
+			ret = open_redirect_outfile(current, fd_out);
 		if (current->symbol == INFILE)
-			ret = open_redirect_infile(current);
+			ret = open_redirect_infile(current, fd_in);
 		if (current->symbol == HEREDOC_DELIMITER)
 			open_heredoc(current->token->content, og_stdin);
 		current = current->next;
