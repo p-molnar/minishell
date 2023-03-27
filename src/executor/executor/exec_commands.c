@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/27 16:02:18 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/27 17:14:09 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 		}
 		free(commandpath);
 	}
-	ft_putstr_fd("Command not found\n", 2);
+	ft_putstr_fd("Command not found\n", STDERR_FILENO);
 }
 
 void	execute_cmd(t_command_list *current, t_shell_data *data,
@@ -98,13 +98,13 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 	int		fd_in;
 	int		fd_out;
 
-	fd_in = 0;
-	fd_out = 1;
-	original_stdin = dup(0);
+	fd_in = -1;
+	fd_out = -1;
+	original_stdin = dup(STDIN_FILENO);
 	signal(SIGINT, SIG_DFL);
 	tcsetattr(0, 0, &data->original_termios);
 	redirect_pipes(in_pipe, out_pipe);
-	if (redirect_files(current, original_stdin, fd_in, fd_out))
+	if (redirect_files(current, original_stdin, &fd_in, &fd_out))
 		exit (0);
 	while (current)
 	{

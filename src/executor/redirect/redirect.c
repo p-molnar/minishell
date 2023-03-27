@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/27 16:36:17 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/27 17:11:25 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	open_redirect_infile(t_command_list *current, int *fd)
 	*fd = open(current->token->content, O_RDONLY);
 	if (*fd < 0)
 	{
-		ft_putstr_fd("Could not open file ", 2);
-		ft_putendl_fd(current->token->content, 2);
+		ft_putstr_fd("Could not open file ", STDERR_FILENO);
+		ft_putendl_fd(current->token->content, STDERR_FILENO);
 		return (1);
 	}
-	dup2(*fd, 0);
+	dup2(*fd, STDIN_FILENO);
 	return (0);
 }
 
@@ -39,11 +39,11 @@ int	open_redirect_outfile(t_command_list *current, int *fd)
 		*fd = open(current->token->content, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (*fd < 0)
 	{
-		ft_putstr_fd("Could not open file ", 2);
-		ft_putendl_fd(current->token->content, 2);
+		ft_putstr_fd("Could not open file ", STDERR_FILENO);
+		ft_putendl_fd(current->token->content, STDERR_FILENO);
 		return (1);
 	}
-	dup2(*fd, 1);
+	dup2(*fd, STDOUT_FILENO);
 	return (0);
 }
 
@@ -71,12 +71,12 @@ void	redirect_pipes(t_pipe_fd *in_pipe, t_pipe_fd *out_pipe)
 {
 	if (in_pipe)
 	{
-		dup2(in_pipe->pipe_end[0], 0);
+		dup2(in_pipe->pipe_end[0], STDIN_FILENO);
 		close(in_pipe->pipe_end[1]);
 	}
 	if (out_pipe)
 	{
-		dup2(out_pipe->pipe_end[1], 1);
+		dup2(out_pipe->pipe_end[1], STDOUT_FILENO);
 		close(out_pipe->pipe_end[0]);
 	}
 }
