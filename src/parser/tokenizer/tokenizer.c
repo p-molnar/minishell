@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/27 11:31:33 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/27 18:14:28 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,46 @@
 #include <ms_macros.h>
 #include <stdlib.h>
 
-char	*get_token_end(char *start)
+static void	update_prev_ptr(char **prev, char *curr, char *s)
 {
-	char	is_quoted;
-	char	*curr;
+	if (curr != s)
+		*prev = curr - 1;
+	else
+		*prev = curr;
+}
 
-	is_quoted = 0;
-	curr = start;
-	while (*curr != '\0' && (*(curr + 1) != ' ' || is_quoted))
+static char	*is_token_end(char *prev, char *curr)
+{
+	static char	is_quoted;
+
+	if (!is_quoted && ft_strchr(OPERATORS, *prev) && *curr == *prev)
+		;
+	else if (!is_quoted && ft_strchr(OPERATORS, *prev) && *curr != *prev)
+		return (prev);
+	else if (!is_quoted && ft_strchr(QUOTES, *curr))
+		is_quoted = *curr;
+	else if (is_quoted && ft_strchr(QUOTES, *curr) && *curr == is_quoted)
+		is_quoted = 0;
+	else if (!is_quoted && ft_strchr(OPERATORS, *curr))
+		return (prev);
+	else if (!is_quoted && *curr == ' ')
+		return (prev);
+	return (NULL);
+}
+
+char	*delimit_token(char *prompt)
+{
+	char	*curr;
+	char	*prev;
+	char	*tkn_end;
+
+	curr = prompt;
+	while (curr && *curr != '\0')
 	{
-		if (*curr == QUOTE || *curr == DQUOTE)
-		{
-			if (!is_quoted)
-				is_quoted = *curr;
-			else if (is_quoted == *curr)
-				is_quoted = 0;
-		}
+		update_prev_ptr(&prev, curr, prompt);
+		tkn_end = is_token_end(prev, curr);
+		if (tkn_end)
+			return (tkn_end);
 		curr++;
 	}
 	return (curr);
@@ -51,9 +75,9 @@ t_token_list	*tokenizer(const char *prompt)
 	{
 		if (!ft_strchr(SPACES, *start_ptr))
 		{
-			end_ptr = get_token_end(start_ptr);
-			if (end_ptr == NULL || *end_ptr == '\0')
-				end_ptr = start_ptr + ft_strlen(start_ptr) - 1;
+			end_ptr = delimit_token(start_ptr);
+			// if (*end_ptr == '\0')
+			// 	end_ptr = start_ptr + ft_strlen(start_ptr) - 1;
 			content = ft_substr(start_ptr, 0, end_ptr - start_ptr + 1);
 			add_node_last(&tokens, new_node(content, start_ptr, UNDEFINED));
 			start_ptr += end_ptr - start_ptr;
