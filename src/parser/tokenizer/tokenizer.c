@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 17:27:36 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/27 11:31:33 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,19 @@
 
 char	*get_token_end(char *start)
 {
-	char	quoted;
+	char	is_quoted;
 	char	*curr;
 
-	quoted = 0;
+	is_quoted = 0;
 	curr = start;
-	while (*curr != '\0' && (*(curr + 1) != ' ' || quoted))
+	while (*curr != '\0' && (*(curr + 1) != ' ' || is_quoted))
 	{
 		if (*curr == QUOTE || *curr == DQUOTE)
 		{
-			if (!quoted)
-				quoted = *curr;
-			else if (*curr == quoted)
-				quoted = 0;
-			curr++;
-			continue ;
+			if (!is_quoted)
+				is_quoted = *curr;
+			else if (is_quoted == *curr)
+				is_quoted = 0;
 		}
 		curr++;
 	}
@@ -47,9 +45,9 @@ t_token_list	*tokenizer(const char *prompt)
 	char			*content;
 	t_token_list	*tokens;
 
-	start_ptr = (char *) prompt;
+	start_ptr = (char *)prompt;
 	tokens = NULL;
-	while (*start_ptr != '\0')
+	while (start_ptr && *start_ptr != '\0')
 	{
 		if (!ft_strchr(SPACES, *start_ptr))
 		{
