@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 11:07:44 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/27 15:22:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 
 //	collections
 # define META_CHARS " \t\n|&;()<>"
-# define OPERATORS "|&;()<>"
+# define OPERATORS "|<>"
 # define SPACES	" \t\n"
-# define QUOTES "'\""
+# define QUOTES "'\"" // QUOTE and DQUOTE
 # define DELIM_CHARS " \t\n|&;()<>'\""
 
 //	argument symbol
