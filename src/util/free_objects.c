@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 14:12:38 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 15:47:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 15:38:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,28 @@ void	free_list(t_list *list)
 		free(tmp_ptr);
 	}
 }
+
+void	free_var_obj(t_var *var)
+{
+	if (var)
+	{
+		if (var->name)
+			free(var->name);
+		if (var->val)
+			free(var->val);
+		free(var);
+	}
+}
+
 void	free_var_list(t_list *var_list)
 {
 	t_list	*tmp_list;
-	t_var	*tmp_var;
 
 	while (var_list)
 	{
 		tmp_list = var_list;
-		if (tmp_list->content)
-		{
-			tmp_var = tmp_list->content;
-			if (tmp_var->name)
-				free(tmp_var->name);
-			if (tmp_var->val)
-				free(tmp_var->val);
-		}
+		if (var_list->content)
+			free_var_obj(var_list->content);
 		var_list = var_list->next;
 		free(tmp_list);
 	}
