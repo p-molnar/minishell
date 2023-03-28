@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/26 22:47:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/27 17:11:25 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,21 @@ void	execute_builtin(char *cmd, t_shell_data *data, char **args)
 int	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 {
 	int				original_stdin;
+	int				original_stdout;
 	char			*cmd;
 	t_token_list	*arg;
 	char			*arg_content;
+	int				fd_in;
+	int				fd_out;
 
 	arg_content = NULL;
-	original_stdin = dup(0);
+	original_stdin = dup(STDIN_FILENO);
+	original_stdout = dup(STDOUT_FILENO);
+	fd_in = -1;
+	fd_out = -1;
 	signal(SIGINT, SIG_DFL);
 	tcsetattr(0, 0, &data->original_termios);
-	if (redirect_files(current, original_stdin))
+	if (redirect_files(current, original_stdin, &fd_in, &fd_out))
 		return (1);
 	while (current)
 	{
@@ -86,6 +92,12 @@ int	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 		cd(arg_content, data);
 	else if (ft_strncmp(cmd, "exit", ft_strlen("exit") + 1) == 0)
 		exit (0);
+	dup2(original_stdin, STDIN_FILENO);
+	dup2(original_stdout, STDOUT_FILENO);
+	close(fd_in);
+	close(fd_out);
+	close(original_stdin);
+	close(original_stdout);
 	return (1);
 }
 

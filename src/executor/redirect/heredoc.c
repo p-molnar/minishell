@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/16 17:50:14 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/21 15:09:08 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/27 17:11:25 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	open_heredoc(char *delimiter, int og_stdin)
 	d_len = ft_strlen(delimiter);
 	buf = NULL;
 	pipe(here_pipe);
-	dup2(og_stdin, 0);
+	dup2(og_stdin, STDIN_FILENO);
 	buf = readline("> ");
 	while (buf && ft_strncmp(buf, delimiter, d_len + 1))
 	{
@@ -35,6 +35,6 @@ void	open_heredoc(char *delimiter, int og_stdin)
 		buf = readline("> ");
 	}
 	free(buf);
-	dup2(here_pipe[0], 0);
+	dup2(here_pipe[0], STDIN_FILENO);
 	close(here_pipe[1]);
 }

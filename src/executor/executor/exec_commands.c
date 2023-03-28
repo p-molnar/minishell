@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/23 16:30:07 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/28 13:06:07 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 		}
 		free(commandpath);
 	}
-	ft_putstr_fd("Command not found\n", 2);
-	exit(0);
+	ft_putstr_fd("Command not found\n", STDERR_FILENO);
 }
 
 void	execute_cmd(t_command_list *current, t_shell_data *data,
@@ -96,13 +95,17 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 {
 	char	**arguments;
 	int		original_stdin;
+	int		fd_in;
+	int		fd_out;
 
-	original_stdin = dup(0);
+	fd_in = -1;
+	fd_out = -1;
+	original_stdin = dup(STDIN_FILENO);
 	signal(SIGINT, SIG_DFL);
 	tcsetattr(0, 0, &data->original_termios);
 	redirect_pipes(in_pipe, out_pipe);
-	if (redirect_files(current, original_stdin))
-		exit (0);
+	if (redirect_files(current, original_stdin, &fd_in, &fd_out))
+		exit (1);
 	while (current)
 	{
 		if (current->symbol == CMD || current->symbol == D_PIPE)
@@ -118,8 +121,11 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 			execute_bin(current->token->content, data, arguments);
 		}
 		free(arguments);
+		close(fd_in);
+		close(fd_out);
+		close(original_stdin);
 	}
-	exit(0);
+	exit(127);
 }
 
 void	execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
