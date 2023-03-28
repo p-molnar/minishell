@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 09:15:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/26 23:52:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 11:34:54 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	add_var(t_var *new_var, t_list **var_list)
+int	is_valid_var_definition(char *s)
 {
-	t_var	*var_defined;
-	t_var	*old_var;
+	int	i;
 
-	var_defined = get_var(new_var->name, *var_list);
-	if (!var_defined)
-		ft_lstadd_back(var_list, ft_lstnew(new_var));
-	else
-	{
-		old_var = var_defined;
-		if (old_var->val)
-			free(old_var->val);
-		old_var->val = new_var->val;
-	}
+	i = 0;
+	if (ft_isdigit(s[i++]))
+		return (0);
+	while (ft_isalnum(s[i]))
+		i++;
+	if (s[i] != EQUAL)
+		return (0);
+	return (1);
 }
 
 void	parse_shell_variable(t_shell_data *data)

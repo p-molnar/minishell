@@ -6,29 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/26 23:33:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 11:04:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ms_data_types.h>
 #include <ms_macros.h>
 #include <libft.h>
-
-int	is_valid_var_definition(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (ft_isdigit(s[i++]))
-		return (0);
-	while (ft_isalnum(s[i]))
-		i++;
-	if (s[i] != EQUAL)
-		return (0);
-	// while (s[i] && ft_isalnum(s[i]))
-	// 	i++;
-	return (1);
-}
+#include <stdlib.h>
 
 t_var	*get_var(char *var_name, t_list *var_list)
 {
@@ -49,6 +34,23 @@ t_var	*get_var(char *var_name, t_list *var_list)
 		var_list = var_list->next;
 	}
 	return (NULL);
+}
+
+void	add_var(t_var *new_var, t_list **var_list)
+{
+	t_var	*var_defined;
+	t_var	*old_var;
+
+	var_defined = get_var(new_var->name, *var_list);
+	if (!var_defined)
+		ft_lstadd_back(var_list, ft_lstnew(new_var));
+	else
+	{
+		old_var = var_defined;
+		if (old_var->val)
+			free(old_var->val);
+		old_var->val = new_var->val;
+	}
 }
 
 t_list	*get_node(void *lookup_content, t_list *list)
