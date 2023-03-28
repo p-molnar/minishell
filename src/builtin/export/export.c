@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/18 20:22:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 12:07:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	export(t_token_list *token, t_shell_data *data)
 		return ;
 	}
 	else if (is_valid_var_definition(token->content))
-		parse_var(token->content, var);
+		parse_var(var, token->content);
 	else
 	{
 		var->name = ft_strdup(token->content); // check for return val!
