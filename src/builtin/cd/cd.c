@@ -6,13 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 11:42:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 17:32:18 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <ms_macros.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 static void	init_env_vars(t_var **env_var, t_shell_data *data)
 {
@@ -58,6 +59,7 @@ int	cd(char *dir, t_shell_data *data)
 	init_env_vars(env_var, data);
 	if (exec_steps(dir, &curpath, env_var))
 		return (1);
+	chdir(curpath);
 	return (update_wdirs(curpath, env_var, data));
 }
 
