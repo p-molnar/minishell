@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 16:45:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 17:14:58 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ void	add_variable(t_list **str_list, char **s, t_shell_data *data)
 	var_name = parse_var_name(*s);
 	var = get_var(var_name, data->env_vars);
 	if (var != NULL)
-		ft_lstadd_back(str_list, ft_lstnew(ft_strdup(var->val)));
+	{
+		if (!var->val)
+			ft_lstadd_back(str_list, ft_lstnew(ft_strdup("")));
+		else
+			ft_lstadd_back(str_list, ft_lstnew(ft_strdup(var->val)));
+	}
 	*s += ft_strlen(var_name) + 1;
 	free(var_name);
 }
@@ -40,9 +45,9 @@ char	*expand_token(char *s, t_shell_data *data)
 	is_quoted = 0;
 	while (s && *s != '\0')
 	{
-		if ((*s == QUOTE || *s == DQUOTE) && !is_quoted)
+		if (ft_strchr(QUOTES, *s) && !is_quoted)
 			is_quoted = *s;
-		else if (*s == is_quoted)
+		else if (is_quoted && *s == is_quoted)
 			is_quoted = 0;
 		else if (*s == DOLLAR && (!is_quoted || is_quoted == DQUOTE))
 		{
