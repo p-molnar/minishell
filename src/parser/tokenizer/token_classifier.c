@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/28 10:58:48 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 15:02:52 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/28 16:30:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static int	is_valid_quotation(char *s)
 {
 	int	in_quote;
 
-	in_quote  = 0;
+	in_quote = 0;
 	while (s && *s)
 	{
 		if (!in_quote && ft_strchr(QUOTES, *s))
 			in_quote = *s;
-		else if(in_quote && in_quote == *s)
+		else if (in_quote && in_quote == *s)
 			in_quote = 0;
 		s++;
 	}
