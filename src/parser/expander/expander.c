@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 16:19:56 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 16:45:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,18 @@ void	add_variable(t_list **str_list, char **s, t_shell_data *data)
 char	*expand_token(char *s, t_shell_data *data)
 {
 	t_list	*str_list;
-	char	quoted;
+	char	is_quoted;
 	char	*expanded_s;
 
 	str_list = NULL;
-	quoted = 0;
+	is_quoted = 0;
 	while (s && *s != '\0')
 	{
-		if ((*s == QUOTE || *s == DQUOTE) && !quoted)
-			quoted = *s;
-		else if (*s == quoted)
-			quoted = 0;
-		else if (*s == DOLLAR && (!quoted || quoted == DQUOTE))
+		if ((*s == QUOTE || *s == DQUOTE) && !is_quoted)
+			is_quoted = *s;
+		else if (*s == is_quoted)
+			is_quoted = 0;
+		else if (*s == DOLLAR && (!is_quoted || is_quoted == DQUOTE))
 		{
 			add_variable(&str_list, &s, data);
 			continue ;
