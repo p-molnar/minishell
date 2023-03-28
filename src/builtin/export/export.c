@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 12:40:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 14:37:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_exported_vars(t_list *var_list)
 		curr_var = var_list->content;
 		printf("declare -x ");
 		if (curr_var->name && curr_var->val)
-			printf("%s=%s", curr_var->name, curr_var->val);
+			printf("%s=\"%s\"", curr_var->name, curr_var->val);
 		else if (curr_var->name && curr_var->val == NULL)
 			printf("%s", curr_var->name);
 		printf("\n");
@@ -35,21 +35,26 @@ void	print_exported_vars(t_list *var_list)
 void	export(t_token_list *token, t_shell_data *data)
 {
 	t_var	*var;
+	char	*s;
 
 	if (token == NULL)
-	{
-		print_exported_vars(data->env_vars);
-		return ;
-	}
-	else if (is_valid_var_definition(token->content))
-		var = parse_var(token->content);
+		return (print_exported_vars(data->env_vars));
+	s = token->content;
+	if (*s == ' ')
+		return ; // error handling
+	else if (is_valid_var_definition(s))
+		var = parse_var(s);
 	else
 	{
-		var = ft_calloc(1, sizeof(t_var));
+		var = get_var(s, data->shell_vars);
 		if (!var)
-			return ;
-		var->name = ft_strdup(token->content);
-		var->val = NULL;
+		{
+			var = ft_calloc(1, sizeof(t_var));
+			if (!var)
+				return ;
+			var->name = ft_strdup(token->content);
+			var->val = NULL;
+		}
 	}
 	add_var(var, &data->env_vars);
 }
