@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/27 17:11:25 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/28 15:46:54 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 	else if (ft_strncmp(cmd, "cd", ft_strlen("cd") + 1) == 0)
 		cd(arg_content, data);
 	else if (ft_strncmp(cmd, "exit", ft_strlen("exit") + 1) == 0)
-		exit (0);
+		builtin_exit(compound_args(current));
 	dup2(original_stdin, STDIN_FILENO);
 	dup2(original_stdout, STDOUT_FILENO);
 	close(fd_in);
