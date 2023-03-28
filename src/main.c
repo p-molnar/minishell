@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/27 17:42:05 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/28 15:05:11 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	print_tokens(t_token_list *list)
 	while (list)
 	{
 		// printf("#%d\t:%s: ->%s\n", i + 1, list->content, token[list->type + 1]);
+		// printf("%p\n", list);
 		printf("|%s|\n", list->content);
 		// printf("token_start -> :%s:\n", list->prompt_ptr);
 		i++;
@@ -63,7 +64,9 @@ void	print_commands(t_command_list *list)
 	{
 		printf("#%d : -> %s\n", i + 1, symbol[list->symbol]);
 		if (list->token)
+		{
 			printf("%s\n", list->token->content);
+		}
 		i++;
 		list = list->next;
 	}
@@ -112,7 +115,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (commands)
 		{
 			expand_tokens(&data);
-			// print_tokens(data.tokens);
+			print_tokens(data.tokens);
 			// print_commands(commands);
 			executor(&data, commands);
 			free_command_list(commands);

@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/23 16:56:10 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/03/28 13:58:26 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ EXECUTOR		=	$(addprefix executor/,		$(EXECUTE)	\
 # BUILTINS
 EXPORT			=	$(addprefix export/,	export.c)
 ENV				=	$(addprefix env/, 		env.c)
+EXIT			=	$(addprefix exit/, 		exit.c)
 UNSET			=	$(addprefix unset/,		unset.c)
 PWD				=	$(addprefix pwd/,		pwd.c)
 ECHO			=	$(addprefix echo/,		echo.c)
@@ -85,6 +86,7 @@ BUILTIN			=	$(addprefix builtin/, 	$(EXPORT)			\
 											$(UNSET)			\
 											$(PWD)				\
 											$(ENV)				\
+											$(EXIT)				\
 											$(ECHO)				\
 											$(CD)				\
 													)
