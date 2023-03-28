@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/28 15:46:54 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/28 18:08:55 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,34 @@ void	execute_builtin(char *cmd, t_shell_data *data, char **args)
 	}
 }
 
-int	execute_parent_builtin(t_command_list *current, t_shell_data *data)
+void	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 {
-	int				original_stdin;
-	int				original_stdout;
 	char			*cmd;
 	t_token_list	*arg;
 	char			*arg_content;
+
+	arg_content = NULL;
+	cmd = current->token->content;
+	arg = get_next_argument(current);
+	if (arg)
+		arg_content = arg->content;
+	if (ft_strncmp(cmd, "export", ft_strlen("export") + 1) == 0)
+		export(arg, data);
+	else if (ft_strncmp(cmd, "unset", ft_strlen("unset") + 1) == 0)
+		unset(arg_content, data);
+	else if (ft_strncmp(cmd, "cd", ft_strlen("cd") + 1) == 0)
+		cd(arg_content, data);
+	else if (ft_strncmp(cmd, "exit", ft_strlen("exit") + 1) == 0)
+		builtin_exit(compound_args(current));
+}
+
+int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)
+{
+	int				original_stdin;
+	int				original_stdout;
 	int				fd_in;
 	int				fd_out;
 
-	arg_content = NULL;
 	original_stdin = dup(STDIN_FILENO);
 	original_stdout = dup(STDOUT_FILENO);
 	fd_in = -1;
@@ -80,18 +97,7 @@ int	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 			break ;
 		current = current->next;
 	}
-	cmd = current->token->content;
-	arg = get_next_argument(current);
-	if (arg)
-		arg_content = arg->content;
-	if (ft_strncmp(cmd, "export", ft_strlen("export") + 1) == 0)
-		export(arg, data);
-	else if (ft_strncmp(cmd, "unset", ft_strlen("unset") + 1) == 0)
-		unset(arg_content, data);
-	else if (ft_strncmp(cmd, "cd", ft_strlen("cd") + 1) == 0)
-		cd(arg_content, data);
-	else if (ft_strncmp(cmd, "exit", ft_strlen("exit") + 1) == 0)
-		builtin_exit(compound_args(current));
+	execute_parent_builtin(current, data);
 	dup2(original_stdin, STDIN_FILENO);
 	dup2(original_stdout, STDOUT_FILENO);
 	close(fd_in);
@@ -115,12 +121,12 @@ int	check_parent_builtin(t_command_list *current, t_shell_data *data)
 		return (0);
 	cmd = current->token->content;
 	if (ft_strncmp(cmd, "export", ft_strlen("export") + 1) == 0)
-		return (execute_parent_builtin(current, data));
+		return (prepare_parent_builtin(current, data));
 	else if (ft_strncmp(cmd, "unset", ft_strlen("unset") + 1) == 0)
-		return (execute_parent_builtin(current, data));
+		return (prepare_parent_builtin(current, data));
 	else if (ft_strncmp(cmd, "cd", ft_strlen("cd") + 1) == 0)
-		return (execute_parent_builtin(current, data));
+		return (prepare_parent_builtin(current, data));
 	else if (ft_strncmp(cmd, "exit", ft_strlen("exit") + 1) == 0)
-		return (execute_parent_builtin(current, data));
+		return (prepare_parent_builtin(current, data));
 	return (0);
 }

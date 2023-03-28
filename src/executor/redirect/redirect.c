@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/27 17:11:25 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/28 18:00:26 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	open_redirect_outfile(t_command_list *current, int *fd)
 	return (0);
 }
 
-int	redirect_files(t_command_list *current, int og_stdin, int *fd_in, int *fd_out)
+int	redirect_files(t_command_list *current, int og_stdin,
+						int *fd_in, int *fd_out)
 {
 	int		ret;
 
