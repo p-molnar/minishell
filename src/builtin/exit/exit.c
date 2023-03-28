@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 13:55:12 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/28 15:48:10 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/28 15:58:40 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	builtin_exit(char **args)
 	int	i;
 
 	i = 0;
+	if (!args)
+		exit(0);
 	if (args[1])
 	{
 		while (args[1][i])

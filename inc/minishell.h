@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 15:45:36 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/28 16:09:20 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ t_list			*get_node(void *lookup_content, t_list *list);
 void			executor(t_shell_data *data, t_command_list *commands);
 void			execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
 					pid_t *process, t_shell_data *data);
-int				check_parent_builtin(t_command_list *current, t_shell_data *data);
+int				check_parent_builtin(t_command_list *current,
+					t_shell_data *data);
 void			execute_builtin(char *cmd, t_shell_data *data, char **args);
 int				count_symbols(int symbol, t_command_list *current);
 int				count_symbols_simple_cmd(int symbol, t_command_list *current);
@@ -124,11 +125,12 @@ void			exec_step_7(char **curpath, t_var **env_var, int *step);
 int				exec_step_8(char **curpath, int *step);
 
 //	update_working_dirs.c
-int				update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data);
+int				update_wdirs(char *dir, t_var *var[ENV_SIZE],
+					t_shell_data *data);
 
 //	cd_utils.c
 int				get_arr_size(void **arr);
 char			*path_concat(char *basepath, char *relpath);
 void			free_arr(void **arr);
-char    *n_arr_to_str(char **arr, char *c, int n);
+char			*n_arr_to_str(char **arr, char *c, int n);
 #endif
