@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 12:34:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 12:52:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 #include <libft.h>
 #include <stdlib.h>
 
-t_var	*get_var(char *var_name, t_list *var_list)
+t_var	*get_var(char *lookup_name, t_list *var_list)
 {
-	t_var	*var_declared;
-	char	*name_declared;
+	t_var	*var;
+	char	*var_name;
 	int		len;
 
-	while (var_name && var_list)
+	while (lookup_name && var_list)
 	{
-		var_declared = var_list->content;
-		if (var_declared && var_declared->name)
+		var = var_list->content;
+		if (var && var->name)
 		{
-			name_declared = var_declared->name;
+			var_name = var->name;
 			len = ft_strlen(var_name);
-			if (ft_strncmp(var_name, name_declared, len + 1) == 0)
+			if (ft_strncmp(var_name, lookup_name, len + 1) == 0)
 				return (var_list->content);
 		}
 		var_list = var_list->next;
@@ -36,20 +36,22 @@ t_var	*get_var(char *var_name, t_list *var_list)
 	return (NULL);
 }
 
-void	add_var(t_var *new_var, t_list **var_list)
+void	add_var(t_var *new_var_def, t_list **var_list)
 {
 	t_var	*var_defined;
-	t_var	*old_var;
+	t_var	*old_var_def;
 
-	var_defined = get_var(new_var->name, *var_list);
+	if (!new_var_def || !var_list)
+		return ;
+	var_defined = get_var(new_var_def->name, *var_list);
 	if (!var_defined)
-		ft_lstadd_back(var_list, ft_lstnew(new_var));
+		ft_lstadd_back(var_list, ft_lstnew(new_var_def));
 	else
 	{
-		old_var = var_defined;
-		if (old_var->val)
-			free(old_var->val);
-		old_var->val = new_var->val;
+		old_var_def = var_defined;
+		if (old_var_def->val)
+			free(old_var_def->val);
+		old_var_def->val = new_var_def->val;
 	}
 }
 
