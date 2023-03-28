@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/27 17:14:09 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/28 13:06:07 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 	tcsetattr(0, 0, &data->original_termios);
 	redirect_pipes(in_pipe, out_pipe);
 	if (redirect_files(current, original_stdin, &fd_in, &fd_out))
-		exit (0);
+		exit (1);
 	while (current)
 	{
 		if (current->symbol == CMD || current->symbol == D_PIPE)
@@ -125,7 +125,7 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 		close(fd_out);
 		close(original_stdin);
 	}
-	exit(0);
+	exit(127);
 }
 
 void	execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,

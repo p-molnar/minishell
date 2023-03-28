@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/27 17:11:25 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/27 17:42:05 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ int	main(int argc, char *argv[], char *envp[])
 		commands = parse_commands(data.tokens);
 		if (commands)
 		{
-			//expand_tokens(&data);
-			print_tokens(data.tokens);
+			expand_tokens(&data);
+			// print_tokens(data.tokens);
 			// print_commands(commands);
 			executor(&data, commands);
 			free_command_list(commands);
