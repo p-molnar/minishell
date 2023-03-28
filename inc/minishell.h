@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 12:06:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 12:34:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void			parse_shell_variable(t_shell_data *data);
 void			parse_env_variable(char **env, t_list **list);
 
 //	variable_parser_util.c
-void			parse_var(t_var *var, char *s);
+t_var			*parse_var(char *s);
 int				is_valid_var_definition(char *s);
 t_var			*get_var(char *lookup_name, t_list *list);
 t_list			*get_node(void *lookup_content, t_list *list);

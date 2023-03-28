@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 12:16:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/28 12:34:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,24 @@ t_list	*get_node(void *lookup_content, t_list *list)
 	return (NULL);
 }
 
-void	parse_var(t_var *var, char *s)
+t_var	*parse_var(char *s)
 {
-	char	*separator;
+	char	*sep;
 	int		size;
+	t_var	*var;
 
 	if (!s)
-		return ;
-	separator = ft_strchr(s, EQUAL);
-	if (!separator)
-		return ;
-	size = separator - s;
+		return (NULL);
+	var = ft_calloc(1, sizeof(t_var));
+	if (!var)
+		return (NULL);
+	sep = ft_strchr(s, EQUAL);
+	if (!sep)
+		return (NULL);
+	size = sep - s;
 	var->name = ft_substr(s, 0, size);
 	s += size + 1;
 	size = ft_strlen(s);
 	var->val = ft_substr(s, 0, size);
+	return (var);
 }
