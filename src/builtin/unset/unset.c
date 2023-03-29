@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:17:39 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 18:09:37 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/29 15:42:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,48 @@
 #include <stdlib.h>
 #include <libft.h>
 
+void	del_first_node(t_list **curr_node)
+{
+	t_list	*next_node;
+
+	next_node = (*curr_node)->next;
+	free_node(*curr_node);
+	*curr_node = next_node;
+}
+
+void	del_middle_node(t_list *prev_node, t_list *curr_node)
+{
+	prev_node->next = curr_node->next;
+	free(curr_node);
+}
+
+void	del_last_node(t_list *prev_node)
+{
+	free_node(prev_node->next);
+	prev_node->next = NULL;
+}
+
 void	del_node(t_list **list, t_list *node)
 {
 	t_list	*prev_node;
-	t_list	*tmp;
+	t_list	*curr;
 
 	prev_node = NULL;
-	tmp = *list;
-	while (tmp)
+	curr = *list;
+	while (curr)
 	{
-		if (tmp == node)
+		if (curr == node)
 		{
 			if (prev_node == NULL)
-				*list = tmp->next;
-			else if (tmp->next == NULL)
-				prev_node->next = NULL;
+				del_first_node(&node);
+			else if (curr->next == NULL)
+				del_last_node(node);
 			else
-				prev_node->next = tmp->next;
+				del_middle_node(prev_node, curr);
 			return ;
 		}
-		prev_node = tmp;
-		tmp = tmp->next;
+		prev_node = curr;
+		curr = curr->next;
 	}
 }
 
