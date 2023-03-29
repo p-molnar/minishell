@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 16:08:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 11:35:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 #include <minishell.h>
 #include <libft.h>
 #include <stdlib.h>
+
+int	is_valid_var_name(char *s, int n)
+{
+	int	i;
+
+	i = 0;
+	while (s && s[i] != '\0' && n)
+	{
+		if (i == 0 && ft_isdigit(s[i]))
+			return (0);
+		else if (s[i] != '_' && !ft_isalnum(s[i]))
+			return (0);
+		i++;
+		n--;
+	}
+	return (1);
+}
 
 t_var	*get_var(char *lookup_name, t_list *var_list)
 {
@@ -74,17 +91,6 @@ void	add_var(t_var *new_var_def, t_list **var_list)
 	}
 	else
 		ft_lstadd_back(var_list, ft_lstnew(new_var_def));
-}
-
-t_list	*get_node(void *lookup_content, t_list *list)
-{
-	while (list)
-	{
-		if (list->content == lookup_content)
-			return (list);
-		list = list->next;
-	}
-	return (NULL);
 }
 
 t_var	*parse_var(char *s)

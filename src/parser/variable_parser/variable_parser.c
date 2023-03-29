@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 09:15:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 09:37:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 11:35:39 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 
 int	is_valid_var_definition(char *s)
 {
-	int	i;
+	char	*sep;
+	int		len;
 
-	i = 0;
-	if (ft_isdigit(s[i++]))
-		return (0);
-	while (ft_isalnum(s[i]) || s[i] == '_')
-		i++;
-	if (s[i] != EQUAL)
-		return (0);
-	return (1);
+	sep = ft_strchr(s, EQUAL);
+	if (sep != NULL)
+	{
+		len = sep - s;
+		return (is_valid_var_name(s, len));
+	}
+	return (0);
 }
 
 void	parse_shell_variable(t_shell_data *data)
