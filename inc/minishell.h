@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 12:58:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 13:27:30 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <termios.h>
 
 # define PROMPT_MSG "minishell$ "
+
+int	g_exit_status;
 
 //  readline
 void			rl_replace_line(const char *text, int clear_undo);

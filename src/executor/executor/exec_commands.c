@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/28 17:23:13 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/29 13:25:44 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
 	i--;
 	while (i >= 0)
 	{
-		waitpid(process[i], NULL, 0);
+		waitpid(process[i], &g_exit_status, 0);
 		i--;
 	}
 }
