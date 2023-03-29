@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:17:39 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 15:42:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 18:21:38 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,33 @@ void	del_first_node(t_list **curr_node)
 {
 	t_list	*next_node;
 
-	next_node = (*curr_node)->next;
-	free_node(*curr_node);
-	*curr_node = next_node;
+	if (curr_node && *curr_node)
+	{
+		next_node = (*curr_node)->next;
+		free_var((t_var **)&((*curr_node)->content));
+		free_node(curr_node);
+		*curr_node = next_node;
+	}
 }
 
 void	del_middle_node(t_list *prev_node, t_list *curr_node)
 {
-	prev_node->next = curr_node->next;
-	free(curr_node);
+	if (prev_node && curr_node)
+	{
+		prev_node->next = curr_node->next;
+		free_var(curr_node->content);
+		free_node(&curr_node);
+	}
 }
 
-void	del_last_node(t_list *prev_node)
+void	del_last_node(t_list **prev_node)
 {
-	free_node(prev_node->next);
-	prev_node->next = NULL;
+	if (prev_node && *prev_node)
+	{
+		free_var((t_var **)&((*prev_node)->next->content));
+		free_node(&((*prev_node)->next));
+		(*prev_node)->next = NULL;
+	}
 }
 
 void	del_node(t_list **list, t_list *node)
@@ -49,7 +61,7 @@ void	del_node(t_list **list, t_list *node)
 			if (prev_node == NULL)
 				del_first_node(&node);
 			else if (curr->next == NULL)
-				del_last_node(node);
+				del_last_node(&prev_node);
 			else
 				del_middle_node(prev_node, curr);
 			return ;
@@ -65,7 +77,7 @@ void	unset(char *var_name, t_shell_data *data)
 	t_list	*shell_ptr;
 	t_list	*ptr;
 
-	if (!var_name)
+	if (!var_name || !data)
 		return ;
 	shell_ptr = get_node(get_var(var_name, data->shell_vars), data->shell_vars);
 	env_ptr = get_node(get_var(var_name, data->env_vars), data->env_vars);
@@ -84,8 +96,8 @@ void	unset(char *var_name, t_shell_data *data)
 	}
 	if (!shell_ptr && !env_ptr)
 		return ;
-	free(((t_var *) ptr->content)->name);
-	free(((t_var *) ptr->content)->val);
-	free(ptr->content);
-	free(ptr);
+	// free(((t_var *) ptr->content)->name);
+	// free(((t_var *) ptr->content)->val);
+	// free(ptr->content);
+	// free(ptr);
 }
