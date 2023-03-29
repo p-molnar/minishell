@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 14:43:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 16:43:06 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	initialise_data(t_shell_data *data)
 	data->prompt = NULL;
 	data->tokens = NULL;
 	tcgetattr(0, &data->original_termios);
+	g_exit_status = 0;
 }
 
 int	main(int argc, char *argv[], char *envp[])
