@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/29 10:41:41 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/29 12:22:26 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,91 +22,121 @@ LIBFT			=	$(SUBMODULE)/libft.a
 
 
 # PARSER
-CHAR_READER		=	$(addprefix	character_reader/, character_reader.c)
+CHAR_READER		=	$(addprefix	character_reader/,							\
+						character_reader.c									\
+						)									
 
-TOKENIZER		=	$(addprefix	tokenizer/,	tokenizer.c						\
-											token_classifier.c				\
-											)
 
-EXPANDER 		=	$(addprefix	expander/,	expander.c						\
-											expander_util.c					\
-											)
+TOKENIZER		=	$(addprefix	tokenizer/,									\
+						tokenizer.c											\
+						token_classifier.c									\
+						)
+
+EXPANDER 		=	$(addprefix	expander/,									\
+						expander.c											\
+						expander_util.c										\
+						)
 											
-VAR_INTERPRETER	=	$(addprefix	variable_parser/,	variable_parser.c		\
-													variable_parser_util.c	\
-													)
+VAR_INTERPRETER	=	$(addprefix	variable_parser/,							\
+						variable_parser.c									\
+						variable_parser_util.c								\
+						)
 
-CMD_PARSER		=	$(addprefix	command_list/,	parse_commands.c	\
-												parse_operators.c	\
-												)
+CMD_PARSER		=	$(addprefix	command_list/,								\
+						parse_commands.c									\
+						parse_operators.c									\
+						)
 
-PARSER			=	$(addprefix parser/,	$(CHAR_READER)		\
-											$(TOKENIZER)		\
-											$(CMD_PARSER)		\
-											$(EXPANDER)			\
-											$(VAR_INTERPRETER)	\
-											)
+PARSER			=	$(addprefix parser/,									\
+						$(CHAR_READER)										\
+						$(TOKENIZER)										\
+						$(CMD_PARSER)										\
+						$(EXPANDER)											\
+						$(VAR_INTERPRETER)									\
+						)
 
 # SIGNAL HANDLER
-SIG_HANDLER		=	$(addprefix	signal/, signal_handler.c)
+SIG_HANDLER		=	$(addprefix	signal/,									\
+						signal_handler.c									\
+						)
 
-SIGNAL			=	$(addprefix signal/, $(SIG_HANDLER))
+SIGNAL			=	$(addprefix signal/,									\
+						$(SIG_HANDLER)										\
+						)
 
 # EXECUTOR
-EXECUTE			=	$(addprefix executor/,		executor.c				\
-												exec_commands.c			\
-												exec_builtins.c			\
-												exec_utils.c			\
-												)
+EXECUTE			=	$(addprefix executor/,									\
+						executor.c											\
+						exec_commands.c										\
+						exec_builtins.c										\
+						exec_utils.c										\
+						)
 
-REDIRECT		=	$(addprefix redirect/,		redirect.c				\
-												heredoc.c				\
-												)
+REDIRECT		=	$(addprefix redirect/,									\
+						redirect.c											\
+						heredoc.c											\
+						)
 
-EXECUTOR		=	$(addprefix executor/,		$(EXECUTE)				\
-												$(REDIRECT)				\
-												)
+EXECUTOR		=	$(addprefix executor/,									\
+						$(EXECUTE)											\
+						$(REDIRECT)											\
+						)
 
 # BUILTINS
-EXPORT			=	$(addprefix export/,	export.c)
-ENV				=	$(addprefix env/, 		env.c)
-EXIT			=	$(addprefix exit/, 		exit.c)
-UNSET			=	$(addprefix unset/,		unset.c)
-PWD				=	$(addprefix pwd/,		pwd.c)
-ECHO			=	$(addprefix echo/,		echo.c)
-CD				=	$(addprefix cd/,		cd.c					\
-											cd_utils.c				\
-											update_working_dirs.c	\
-											$(CD_STEPS)				\
-											)
+EXPORT			=	$(addprefix export/,									\
+						export.c											\
+						)
+ENV				=	$(addprefix env/,										\
+						env.c												\
+						)
+EXIT			=	$(addprefix exit/,										\
+						exit.c												\
+						)
+UNSET			=	$(addprefix unset/,										\
+						unset.c												\
+						)
+PWD				=	$(addprefix pwd/,										\
+						pwd.c												\
+						)
+ECHO			=	$(addprefix echo/,										\
+						echo.c												\
+						)
+CD				=	$(addprefix cd/,										\
+						cd.c												\
+						cd_utils.c											\
+						update_working_dirs.c								\
+						$(CD_STEPS)											\
+						)
 
-CD_STEPS		=	$(addprefix	cd_execution_steps/,			\
-											step_1_2.c			\
-											step_3.c			\
-											step_4.c			\
-											step_5.c			\
-											step_6.c			\
-											step_7.c			\
-											step_8.c			\
-											)
+CD_STEPS		=	$(addprefix	cd_execution_steps/,						\
+						step_1_2.c											\
+						step_3.c											\
+						step_4.c											\
+						step_5.c											\
+						step_6.c											\
+						step_7.c											\
+						step_8.c											\
+						)
 
 
-BUILTIN			=	$(addprefix builtin/, 	$(EXPORT)			\
-											$(UNSET)			\
-											$(PWD)				\
-											$(ENV)				\
-											$(EXIT)				\
-											$(ECHO)				\
-											$(CD)				\
-											)
+BUILTIN			=	$(addprefix builtin/,									\
+						$(EXPORT)											\
+						$(UNSET)											\
+						$(PWD)												\
+						$(ENV)												\
+						$(EXIT)												\
+						$(ECHO)												\
+						$(CD)												\
+						)
 
 # UTILS
 UTIL_PATH		=	util/
-UTIL			=	$(addprefix $(UTIL_PATH), 	token_list_util.c		\
-												command_list_util.c		\
-												free_objects.c			\
-												list_util.c				\
-												)
+UTIL			=	$(addprefix $(UTIL_PATH),								\
+						token_list_util.c									\
+						command_list_util.c									\
+						free_objects.c										\
+						list_util.c											\
+						)
 
 # ALL SOURCE FILES
 SRC				=	main.c $(PARSER) $(UTIL) $(SIGNAL) $(BUILTIN) $(EXECUTOR)
