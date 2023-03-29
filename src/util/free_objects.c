@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 14:12:38 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 09:48:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 18:17:28 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void	free_token(t_token_list *token)
 {
 	if (token)
 	{
-		if (token->content)
+		if (token && token->content)
 			free(token->content);
-		free(token);
+		if (token)
+			free(token);
 	}
 }
 
@@ -39,29 +40,45 @@ void	free_token_list(t_token_list *list)
 	}
 }
 
+void	free_node(t_list **node)
+{
+	if (node && *node && (*node)->content)
+		free((*node)->content);
+	if (node && *node)
+	{
+		free(*node);
+		*node = NULL;
+	}
+}
+
 void	free_list(t_list *list)
 {
 	t_list	*tmp_ptr;
 
 	while (list)
 	{
-		tmp_ptr = list;
-		if (tmp_ptr->content)
-			free(tmp_ptr->content);
-		list = list->next;
-		free(tmp_ptr);
+		tmp_ptr = list->next;
+		free_node(&list);
+		list = tmp_ptr;
 	}
 }
 
-void	free_var_obj(t_var *var)
+void	free_var(t_var **var)
 {
-	if (var)
+	if (var && *var)
 	{
-		if (var->name)
-			free(var->name);
-		if (var->val)
-			free(var->val);
-		free(var);
+		if ((*var)->name)
+		{
+			free((*var)->name);
+			(*var)->name = NULL;
+		}
+		if ((*var)->val)
+		{
+			free((*var)->val);
+			(*var)->val = NULL;
+		}
+		free(*var);
+		*var = NULL;
 	}
 }
 
@@ -73,8 +90,19 @@ void	free_var_list(t_list *var_list)
 	{
 		tmp_list = var_list;
 		if (var_list->content)
-			free_var_obj(var_list->content);
+			free_var(var_list->content);
 		var_list = var_list->next;
 		free(tmp_list);
 	}
+}
+
+void	free_arr(void **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr && arr[i])
+		free (arr[i++]);
+	if (arr)
+		free (arr);
 }
