@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 16:14:47 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 09:50:20 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char			*read_prompt(const char *prompt);
 t_token_list	*tokenizer(const char *prompt);
 
 //	token_list_util.c
-t_token_list	*new_node(char *content, char *tkn_start, int token_type);
+t_token_list	*new_node(char *content, int token_type);
 void			add_node_last(t_token_list **list, t_token_list *node);
 void			iter_tokens(t_token_list *l, int fd, void (*f)(char *, int));
 
