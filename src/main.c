@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 13:26:55 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/29 14:39:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,8 @@ int	main(int argc, char *argv[], char *envp[])
 	int prog_running;
 	t_shell_data data;
 	t_command_list *commands;
-	(void)argc;
-	(void)argv;
-	// (void) envp;
+	(void) argv;
+	(void) argc;
 
 	prog_running = 1;
 	initialise_data(&data);
