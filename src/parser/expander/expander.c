@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 17:14:58 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 12:48:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,31 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	add_variable(t_list **str_list, char **s, t_shell_data *data)
+t_var	*add_variable(t_list **str_list, char **s, t_shell_data *data)
 {
 	char	*var_name;
 	t_var	*var;
 
 	var_name = parse_var_name(*s);
 	var = get_var(var_name, data->env_vars);
-	if (var != NULL)
+	if (var == NULL)
+		var = get_var(var_name, data->shell_vars);
+	if (var)
 	{
 		if (!var->val)
 			ft_lstadd_back(str_list, ft_lstnew(ft_strdup("")));
 		else
 			ft_lstadd_back(str_list, ft_lstnew(ft_strdup(var->val)));
 	}
-	*s += ft_strlen(var_name) + 1;
+	else if (*var_name == '\0')
+		ft_lstadd_back(str_list, ft_lstnew(chardup(*s)));
+	else if (ft_strncmp(var_name, "?", 2) == 0)
+		ft_lstadd_back(str_list, ft_lstnew(ft_strdup("questionmark")));
+	else if (var == NULL)
+		ft_lstadd_back(str_list, ft_lstnew(ft_strdup("")));
+	*s += ft_strlen(var_name);
 	free(var_name);
+	return (var);
 }
 
 char	*expand_token(char *s, t_shell_data *data)
@@ -52,7 +61,6 @@ char	*expand_token(char *s, t_shell_data *data)
 		else if (*s == DOLLAR && (!is_quoted || is_quoted == DQUOTE))
 		{
 			add_variable(&str_list, &s, data);
-			continue ;
 		}
 		else
 			ft_lstadd_back(&str_list, ft_lstnew(chardup(s)));
