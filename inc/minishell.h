@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 16:06:44 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/29 17:26:57 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_token_list	*get_next_argument(t_command_list *current);
 int				count_symbols(int symbol, t_command_list *current);
 int				count_symbols_simple_cmd(int symbol, t_command_list *current);
 char			**compound_args(t_command_list *current);
-char			**path_builder(t_shell_data *data);
+char			**path_builder(t_shell_data *data, char *cmd);
 
 //	redirect.c
 int				redirect_files(t_command_list *current, int og_stdin,

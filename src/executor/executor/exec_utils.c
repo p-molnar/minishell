@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/28 17:37:32 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/29 17:33:31 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,37 @@
 #include <ms_macros.h>
 #include <stdlib.h>
 
-char	**path_builder(t_shell_data *data)
+char	*get_full_path(t_shell_data *data, char *cmd)
 {
-	t_var	*var;
+	t_var		*var;
+	char		*join;
+	const char	folder_indicator = '/';
+
+	if (ft_strnstr(cmd, &folder_indicator, ft_strlen(cmd)))
+	{
+		var = get_var("PWD", data->env_vars);
+		if (!var)
+			join = ft_strdup("");
+		else
+			join = ft_strjoin(var->val, ":");
+	}
+	else
+		join = ft_strdup("");
+	var = get_var("PATH", data->env_vars);
+	if (!var)
+		return (join);
+	join = ft_strjoin(join, var->val);
+	return (join);
+}
+
+char	**path_builder(t_shell_data *data, char *cmd)
+{
 	char	**path;
 	char	*finalpath;
 	int		i;
 
 	i = 0;
-	var = get_var("PATH", data->env_vars);
-	if (!var)
-		return (NULL);
-	path = ft_split(var->val, ':');
+	path = ft_split(get_full_path(data, cmd), ':');
 	while (path[i])
 	{
 		finalpath = ft_strjoin(path[i], "/");
