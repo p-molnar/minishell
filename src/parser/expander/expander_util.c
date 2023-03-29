@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 09:50:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 17:18:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 12:31:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ char	*parse_var_name(char *s)
 
 	start_ptr = s + 1;
 	end_ptr = start_ptr;
-	while (!ft_strchr(DELIM_CHARS, *end_ptr) && *end_ptr != DOLLAR)
+	while (*end_ptr && (ft_isalnum(*end_ptr) || ft_strchr("_?", *end_ptr)))
 		end_ptr++;
 	var_name = ft_substr(start_ptr, 0, end_ptr - start_ptr);
-	if (*var_name == '\0')
-		free (var_name);
 	return (var_name);
 }
 
