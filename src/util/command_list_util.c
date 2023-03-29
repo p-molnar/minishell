@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 14:43:08 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/09 16:02:44 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/29 14:27:24 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	add_command_back(t_command_list **list, t_command_list *node)
 	if (list && node)
 	{
 		if (!*list)
-			*list = new_command_node(node->symbol, node->token);
+			*list = node;
 		else
 		{
 			tmp_ptr = *list;
@@ -48,14 +48,21 @@ void	add_command_back(t_command_list **list, t_command_list *node)
 	}
 }
 
-void	free_command_list(t_command_list *list)
+void	free_command_list(t_command_list **list)
 {
-	t_command_list	*tmp_ptr;
+	t_command_list	*current;
+	t_command_list	*previous;
 
-	while (list)
+	if (*list)
 	{
-		tmp_ptr = list->next;
-		free(list);
-		list = tmp_ptr;
+		current = *list;
+		while (current)
+		{
+			previous = current;
+			current = current->next;
+			free(previous);
+			previous = NULL;
+		}
+		list = NULL;
 	}
 }

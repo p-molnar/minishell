@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 14:59:33 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/21 16:59:10 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/29 14:15:13 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int	parse_redirect_out(t_command_list **cmd_list,
 	if (!token->next)
 	{
 		printf("Syntax error, unexpected end of token list\n");
-		free_command_list(*cmd_list);
+		free_command_list(cmd_list);
 		return (RET_SYNTAX_ERR);
 	}
 	token = token->next;
 	if (token->type != WORD)
 	{
 		printf("Syntax error, unexpected token %s\n", token->content);
-		free_command_list(*cmd_list);
+		free_command_list(cmd_list);
 		return (RET_SYNTAX_ERR);
 	}
 	if (append_flag == 0)
@@ -44,14 +44,14 @@ int	parse_redirect_in(t_command_list **cmd_list,
 	if (!token->next)
 	{
 		printf("Syntax error, unexpected end of token list\n");
-		free_command_list(*cmd_list);
+		free_command_list(cmd_list);
 		return (RET_SYNTAX_ERR);
 	}
 	token = token->next;
 	if (token->type != WORD)
 	{
 		printf("Syntax error, unexpected token %s\n", token->content);
-		free_command_list(*cmd_list);
+		free_command_list(cmd_list);
 		return (RET_SYNTAX_ERR);
 	}
 	if (heredoc_flag == 0)

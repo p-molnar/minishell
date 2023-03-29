@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 15:49:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 10:37:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 14:31:30 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	add_node_last(t_token_list **list, t_token_list *node)
 	if (list && node)
 	{
 		if (!*list)
-			*list = new_node(node->content, node->type);
+			*list = node;
 		else
 		{
 			tmp_ptr = *list;
