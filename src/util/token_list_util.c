@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 15:49:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/23 14:12:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 09:51:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_token_list	*new_node(char *content, char *tkn_start, int token_type)
+t_token_list	*new_node(char *content, int token_type)
 {
 	t_token_list	*token;
 
@@ -25,7 +25,7 @@ t_token_list	*new_node(char *content, char *tkn_start, int token_type)
 		if (token == NULL)
 			return (NULL);
 		token->content = content;
-		token->prompt_ptr = tkn_start;
+		// token->prompt_ptr = tkn_start; might be useful later.
 		token->type = token_type;
 		token->next = NULL;
 		return (token);
@@ -40,7 +40,7 @@ void	add_node_last(t_token_list **list, t_token_list *node)
 	if (list && node)
 	{
 		if (!*list)
-			*list = new_node(node->content, node->prompt_ptr, node->type);
+			*list = new_node(node->content, node->type);
 		else
 		{
 			tmp_ptr = *list;
