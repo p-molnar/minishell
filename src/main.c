@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 14:43:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 14:50:36 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,8 @@ int	main(int argc, char *argv[], char *envp[])
 		data.prompt = read_prompt(PROMPT_MSG);
 		if (!data.prompt)
 			break;
-		// printf("original prompt |%s|\n", data.prompt);
 		data.tokens = tokenizer(data.prompt);
 		parse_shell_variable(&data);
-		// print_variables(data.shell_vars, "SHELL VARS");
 		classify_tokens(data.tokens);
 		commands = parse_commands(data.tokens);
 		if (ft_strncmp(data.prompt, "set", 4) == 0)
