@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 14:36:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 18:10:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*expand_token(char *s, t_shell_data *data)
 		s++;
 	}
 	expanded_s = list_to_str(str_list);
-	free_list(str_list);
+	// free_list(str_list);
 	return (expanded_s);
 }
 
