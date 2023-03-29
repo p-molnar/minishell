@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 11:35:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 16:39:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,20 @@ t_var	*get_var(char *lookup_name, t_list *var_list)
 	return (NULL);
 }
 
+t_var	*create_var(char *name, char *val)
+{
+	t_var	*var;
+
+	if (!name)
+		return (NULL);
+	var = ft_calloc(1, sizeof(t_var));
+	if (!var)
+		return (NULL);
+	var->name = name;
+	var->val = val;
+	return (var);
+}
+
 void	update_var(t_var *old_var, t_var *new_var)
 {
 	if (old_var && new_var)
@@ -65,7 +79,7 @@ void	update_var(t_var *old_var, t_var *new_var)
 			else if (ft_strncmp(old_var->val, new_var->val,
 					ft_strlen(old_var->val)) == 0)
 			{
-				free_var_obj(new_var);
+				free_var(&new_var);
 				return ;
 			}
 			free(old_var->val);
@@ -93,24 +107,22 @@ void	add_var(t_var *new_var_def, t_list **var_list)
 		ft_lstadd_back(var_list, ft_lstnew(new_var_def));
 }
 
-t_var	*parse_var(char *s)
+t_var	*parse_var_def(char *s)
 {
 	char	*sep;
+	char	*name;
+	char	*val;
 	int		size;
-	t_var	*var;
 
 	if (!s)
-		return (NULL);
-	var = ft_calloc(1, sizeof(t_var));
-	if (!var)
 		return (NULL);
 	sep = ft_strchr(s, EQUAL);
 	if (!sep)
 		return (NULL);
 	size = sep - s;
-	var->name = ft_substr(s, 0, size);
+	name = ft_substr(s, 0, size);
 	s += size + 1;
 	size = ft_strlen(s);
-	var->val = ft_substr(s, 0, size);
-	return (var);
+	val = ft_substr(s, 0, size);
+	return (create_var(name, val));
 }
