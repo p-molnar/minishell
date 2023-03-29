@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 15:01:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 09:52:17 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 14:24:39 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_var
 
 typedef struct s_shell_data
 {
+	int				argc;
+	char			**argv;
 	char			*prompt;
 	t_token_list	*tokens;
 	t_list			*env_vars;

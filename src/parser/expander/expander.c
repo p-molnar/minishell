@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 12:48:56 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 14:36:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 t_var	*add_variable(t_list **str_list, char **s, t_shell_data *data)
 {
 	char	*var_name;
+	char	*str;
 	t_var	*var;
 
 	var_name = parse_var_name(*s);
@@ -29,16 +30,17 @@ t_var	*add_variable(t_list **str_list, char **s, t_shell_data *data)
 	if (var)
 	{
 		if (!var->val)
-			ft_lstadd_back(str_list, ft_lstnew(ft_strdup("")));
+			str = ft_strdup("");
 		else
-			ft_lstadd_back(str_list, ft_lstnew(ft_strdup(var->val)));
+			str = ft_strdup(var->val);
 	}
 	else if (*var_name == '\0')
-		ft_lstadd_back(str_list, ft_lstnew(chardup(*s)));
-	else if (ft_strncmp(var_name, "?", 2) == 0)
-		ft_lstadd_back(str_list, ft_lstnew(ft_strdup("questionmark")));
-	else if (var == NULL)
-		ft_lstadd_back(str_list, ft_lstnew(ft_strdup("")));
+		str = chardup(*s);
+	else if (*var_name == '?')
+		str = ft_itoa(WEXITSTATUS(g_exit_status));
+	else
+		str = ft_strdup("");
+	ft_lstadd_back(str_list, ft_lstnew(str));
 	*s += ft_strlen(var_name);
 	free(var_name);
 	return (var);
