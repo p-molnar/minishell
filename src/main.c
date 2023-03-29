@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 16:43:06 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/29 18:19:15 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,6 @@ int	main(int argc, char *argv[], char *envp[])
 		commands = parse_commands(data.tokens);
 		if (ft_strncmp(data.prompt, "set", 4) == 0)
 			print_variables(data.shell_vars, NULL);
-		if (ft_strncmp(data.prompt, "xstat", 6) == 0)
-			printf("exit status: %d\n", WEXITSTATUS(g_exit_status));
 		if (commands)
 		{
 			expand_tokens(&data);
