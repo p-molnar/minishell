@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 09:50:20 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 10:38:58 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ t_token_list	*tokenizer(const char *prompt);
 t_token_list	*new_node(char *content, int token_type);
 void			add_node_last(t_token_list **list, t_token_list *node);
 void			iter_tokens(t_token_list *l, int fd, void (*f)(char *, int));
+
+//	list_util.c
+t_list			*get_node(void *lookup_content, t_list *list);
 
 //	token_classifier.c
 void			classify_tokens(t_token_list *list);
@@ -71,7 +74,6 @@ void			parse_env_variable(char **env, t_list **list);
 t_var			*parse_var(char *s);
 int				is_valid_var_definition(char *s);
 t_var			*get_var(char *lookup_name, t_list *list);
-t_list			*get_node(void *lookup_content, t_list *list);
 
 //	executor
 void			executor(t_shell_data *data, t_command_list *commands);
