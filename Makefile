@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/29 15:57:05 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/03/29 16:07:28 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ SIGNAL			=	$(addprefix signal/,									\
 EXECUTE			=	$(addprefix executor/,		executor.c					\
 												exec_commands.c				\
 												exec_builtins.c				\
-												exec_builtins_utils.c		\
+												exec_builtin_utils.c		\
 												env_builder.c				\
 												exec_utils.c)
 
