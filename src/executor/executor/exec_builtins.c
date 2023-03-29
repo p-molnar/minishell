@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/28 18:08:55 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/29 15:35:32 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void	execute_builtin(char *cmd, t_shell_data *data, char **args)
 	else if (ft_strncmp(cmd, "cd", ft_strlen("cd") + 1) == 0)
 		exit (0);
 	else if (ft_strncmp(cmd, "exit", ft_strlen("exit") + 1) == 0)
-		exit (0);
+	{
+		builtin_exit (args);
+		exit (1);
+	}
 	else if (ft_strncmp(cmd, "env", ft_strlen("env") + 1) == 0)
 	{
 		env(data->env_vars);
@@ -110,7 +113,9 @@ int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)
 int	check_parent_builtin(t_command_list *current, t_shell_data *data)
 {
 	char			*cmd;
+	t_command_list	*start;
 
+	start =  current;
 	while (current)
 	{
 		if (current->symbol == CMD)
@@ -121,12 +126,12 @@ int	check_parent_builtin(t_command_list *current, t_shell_data *data)
 		return (0);
 	cmd = current->token->content;
 	if (ft_strncmp(cmd, "export", ft_strlen("export") + 1) == 0)
-		return (prepare_parent_builtin(current, data));
+		return (prepare_parent_builtin(start, data));
 	else if (ft_strncmp(cmd, "unset", ft_strlen("unset") + 1) == 0)
-		return (prepare_parent_builtin(current, data));
+		return (prepare_parent_builtin(start, data));
 	else if (ft_strncmp(cmd, "cd", ft_strlen("cd") + 1) == 0)
-		return (prepare_parent_builtin(current, data));
+		return (prepare_parent_builtin(start, data));
 	else if (ft_strncmp(cmd, "exit", ft_strlen("exit") + 1) == 0)
-		return (prepare_parent_builtin(current, data));
+		return (prepare_parent_builtin(start, data));
 	return (0);
 }
