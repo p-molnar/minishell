@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:48:13 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/27 16:07:51 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/29 15:11:28 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,18 @@ t_pipe_fd	*setup_pipes(int pipe_n)
 	return (pipe_fd);
 }
 
+void	wait_for_each_process(pid_t *process, int command_n)
+{
+	int		i;
+
+	i = 0;
+	while (i < command_n)
+	{
+		waitpid(process[i], &g_exit_status, 0);
+		i++;
+	}
+}
+
 void	executor(t_shell_data *data, t_command_list *commands)
 {
 	int			pipe_n;
@@ -58,6 +70,7 @@ void	executor(t_shell_data *data, t_command_list *commands)
 		ret = check_parent_builtin(commands, data);
 	if (ret == 0)
 		execute_commands(commands, pipe_fd, process, data);
+	wait_for_each_process(process, pipe_n + 1);
 	free(process);
 	free(pipe_fd);
 }
