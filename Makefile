@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/29 12:22:26 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/29 12:23:21 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ LIBFT			=	$(SUBMODULE)/libft.a
 CHAR_READER		=	$(addprefix	character_reader/,							\
 						character_reader.c									\
 						)									
-
 
 TOKENIZER		=	$(addprefix	tokenizer/,									\
 						tokenizer.c											\
