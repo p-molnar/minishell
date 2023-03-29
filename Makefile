@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/29 12:23:21 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/29 12:57:59 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,12 +64,11 @@ SIGNAL			=	$(addprefix signal/,									\
 						)
 
 # EXECUTOR
-EXECUTE			=	$(addprefix executor/,									\
-						executor.c											\
-						exec_commands.c										\
-						exec_builtins.c										\
-						exec_utils.c										\
-						)
+EXECUTE			=	$(addprefix executor/,		executor.c		\
+												exec_commands.c	\
+												exec_builtins.c	\
+												env_builder.c	\
+												exec_utils.c)
 
 REDIRECT		=	$(addprefix redirect/,									\
 						redirect.c											\

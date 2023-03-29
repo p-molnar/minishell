@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/28 15:28:35 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/28 17:23:13 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,19 @@
 void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 {
 	char	**path;
+	char	**env;
 	char	*commandpath;
 	int		i;
 
 	path = path_builder(data);
+	env = env_builder(data->env_vars);
 	i = 0;
 	if (path)
 	{
 		while (path[i])
 		{
 			commandpath = ft_strjoin(path[i], command);
-			//env vars should be turned into array of strings and passed instead of NULL
-			execve(commandpath, arguments, NULL);
+			execve(commandpath, arguments, env);
 			free(commandpath);
 			commandpath = NULL;
 			i++;

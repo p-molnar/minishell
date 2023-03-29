@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 09:49:17 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 12:57:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,12 @@ int	main(int argc, char *argv[], char *envp[])
 		// print_variables(data.shell_vars, "SHELL VARS");
 		classify_tokens(data.tokens);
 		commands = parse_commands(data.tokens);
+		if (ft_strncmp(data.prompt, "set", 4) == 0)
+			print_variables(data.shell_vars, NULL);
 		if (commands)
 		{
 			expand_tokens(&data);
-			print_tokens(data.tokens);
+			// print_tokens(data.tokens);
 			// print_commands(commands);
 			executor(&data, commands);
 			free_command_list(commands);

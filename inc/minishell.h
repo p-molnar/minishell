@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 11:36:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 12:58:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int				count_symbols(int symbol, t_command_list *current);
 int				count_symbols_simple_cmd(int symbol, t_command_list *current);
 char			**compound_args(t_command_list *current);
 char			**path_builder(t_shell_data *data);
+char			**env_builder(t_list *var_list);
 void			close_pipe(t_pipe_fd *pipe);
 void			add_var(t_var *new_var, t_list **list);
 
