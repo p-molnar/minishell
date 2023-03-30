@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:17:39 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 18:21:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/30 11:18:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 #include <stdlib.h>
 #include <libft.h>
 
-void	del_first_node(t_list **curr_node)
+void	del_first_node(t_list **list)
 {
 	t_list	*next_node;
 
-	if (curr_node && *curr_node)
+	if (list && *list)
 	{
-		next_node = (*curr_node)->next;
-		free_var((t_var **)&((*curr_node)->content));
-		free_node(curr_node);
-		*curr_node = next_node;
+		next_node = (*list)->next;
+		free_var((t_var **)&((*list)->content));
+		free_node(list);
+		*list = next_node;
 	}
 }
 
@@ -32,9 +32,9 @@ void	del_middle_node(t_list *prev_node, t_list *curr_node)
 	if (prev_node && curr_node)
 	{
 		prev_node->next = curr_node->next;
-		free_var(curr_node->content);
+		free_var((t_var **)(&curr_node->content));
 		free_node(&curr_node);
-	}
+}
 }
 
 void	del_last_node(t_list **prev_node)
@@ -59,7 +59,7 @@ void	del_node(t_list **list, t_list *node)
 		if (curr == node)
 		{
 			if (prev_node == NULL)
-				del_first_node(&node);
+				del_first_node(list);
 			else if (curr->next == NULL)
 				del_last_node(&prev_node);
 			else
@@ -75,13 +75,12 @@ void	unset(char *var_name, t_shell_data *data)
 {
 	t_list	*env_ptr;
 	t_list	*shell_ptr;
-	t_list	*ptr;
 
 	if (!var_name || !data)
 		return ;
 	shell_ptr = get_node(get_var(var_name, data->shell_vars), data->shell_vars);
 	env_ptr = get_node(get_var(var_name, data->env_vars), data->env_vars);
-	ptr = shell_ptr;
+	// ptr = shell_ptr;
 	if (shell_ptr && env_ptr)
 	{
 		del_node(&data->shell_vars, shell_ptr);
@@ -92,7 +91,7 @@ void	unset(char *var_name, t_shell_data *data)
 	else if (env_ptr)
 	{
 		del_node(&data->env_vars, env_ptr);
-		ptr = env_ptr;
+		// ptr = env_ptr;
 	}
 	if (!shell_ptr && !env_ptr)
 		return ;
