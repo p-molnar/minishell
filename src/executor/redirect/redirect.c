@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/28 18:00:26 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 13:02:31 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	open_redirect_outfile(t_command_list *current, int *fd)
 }
 
 int	redirect_files(t_command_list *current, int og_stdin,
-						int *fd_in, int *fd_out)
+						int *fd_in, int *fd_out, t_shell_data *data)
 {
 	int		ret;
 
@@ -62,7 +62,7 @@ int	redirect_files(t_command_list *current, int og_stdin,
 		if (current->symbol == INFILE)
 			ret = open_redirect_infile(current, fd_in);
 		if (current->symbol == HEREDOC_DELIMITER)
-			open_heredoc(current->token->content, og_stdin);
+			open_heredoc(current->token->content, og_stdin, data);
 		current = current->next;
 	}
 	return (ret);

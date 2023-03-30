@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 17:26:57 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 13:16:30 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void			free_command_list(t_command_list **list);
 
 //	expander.c
 void			expand_tokens(t_shell_data *data);
+t_var			*add_variable(t_list **str_list, char **s, t_shell_data *data);
 
 //	expander_util.c
 char			*parse_var_name(char *s);
@@ -99,9 +100,9 @@ char			**path_builder(t_shell_data *data, char *cmd);
 
 //	redirect.c
 int				redirect_files(t_command_list *current, int og_stdin,
-					int *fd_in, int *fd_out);
+					int *fd_in, int *fd_out, t_shell_data *data);
 void			redirect_pipes(t_pipe_fd *in_pipe, t_pipe_fd *out_pipe);
-void			open_heredoc(char *delimiter, int og_stdin);
+void			open_heredoc(char *delimiter, int og_stdin, t_shell_data *data);
 
 //	BUILTINS
 
