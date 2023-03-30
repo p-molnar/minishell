@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/16 17:50:14 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 14:50:09 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 15:03:16 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*replace_variables(char *s, t_shell_data *data)
 		s++;
 	}
 	expanded_s = list_to_str(str_list);
-	free_list(str_list);
+	free_list(&str_list);
 	return (expanded_s);
 }
 
