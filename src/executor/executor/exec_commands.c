@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 14:36:13 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 14:47:40 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 #include <ms_macros.h>
 #include <libft.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
-#include <sys/wait.h>
 
 void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 {

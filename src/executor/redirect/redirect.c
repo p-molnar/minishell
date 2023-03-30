@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 14:33:53 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 14:49:34 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <ms_macros.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <stdlib.h>
 
 void	initialise_redirection_data(t_redir_data *redir_data)
 {
