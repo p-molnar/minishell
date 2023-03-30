@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/30 15:01:29 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 17:31:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void			free_command_list(t_command_list **list);
 
 //	expander.c
 void			expand_tokens(t_shell_data *data);
-t_var			*add_variable(t_list **str_list, char **s, t_shell_data *data);
+void			add_variable(t_list **str_list, char **s, t_shell_data *data);
 
 //	expander_util.c
 char			*parse_var_name(char *s);
