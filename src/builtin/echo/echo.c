@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:41:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 14:24:12 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 12:36:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	echo(char **args)
 
 	i = 1;
 	n_flag = 0;
-	if (args)
+	if (args && args[i])
 	{
 		while (ft_strncmp(args[i], "-n", 2 + 1) == 0)
 		{
