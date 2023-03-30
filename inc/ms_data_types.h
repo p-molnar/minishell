@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 15:01:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/30 14:00:55 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 14:33:53 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_redir_data
 	int		og_stdin;
 	int		fd_in;
 	int		fd_out;
+	int		heredoc_pipe_out;
 }	t_redir_data;
 
 typedef struct s_var

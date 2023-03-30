@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/16 17:50:14 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 14:00:55 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 14:36:13 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ void	open_heredoc(char *delimiter, t_redir_data *redir_dat,
 	free(buf);
 	dup2(here_pipe[0], STDIN_FILENO);
 	close(here_pipe[1]);
+	redir_dat->heredoc_pipe_out = here_pipe[0];
 }

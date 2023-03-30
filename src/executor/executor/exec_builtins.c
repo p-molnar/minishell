@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 14:04:53 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 14:36:13 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,8 @@ int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)
 	int				original_stdout;
 	t_redir_data	redir_data;
 
-	redir_data.og_stdin = dup(STDIN_FILENO);
+	initialise_redirection_data(&redir_data);
 	original_stdout = dup(STDOUT_FILENO);
-	redir_data.fd_in = -1;
-	redir_data.fd_out = -1;
 	signal(SIGINT, SIG_DFL);
 	tcsetattr(0, 0, &data->original_termios);
 	if (redirect_files(current, &redir_data, data))
@@ -87,6 +85,7 @@ int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)
 	close(redir_data.fd_in);
 	close(redir_data.fd_out);
 	close(redir_data.og_stdin);
+	close(redir_data.heredoc_pipe_out);
 	close(original_stdout);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 14:01:56 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 14:33:53 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
+
+void	initialise_redirection_data(t_redir_data *redir_data)
+{
+	redir_data->fd_in = -1;
+	redir_data->fd_out = -1;
+	redir_data->og_stdin = dup(STDIN_FILENO);
+	redir_data->heredoc_pipe_out = -1;
+}
 
 int	open_redirect_infile(t_command_list *current, t_redir_data *redir_dat)
 {
