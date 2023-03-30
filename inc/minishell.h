@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/30 13:16:30 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 14:02:23 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,11 @@ char			**compound_args(t_command_list *current);
 char			**path_builder(t_shell_data *data, char *cmd);
 
 //	redirect.c
-int				redirect_files(t_command_list *current, int og_stdin,
-					int *fd_in, int *fd_out, t_shell_data *data);
+int				redirect_files(t_command_list *current,
+					t_redir_data *redir_dat, t_shell_data *data);
 void			redirect_pipes(t_pipe_fd *in_pipe, t_pipe_fd *out_pipe);
-void			open_heredoc(char *delimiter, int og_stdin, t_shell_data *data);
+void			open_heredoc(char *delimiter, t_redir_data *redir_dat,
+					t_shell_data *data);
 
 //	BUILTINS
 

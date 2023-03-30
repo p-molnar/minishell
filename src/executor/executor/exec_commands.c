@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 13:03:15 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 14:00:55 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,17 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 void	execute_cmd(t_command_list *current, t_shell_data *data,
 						t_pipe_fd *in_pipe, t_pipe_fd *out_pipe)
 {
-	char			**arguments;
-	t_token_list	*command;
-	int				original_stdin;
-	int				fd_in;
-	int				fd_out;
+	char				**arguments;
+	t_token_list		*command;
+	t_redir_data		redir_data;
 
-	fd_in = -1;
-	fd_out = -1;
-	original_stdin = dup(STDIN_FILENO);
+	redir_data.fd_in = -1;
+	redir_data.fd_out = -1;
+	redir_data.og_stdin = dup(STDIN_FILENO);
 	signal(SIGINT, SIG_DFL);
 	tcsetattr(0, 0, &data->original_termios);
 	redirect_pipes(in_pipe, out_pipe);
-	if (redirect_files(current, original_stdin, &fd_in, &fd_out, data))
+	if (redirect_files(current, &redir_data, data))
 		exit (1);
 	command = get_next_command(current);
 	arguments = compound_args(current);
