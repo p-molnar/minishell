@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 13:56:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/30 13:59:18 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 		arg_content = arg->content;
 	if (ft_strncmp(cmd->content, "export", ft_strlen("export") + 1) == 0)
 		export(arg, data);
-	else if (ft_strncmp(cmd, "unset", ft_strlen("unset") + 1) == 0)
+	else if (ft_strncmp(cmd->content, "unset", ft_strlen("unset") + 1) == 0)
 		unset(arg, data);
-	else if (ft_strncmp(cmd, "cd", ft_strlen("cd") + 1) == 0)
+	else if (ft_strncmp(cmd->content, "cd", ft_strlen("cd") + 1) == 0)
 		cd(arg_content, data);
 	else if (ft_strncmp(cmd->content, "exit", ft_strlen("exit") + 1) == 0)
 		builtin_exit(compound_args(current));
