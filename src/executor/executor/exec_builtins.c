@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 13:59:18 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/30 15:00:45 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,22 @@ void	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 
 int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)
 {
-	int				original_stdin;
 	int				original_stdout;
-	int				fd_in;
-	int				fd_out;
+	t_redir_data	redir_data;
 
-	original_stdin = dup(STDIN_FILENO);
+	initialise_redirection_data(&redir_data);
 	original_stdout = dup(STDOUT_FILENO);
-	fd_in = -1;
-	fd_out = -1;
 	signal(SIGINT, SIG_DFL);
 	tcsetattr(0, 0, &data->original_termios);
-	if (redirect_files(current, original_stdin, &fd_in, &fd_out))
+	if (redirect_files(current, &redir_data, data))
 		return (1);
 	execute_parent_builtin(current, data);
-	dup2(original_stdin, STDIN_FILENO);
+	dup2(redir_data.og_stdin, STDIN_FILENO);
 	dup2(original_stdout, STDOUT_FILENO);
-	close(fd_in);
-	close(fd_out);
-	close(original_stdin);
+	close(redir_data.fd_in);
+	close(redir_data.fd_out);
+	close(redir_data.og_stdin);
+	close(redir_data.heredoc_pipe_out);
 	close(original_stdout);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/28 18:00:26 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 14:49:34 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,50 @@
 #include <ms_macros.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <stdlib.h>
 
-int	open_redirect_infile(t_command_list *current, int *fd)
+void	initialise_redirection_data(t_redir_data *redir_data)
 {
-	close(*fd);
-	*fd = open(current->token->content, O_RDONLY);
-	if (*fd < 0)
+	redir_data->fd_in = -1;
+	redir_data->fd_out = -1;
+	redir_data->og_stdin = dup(STDIN_FILENO);
+	redir_data->heredoc_pipe_out = -1;
+}
+
+int	open_redirect_infile(t_command_list *current, t_redir_data *redir_dat)
+{
+	close(redir_dat->fd_in);
+	redir_dat->fd_in = open(current->token->content, O_RDONLY);
+	if (redir_dat->fd_in < 0)
 	{
 		ft_putstr_fd("Could not open file ", STDERR_FILENO);
 		ft_putendl_fd(current->token->content, STDERR_FILENO);
 		return (1);
 	}
-	dup2(*fd, STDIN_FILENO);
+	dup2(redir_dat->fd_in, STDIN_FILENO);
 	return (0);
 }
 
-int	open_redirect_outfile(t_command_list *current, int *fd)
+int	open_redirect_outfile(t_command_list *list, t_redir_data *redir_dat)
 {
-	close(*fd);
-	if (current->symbol == OUTFILE)
-		*fd = open(current->token->content, O_RDWR | O_CREAT, 0644);
+	close(redir_dat->fd_out);
+	if (list->symbol == OUTFILE)
+		redir_dat->fd_out = open(list->token->content,
+				O_WRONLY | O_CREAT, 0644);
 	else
-		*fd = open(current->token->content, O_RDWR | O_CREAT | O_APPEND, 0644);
-	if (*fd < 0)
+		redir_dat->fd_out = open(list->token->content,
+				O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (redir_dat->fd_out < 0)
 	{
 		ft_putstr_fd("Could not open file ", STDERR_FILENO);
-		ft_putendl_fd(current->token->content, STDERR_FILENO);
+		ft_putendl_fd(list->token->content, STDERR_FILENO);
 		return (1);
 	}
-	dup2(*fd, STDOUT_FILENO);
+	dup2(redir_dat->fd_out, STDOUT_FILENO);
 	return (0);
 }
 
-int	redirect_files(t_command_list *current, int og_stdin,
-						int *fd_in, int *fd_out)
+int	redirect_files(t_command_list *current, t_redir_data *redir_dat,
+		t_shell_data *data)
 {
 	int		ret;
 
@@ -58,11 +67,11 @@ int	redirect_files(t_command_list *current, int og_stdin,
 		if (current->symbol == D_PIPE)
 			break ;
 		if (current->symbol == OUTFILE || current->symbol == OUTFILE_APP)
-			ret = open_redirect_outfile(current, fd_out);
+			ret = open_redirect_outfile(current, redir_dat);
 		if (current->symbol == INFILE)
-			ret = open_redirect_infile(current, fd_in);
+			ret = open_redirect_infile(current, redir_dat);
 		if (current->symbol == HEREDOC_DELIMITER)
-			open_heredoc(current->token->content, og_stdin);
+			open_heredoc(current->token->content, redir_dat, data);
 		current = current->next;
 	}
 	return (ret);

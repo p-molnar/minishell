@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:48:13 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/29 15:11:28 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 14:46:42 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <ms_macros.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 void	close_pipe(t_pipe_fd *pipe)
 {
