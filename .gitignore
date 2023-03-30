@@ -57,3 +57,4 @@ minishell
 *.DS_Store
 *.vscode*
 notes
+minishell_tester

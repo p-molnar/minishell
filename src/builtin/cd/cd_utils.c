@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:18:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/22 10:36:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 15:11:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,6 @@ int	get_arr_size(void **arr)
 	while (arr && arr[i])
 		i++;
 	return (i);
-}
-
-void	free_arr(void **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr && arr[i])
-		free (arr[i++]);
-	if (arr)
-		free (arr);
 }
 
 char	*n_arr_to_str(char **arr, char *el_delim, int n)

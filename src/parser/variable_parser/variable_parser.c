@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 09:15:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 11:35:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 14:59:39 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	parse_shell_variable(t_shell_data *data)
 	{
 		if (is_valid_var_definition(token_list->content))
 		{
-			var = parse_var(token_list->content);
+			var = parse_var_def(token_list->content);
 			add_var(var, &data->shell_vars);
 		}
 		token_list = token_list->next;
@@ -55,7 +55,7 @@ void	parse_env_variable(char **env_arr, t_list **list)
 	while (env_arr && *env_arr)
 	{
 		var_def = *env_arr;
-		var_parsed = parse_var(var_def);
+		var_parsed = parse_var_def(var_def);
 		add_var(var_parsed, list);
 		env_arr++;
 	}

@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/29 16:07:28 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/03/30 13:56:23 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,21 @@ CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix readline)/lib
 CFLAGS			+=	-g # debug
-# CFLAGS			+=	-fsanitize=address
+CFLAGS			+=	-fsanitize=address
 NAME			=	minishell
 INCL			=	inc libft/inc
 SUBMODULE		=	libft
 LIBFT			=	$(SUBMODULE)/libft.a
 
+# PRINT FORMATTING
+RED				=	\033[0;31m
+GREEN			=	\033[0;32m
+YELLOW			=	\033[1;33m
+BOLD			=	\033[1m
+DEF				=	\033[0m
+SPACE_W 		= 	%-50s
+STATUS_W		=	%-10s
+STATUS_FMT		=	$(BOLD)$(STATUS_W)$(DEF) $(SPACE_W)
 
 # PARSER
 CHAR_READER		=	$(addprefix	character_reader/,							\
@@ -64,12 +73,14 @@ SIGNAL			=	$(addprefix signal/,									\
 						)
 
 # EXECUTOR
-EXECUTE			=	$(addprefix executor/,		executor.c					\
-												exec_commands.c				\
-												exec_builtins.c				\
-												exec_builtin_utils.c		\
-												env_builder.c				\
-												exec_utils.c)
+EXECUTE			=	$(addprefix executor/,									\
+						executor.c											\
+						exec_commands.c										\
+						exec_builtins.c										\
+						exec_builtin_utils.c								\
+						env_builder.c										\
+						exec_utils.c										\
+						)
 
 REDIRECT		=	$(addprefix redirect/,									\
 						redirect.c											\
@@ -145,10 +156,12 @@ OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
 
 
 all:	$(NAME)
-	@printf "All compiled into '$(NAME)' executable\n"
+	@printf "$(GREEN)$(NAME) is created at $(shell pwd)$(DEF)\n"
 
 $(NAME):	$(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) -lreadline $^ -o $(NAME)
+	@printf "$(STATUS_FMT)" "building" "$(NAME)"
+	@$(CC) $(CFLAGS) $(LDFLAGS) -lreadline $^ -o $(NAME)
+	@printf "[$(GREEN)DONE$(DEF)]\n"
 
 $(LIBFT): $(SUBMODULE)
 	git submodule update --init
@@ -158,8 +171,10 @@ $(SUBMODULE):
 	git submodule init $(SUBMODULE)
 
 $(OBJ_PATH)%.o:	src/%.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $^ -o $@ 
+	@mkdir -p $(dir $@)
+	@printf "$(STATUS_FMT)" "building" "$<"
+	@$(CC) $(CFLAGS) -c $^ -o $@ 
+	@printf "[$(GREEN)DONE$(DEF)]\n"
 
 clean:
 	rm -rf $(OBJ_PATH)

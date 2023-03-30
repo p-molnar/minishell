@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 14:12:38 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 09:48:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/30 13:39:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void	free_token(t_token_list *token)
 {
 	if (token)
 	{
-		if (token->content)
+		if (token && token->content)
 			free(token->content);
-		free(token);
+		if (token)
+			free(token);
 	}
 }
 
@@ -39,42 +40,70 @@ void	free_token_list(t_token_list *list)
 	}
 }
 
-void	free_list(t_list *list)
+void	free_node(t_list **node)
 {
-	t_list	*tmp_ptr;
-
-	while (list)
+	if (node && *node && (*node)->content)
+		free((*node)->content);
+	if (node && *node)
 	{
-		tmp_ptr = list;
-		if (tmp_ptr->content)
-			free(tmp_ptr->content);
-		list = list->next;
-		free(tmp_ptr);
+		free(*node);
+		*node = NULL;
 	}
 }
 
-void	free_var_obj(t_var *var)
+void	free_list(t_list **list)
 {
-	if (var)
+	t_list	*next;
+
+	while (list && *list)
 	{
-		if (var->name)
-			free(var->name);
-		if (var->val)
-			free(var->val);
-		free(var);
+		next = (*list)->next;
+		free_node(list);
+		*list = next;
+	}
+}
+
+void	free_var(t_var **var)
+{
+	if (var && *var)
+	{
+		if ((*var)->name)
+		{
+			free((*var)->name);
+			(*var)->name = NULL;
+		}
+		if ((*var)->val)
+		{
+			free((*var)->val);
+			(*var)->val = NULL;
+		}
+		free(*var);
+		*var = NULL;
 	}
 }
 
 void	free_var_list(t_list *var_list)
 {
-	t_list	*tmp_list;
+	t_list	**list;
+	t_list	*next;
 
-	while (var_list)
+	list = &var_list;
+	while (list && *list)
 	{
-		tmp_list = var_list;
-		if (var_list->content)
-			free_var_obj(var_list->content);
-		var_list = var_list->next;
-		free(tmp_list);
+		next = (*list)->next;
+		if ((*list)->content)
+			free_var((t_var **)&(*list)->content);
+		*list = next;
 	}
+}
+
+void	free_arr(void **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr && arr[i])
+		free (arr[i++]);
+	if (arr)
+		free (arr);
 }

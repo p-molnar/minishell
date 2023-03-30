@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 15:49:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 14:31:30 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 11:24:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_token_list	*new_node(char *content, int token_type)
 		if (token == NULL)
 			return (NULL);
 		token->content = content;
-		// token->prompt_ptr = tkn_start; might be useful later.
 		token->type = token_type;
 		token->next = NULL;
 		return (token);

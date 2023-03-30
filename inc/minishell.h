@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 17:26:57 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 13:56:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,13 @@ int	g_exit_status;
 void			rl_replace_line(const char *text, int clear_undo);
 
 //	free_objects.c
+void			free_node(t_list **node);
+void			free_list(t_list **list);
+void			free_var(t_var **var);
 void			free_var_list(t_list *var_list);
+void			free_token(t_token_list *token);
 void			free_token_list(t_token_list *list);
-void			free_list(t_list *list);
+void			free_arr(void **arr);
 
 //	character_reader.c
 char			*read_prompt(const char *prompt);
@@ -68,14 +72,15 @@ char			*list_to_str(t_list *l);
 void			setup_signal_handler(t_shell_data *data);
 void			handle_int_signal(int signum);
 
-//	variable_interpreter.c
+//	variable_parser.c
 void			parse_shell_variable(t_shell_data *data);
 void			parse_env_variable(char **env, t_list **list);
+int				is_valid_var_name(char *s, int n);
 
 //	variable_parser_util.c
-t_var			*parse_var(char *s);
+t_var			*create_var(char *name, char *val);
+t_var			*parse_var_def(char *s);
 int				is_valid_var_definition(char *s);
-int				is_valid_var_name(char *s, int n);
 t_var			*get_var(char *lookup_name, t_list *list);
 
 //	executor
@@ -112,7 +117,7 @@ void			export(t_token_list *token, t_shell_data *data);
 void			env(t_list *var_list);
 
 //	unset.c
-void			unset(char *var_name, t_shell_data *data);
+void			unset(t_token_list *token, t_shell_data *data);
 
 //	pwd.c
 void			pwd(t_shell_data *data);
@@ -141,8 +146,6 @@ int				update_wdirs(char *dir, t_var *var[ENV_SIZE],
 //	cd_utils.c
 int				get_arr_size(void **arr);
 char			*path_concat(char *basepath, char *relpath);
-void			free_arr(void **arr);
-void			free_var_obj(t_var *var);
 char			*n_arr_to_str(char **arr, char *c, int n);
 
 #endif

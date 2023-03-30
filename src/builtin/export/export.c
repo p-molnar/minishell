@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 14:37:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/29 15:03:31 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,20 @@ void	export(t_token_list *token, t_shell_data *data)
 
 	if (token == NULL)
 		return (print_exported_vars(data->env_vars));
-	s = token->content;
-	if (*s == ' ')
-		return ; // error handling
-	else if (is_valid_var_definition(s))
-		var = parse_var(s);
-	else
+	while (token)
 	{
-		var = get_var(s, data->shell_vars);
-		if (!var)
+		s = token->content;
+		if (s && *s == ' ')
+			return ;
+		else if (is_valid_var_definition(s))
+			var = parse_var_def(s);
+		else
 		{
-			var = ft_calloc(1, sizeof(t_var));
+			var = get_var(s, data->shell_vars);
 			if (!var)
-				return ;
-			var->name = ft_strdup(token->content);
-			var->val = NULL;
+				var = create_var(ft_strdup(token->content), NULL);
 		}
+		add_var(var, &data->env_vars);
+		token = token->next;
 	}
-	add_var(var, &data->env_vars);
 }
