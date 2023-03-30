@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 18:07:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/30 11:30:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void			rl_replace_line(const char *text, int clear_undo);
 
 //	free_objects.c
 void			free_node(t_list **node);
-void			free_list(t_list *list);
+void			free_list(t_list **list);
 void			free_var(t_var **var);
 void			free_var_list(t_list *var_list);
 void			free_token(t_token_list *token);
