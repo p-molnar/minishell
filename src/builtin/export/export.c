@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 15:33:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 17:01:42 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ int	export(t_token_list *token, t_shell_data *data)
 		add_var(var, &data->env_vars);
 		token = token->next;
 	}
-	return (1);
+	return (0);
 }

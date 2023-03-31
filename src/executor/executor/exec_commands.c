@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 15:18:40 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:10:19 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <string.h>
+#include <errno.h>
 
 void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 {
@@ -24,6 +26,8 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	char	**env;
 	char	*commandpath;
 	int		i;
+	int	err	= 0;
+	int	err_2	= 0;
 
 	path = path_builder(data, command);
 	env = env_builder(data->env_vars);
@@ -33,7 +37,13 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 		while (path[i])
 		{
 			commandpath = ft_strjoin(path[i], command);
-			execve(commandpath, arguments, env);
+			err_2 = access(commandpath, F_OK);
+			// if (err_2 != 0)
+			// {
+			// 	if (errno == 2)
+			// 		error("Command not found", EXIT, 127);
+			// }
+			err = execve(commandpath, arguments, env);
 			free(commandpath);
 			commandpath = NULL;
 			i++;
@@ -59,7 +69,7 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 	arguments = compound_args(current);
 	if (command)
 	{
-		execute_builtin(command->content, data, arguments);
+		execute_builtin(data, arguments, current->next->token);
 		execute_bin(command->content, data, arguments);
 	}
 	exit(127);
