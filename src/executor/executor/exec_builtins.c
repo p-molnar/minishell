@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 17:43:30 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:53:11 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,11 @@ void	execute_builtin(t_shell_data *data, char **args)
 	else if (ft_strncmp(args[0], "unset", ft_strlen("unset") + 1) == 0)
 		exit (0);
 	else if (ft_strncmp(args[0], "cd", ft_strlen("cd") + 1) == 0)
-		exit (0);
+		exit (builtin_cd(args, data));
 	else if (ft_strncmp(args[0], "exit", ft_strlen("exit") + 1) == 0)
 		exit (builtin_exit(args));
 	else if (ft_strncmp(args[0], "env", ft_strlen("env") + 1) == 0)
-	{
-		builtin_env(data->env_vars);
-		exit (0);
-	}
+		exit (builtin_env(data->env_vars));
 	else if (ft_strncmp(args[0], "pwd", ft_strlen("pwd") + 1) == 0)
 		exit (builtin_pwd(data));
 	else if (ft_strncmp(args[0], "echo", ft_strlen("echo") + 1) == 0)

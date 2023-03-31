@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:17:39 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:29:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 18:19:19 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	del_middle_node(t_list *prev_node, t_list *curr_node)
 		prev_node->next = curr_node->next;
 		free_var((t_var **)(&curr_node->content));
 		free_node(&curr_node);
-}
+	}
 }
 
 void	del_last_node(t_list **prev_node)

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 17:34:10 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:55:02 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	char	**env;
 	char	*commandpath;
 	int		i;
-	int	err	= 0;
-	int	err_2	= 0;
 
 	path = path_builder(data, command);
 	env = env_builder(data->env_vars);
@@ -37,13 +35,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 		while (path[i])
 		{
 			commandpath = ft_strjoin(path[i], command);
-			err_2 = access(commandpath, F_OK);
-			// if (err_2 != 0)
-			// {
-			// 	if (errno == 2)
-			// 		error("Command not found", EXIT, 127);
-			// }
-			err = execve(commandpath, arguments, env);
+			execve(commandpath, arguments, env);
 			free(commandpath);
 			commandpath = NULL;
 			i++;

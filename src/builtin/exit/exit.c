@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 13:55:12 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 16:46:49 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 18:17:54 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	is_number(char *arg)
 	return (1);
 }
 
-int		builtin_exit(char **args)
+int	builtin_exit(char **args)
 {
 	if (!args)
 		exit(0);

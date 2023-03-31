@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 09:50:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 18:21:40 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	update_prev_ptr(char **prev, char *curr, char *s)
 
 static char	*is_token_end(char *prev, char *curr, char *is_quoted)
 {
-
 	if (!*is_quoted && ft_strchr(OPERATORS, *prev) && *curr == *prev)
 		;
 	else if (!*is_quoted && ft_strchr(OPERATORS, *prev) && *curr != *prev)

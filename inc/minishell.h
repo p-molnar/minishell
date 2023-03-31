@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:38:15 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:52:37 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void			open_heredoc(char *delimiter, t_redir_data *redir_dat,
 int				builtin_export(char **args, t_shell_data *data);
 
 //	env.c
-void			builtin_env(t_list *var_list);
+int				builtin_env(t_list *var_list);
 
 //	unset.c
 void			builtin_unset(char **args, t_shell_data *data);

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/20 13:28:32 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/21 11:05:20 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 18:20:57 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 	behave as if the directory named in the HOME environment
 	variable was specified as the directory operand.
 */
-
 
 int	exec_step_1_2(t_var **env_var, char **dir, int *step)
 {
