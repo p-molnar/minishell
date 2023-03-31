@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 13:55:12 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 15:47:18 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 16:16:33 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ int		builtin_exit(char **args)
 		exit(ft_atoi(args[1]));
 	}
 	exit(0);
-	return (1);
+	return (0);
 }
