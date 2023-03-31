@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:33:38 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 12:49:00 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 15:57:48 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #include <libft.h>
 #include <ms_macros.h>
 #include <stdio.h>
+
+t_command_list	*syntax_error(t_command_list **list)
+{
+	printf("Syntax error, unexpected end of token list\n");
+	free_command_list(list);
+	return (NULL);
+}
 
 int	add_command(t_command_list **command_list, t_token_list *token)
 {
@@ -71,17 +78,9 @@ t_command_list	*parse_commands(t_token_list *token)
 	while (token)
 	{
 		if (token->type == OPERATOR && ft_strncmp(token->content, "|", 1) == 0)
-		{
-			printf("Syntax error, unexpected token %s\n", token->content);
-			free_command_list(&command_list);
-			return (command_list);
-		}
+			return (syntax_error(&command_list));
 		if (token->type == INVALID || token->type == UNDEFINED)
-		{
-			printf("Syntax error, unexpected token %s\n", token->content);
-			free_command_list(&command_list);
-			return (command_list);
-		}
+			return (syntax_error(&command_list));
 		if (add_simple_command(&command_list, token) == RET_SYNTAX_ERR)
 			return (NULL);
 		while (token->next)
@@ -96,11 +95,7 @@ t_command_list	*parse_commands(t_token_list *token)
 		{
 			add_command_back(&command_list, new_command_node(D_PIPE, NULL));
 			if (!token->next)
-			{
-				printf("Syntax error, unexpected end of token list\n");
-				free_command_list(&command_list);
-				return (NULL);
-			}
+				return (syntax_error(&command_list));
 		}
 		token = token->next;
 	}

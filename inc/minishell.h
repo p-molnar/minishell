@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 15:11:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 16:24:40 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,10 @@ void			unset(t_token_list *token, t_shell_data *data);
 void			pwd(t_shell_data *data);
 
 //	echo.c
-void			echo(char **args);
+int				echo(char **args);
 
 //	exit.c
-void			builtin_exit(char **args);
+int				builtin_exit(char **args);
 
 //	CD
 //	cd.c
