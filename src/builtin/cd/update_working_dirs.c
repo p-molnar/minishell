@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 16:19:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 17:20:14 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	update_oldpwd(t_var	*var[ENV_SIZE], t_shell_data *data)
 		new_var = ft_calloc(1, sizeof(t_var));
 		if (!new_var)
 			return ;
-		new_var->name = ft_strdup("OLDPWD"); // check for null
+		new_var->name = ft_strdup("OLDPWD");
 		new_var->val = ft_strdup(var[PWD]->val);
 		add_var(new_var, &data->env_vars);
 	}
