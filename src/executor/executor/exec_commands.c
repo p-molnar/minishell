@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 13:04:28 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 15:18:40 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,23 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 	exit(127);
 }
 
+t_command_list	*get_next_simple_cmd(t_command_list *start)
+{
+	static t_command_list	*current;
+
+	current = start;
+	while (current)
+	{
+		if (current->symbol == D_PIPE)
+		{
+			current = current->next;
+			return (current);
+		}
+		current = current->next;
+	}
+	return (current);
+}
+
 void	execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
 							pid_t *process, t_shell_data *data)
 {
@@ -76,23 +93,19 @@ void	execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
 	i = 0;
 	in_pipe = NULL;
 	start_of_simple_cmd = current;
-	while (current)
+	while (i < count_symbols(CMD, current))
 	{
 		if (i < count_symbols(D_PIPE, current) && pipe_fd)
 			out_pipe = &pipe_fd[i];
 		else
 			out_pipe = NULL;
-		if (current->symbol == D_PIPE || current->next == NULL)
-		{
-			process[i] = fork();
-			if (process[i] == 0)
-				execute_cmd(start_of_simple_cmd, data, in_pipe, out_pipe);
-			i++;
-			close_pipe(in_pipe);
-			start_of_simple_cmd = current->next;
-			if (out_pipe)
-				in_pipe = out_pipe;
-		}
-		current = current->next;
+		process[i] = fork();
+		if (process[i] == 0)
+			execute_cmd(start_of_simple_cmd, data, in_pipe, out_pipe);
+		i++;
+		close_pipe(in_pipe);
+		start_of_simple_cmd = get_next_simple_cmd(current);
+		if (out_pipe)
+			in_pipe = out_pipe;
 	}
 }
