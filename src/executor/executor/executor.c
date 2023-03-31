@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:48:13 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 14:46:42 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 14:56:18 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ void	executor(t_shell_data *data, t_command_list *commands)
 	if (pipe_n == 0)
 		ret = check_parent_builtin(commands, data);
 	if (ret == 0)
+	{
 		execute_commands(commands, pipe_fd, process, data);
-	wait_for_each_process(process, pipe_n + 1);
+		wait_for_each_process(process, pipe_n + 1);
+	}
 	free(process);
 	free(pipe_fd);
 }
