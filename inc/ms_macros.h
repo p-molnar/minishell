@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 13:56:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 23:43:01 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 // # define BACKSLASH '\\'
 
 //	collections
-# define META_CHARS " \t\n|&;()<>"
 # define OPERATORS "|<>"
 # define SPACES	" \t\n"
 # define QUOTES "'\"" // QUOTE and DQUOTE
@@ -48,9 +47,6 @@
 # define DOLLAR '$'
 # define DQUOTE '"'
 # define QUOTE '\''
-# define SPACE ' ' 
-# define TAB '\t'
-# define NEWLINE '\n'
 
 //	token type classifiers
 enum e_token_type {
