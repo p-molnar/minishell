@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:41:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 15:40:24 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:30:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <minishell.h>
 #include <unistd.h>
 
-int		echo(char **args)
+int		builtin_echo(char **args)
 {
 	int	i;
 	int	n_flag;

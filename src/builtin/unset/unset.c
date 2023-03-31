@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:17:39 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:28:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 17:29:40 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	del_node(t_list **list, t_list *node)
 	}
 }
 
-void	unset(char **args, t_shell_data *data)
+void	builtin_unset(char **args, t_shell_data *data)
 {
 	t_list	*env_ptr;
 	t_list	*shell_ptr;

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 17:09:11 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:30:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	execute_builtin(t_shell_data *data, char **args, t_token_list *arg)
 {
 	if (ft_strncmp(args[0], "export", ft_strlen("export") + 1) == 0)
-		exit (export(arg, data));
+		exit (builtin_export(arg, data));
 	else if (ft_strncmp(args[0], "unset", ft_strlen("unset") + 1) == 0)
 		exit (0);
 	else if (ft_strncmp(args[0], "cd", ft_strlen("cd") + 1) == 0)
@@ -27,13 +27,13 @@ void	execute_builtin(t_shell_data *data, char **args, t_token_list *arg)
 		exit (builtin_exit(args));
 	else if (ft_strncmp(args[0], "env", ft_strlen("env") + 1) == 0)
 	{
-		env(data->env_vars);
+		builtin_env(data->env_vars);
 		exit (0);
 	}
 	else if (ft_strncmp(args[0], "pwd", ft_strlen("pwd") + 1) == 0)
-		exit (pwd(data));
+		exit (builtin_pwd(data));
 	else if (ft_strncmp(args[0], "echo", ft_strlen("echo") + 1) == 0)
-		exit (echo(args));
+		exit (builtin_echo(args));
 }
 
 void	execute_parent_builtin(t_command_list *current, t_shell_data *data)
@@ -50,9 +50,9 @@ void	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 	if (arg)
 		arg_content = arg->content;
 	if (ft_strncmp(cmd->content, "export", ft_strlen("export") + 1) == 0)
-		export(arg, data);
+		builtin_export(arg, data);
 	else if (ft_strncmp(cmd->content, "unset", ft_strlen("unset") + 1) == 0)
-		unset(arg, data);
+		builtin_unset(arg, data);
 	else if (ft_strncmp(cmd->content, "cd", ft_strlen("cd") + 1) == 0)
 		cd(arg_content, data);
 	else if (ft_strncmp(cmd->content, "exit", ft_strlen("exit") + 1) == 0)
