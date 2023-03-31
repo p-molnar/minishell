@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 17:55:02 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 23:31:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <signal.h>
 #include <string.h>
 #include <errno.h>
+#include <stdio.h>
 
 void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 {
@@ -30,6 +31,8 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	path = path_builder(data, command);
 	env = env_builder(data->env_vars);
 	i = 0;
+	if (*command == '\0')
+		error("", EXIT, 127);
 	if (path)
 	{
 		while (path[i])
