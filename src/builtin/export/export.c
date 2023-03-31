@@ -6,11 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 14:03:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 15:33:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <ms_macros.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -31,18 +32,18 @@ void	print_exported_vars(t_list *var_list)
 	}
 }
 
-void	export(t_token_list *token, t_shell_data *data)
+int	export(t_token_list *token, t_shell_data *data)
 {
 	t_var	*var;
 	char	*s;
 
 	if (token == NULL)
-		return (print_exported_vars(data->env_vars));
+		print_exported_vars(data->env_vars);
 	while (token)
 	{
 		s = token->content;
-		if (s && *s == ' ')
-			return ;
+		if (s && (*s == '\0' || *s == ' '))
+			return (error("not a valid identifier", RETURN, 1));
 		else if (is_valid_var_definition(s))
 			var = parse_var_def(s);
 		else if (is_valid_var_name(s, ft_strlen(s)))
@@ -52,8 +53,9 @@ void	export(t_token_list *token, t_shell_data *data)
 				var = create_var(ft_strdup(token->content), NULL);
 		}
 		else
-			return ;
+			return (error("not a valid identifier", RETURN, 1));
 		add_var(var, &data->env_vars);
 		token = token->next;
 	}
+	return (1);
 }
