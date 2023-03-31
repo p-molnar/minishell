@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 17:10:19 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:34:10 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 	arguments = compound_args(current);
 	if (command)
 	{
-		execute_builtin(data, arguments, current->next->token);
+		execute_builtin(data, arguments);
 		execute_bin(command->content, data, arguments);
 	}
 	exit(127);

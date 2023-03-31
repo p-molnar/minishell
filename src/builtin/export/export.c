@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:29:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 17:41:31 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	builtin_export(char **args, t_shell_data *data)
 	t_var	*var;
 	char	*s;
 
-	if (++args == NULL)
+	++args;
+	if (*args == NULL)
 		print_exported_vars(data->env_vars);
 	while (args && *args)
 	{

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 17:30:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 17:43:30 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	execute_builtin(t_shell_data *data, char **args, t_token_list *arg)
+void	execute_builtin(t_shell_data *data, char **args)
 {
 	if (ft_strncmp(args[0], "export", ft_strlen("export") + 1) == 0)
-		exit (builtin_export(arg, data));
+		exit (builtin_export(args, data));
 	else if (ft_strncmp(args[0], "unset", ft_strlen("unset") + 1) == 0)
 		exit (0);
 	else if (ft_strncmp(args[0], "cd", ft_strlen("cd") + 1) == 0)
@@ -39,24 +39,22 @@ void	execute_builtin(t_shell_data *data, char **args, t_token_list *arg)
 void	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 {
 	t_token_list	*cmd;
-	t_token_list	*arg;
+	char			**args;
 	char			*arg_content;
 
 	arg_content = NULL;
 	cmd = get_next_command(current);
 	if (!cmd)
 		return ;
-	arg = get_next_argument(current);
-	if (arg)
-		arg_content = arg->content;
+	args = compound_args(current);
 	if (ft_strncmp(cmd->content, "export", ft_strlen("export") + 1) == 0)
-		builtin_export(arg, data);
+		builtin_export(args, data);
 	else if (ft_strncmp(cmd->content, "unset", ft_strlen("unset") + 1) == 0)
-		builtin_unset(arg, data);
+		builtin_unset(args, data);
 	else if (ft_strncmp(cmd->content, "cd", ft_strlen("cd") + 1) == 0)
-		cd(arg_content, data);
+		builtin_cd(args, data);
 	else if (ft_strncmp(cmd->content, "exit", ft_strlen("exit") + 1) == 0)
-		builtin_exit(compound_args(current));
+		builtin_exit(args);
 }
 
 int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)

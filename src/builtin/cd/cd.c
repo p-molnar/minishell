@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:23:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 17:38:15 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	exec_steps(char *dir, char **curpath, t_var **env_var)
 	return (0);
 }
 
-int	cd(char **args, t_shell_data *data)
+int	builtin_cd(char **args, t_shell_data *data)
 {
 	t_var	*env_var[ENV_SIZE];
 	char	*curpath;
