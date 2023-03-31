@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/30 11:51:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/30 17:31:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-t_var	*add_variable(t_list **str_list, char **s, t_shell_data *data)
+void	add_variable(t_list **str_list, char **s, t_shell_data *data)
 {
 	char	*var_name;
 	char	*str;
@@ -43,7 +43,6 @@ t_var	*add_variable(t_list **str_list, char **s, t_shell_data *data)
 	ft_lstadd_back(str_list, ft_lstnew(str));
 	*s += ft_strlen(var_name);
 	free(var_name);
-	return (var);
 }
 
 char	*expand_token(char *s, t_shell_data *data)
@@ -61,9 +60,7 @@ char	*expand_token(char *s, t_shell_data *data)
 		else if (is_quoted && *s == is_quoted)
 			is_quoted = 0;
 		else if (*s == DOLLAR && (!is_quoted || is_quoted == DQUOTE))
-		{
 			add_variable(&str_list, &s, data);
-		}
 		else
 			ft_lstadd_back(&str_list, ft_lstnew(chardup(s)));
 		s++;

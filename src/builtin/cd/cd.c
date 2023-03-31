@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/28 17:32:18 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 16:18:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	cd(char *dir, t_shell_data *data)
 	init_env_vars(env_var, data);
 	if (exec_steps(dir, &curpath, env_var))
 		return (1);
-	chdir(curpath);
 	return (update_wdirs(curpath, env_var, data));
 }
 

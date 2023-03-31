@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 16:39:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 14:56:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,25 @@
 #include <minishell.h>
 #include <libft.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 int	is_valid_var_name(char *s, int n)
 {
 	int	i;
 
 	i = 0;
+	if (s[i] == '\0' || n == 0)
+		return (0);
 	while (s && s[i] != '\0' && n)
 	{
 		if (i == 0 && ft_isdigit(s[i]))
+		{
 			return (0);
+		}
 		else if (s[i] != '_' && !ft_isalnum(s[i]))
+		{
 			return (0);
+		}
 		i++;
 		n--;
 	}

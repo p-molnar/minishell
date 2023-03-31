@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/27 15:22:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 13:56:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ enum e_token_type {
 	INVALID,
 	WORD,
 	OPERATOR,
+};
+
+//	exit/return methods of error function
+enum e_exit_methods {
+	EXIT = 1,
+	RETURN = 2,
 };
 
 //	command list symbols

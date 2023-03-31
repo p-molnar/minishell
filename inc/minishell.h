@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/30 15:01:29 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 15:11:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void			free_command_list(t_command_list **list);
 
 //	expander.c
 void			expand_tokens(t_shell_data *data);
-t_var			*add_variable(t_list **str_list, char **s, t_shell_data *data);
+void			add_variable(t_list **str_list, char **s, t_shell_data *data);
 
 //	expander_util.c
 char			*parse_var_name(char *s);
@@ -114,7 +114,7 @@ void			open_heredoc(char *delimiter, t_redir_data *redir_dat,
 //	BUILTINS
 
 //	export.c
-void			export(t_token_list *token, t_shell_data *data);
+int				export(t_token_list *token, t_shell_data *data);
 
 //	env.c
 void			env(t_list *var_list);
@@ -150,5 +150,8 @@ int				update_wdirs(char *dir, t_var *var[ENV_SIZE],
 int				get_arr_size(void **arr);
 char			*path_concat(char *basepath, char *relpath);
 char			*n_arr_to_str(char **arr, char *c, int n);
+
+//	error.c
+int				error(char *msg, int exit_method, int value);
 
 #endif
