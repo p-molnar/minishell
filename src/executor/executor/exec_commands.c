@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 14:47:40 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 13:04:28 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,16 @@ void	execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
 							pid_t *process, t_shell_data *data)
 {
 	int				i;
-	int				pipe_n;
 	t_pipe_fd		*in_pipe;
 	t_pipe_fd		*out_pipe;
 	t_command_list	*start_of_simple_cmd;
 
 	i = 0;
-	pipe_n = count_symbols(D_PIPE, current);
 	in_pipe = NULL;
 	start_of_simple_cmd = current;
 	while (current)
 	{
-		if (i < pipe_n && pipe_fd)
+		if (i < count_symbols(D_PIPE, current) && pipe_fd)
 			out_pipe = &pipe_fd[i];
 		else
 			out_pipe = NULL;
