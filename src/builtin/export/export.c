@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 15:03:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 14:03:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	print_exported_vars(t_list *var_list)
 		printf("\n");
 		var_list = var_list->next;
 	}
-	return ;
 }
 
 void	export(t_token_list *token, t_shell_data *data)
@@ -46,12 +45,14 @@ void	export(t_token_list *token, t_shell_data *data)
 			return ;
 		else if (is_valid_var_definition(s))
 			var = parse_var_def(s);
-		else
+		else if (is_valid_var_name(s, ft_strlen(s)))
 		{
 			var = get_var(s, data->shell_vars);
 			if (!var)
 				var = create_var(ft_strdup(token->content), NULL);
 		}
+		else
+			return ;
 		add_var(var, &data->env_vars);
 		token = token->next;
 	}
