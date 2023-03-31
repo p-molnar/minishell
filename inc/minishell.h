@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 13:58:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 15:11:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void			open_heredoc(char *delimiter, t_redir_data *redir_dat,
 //	BUILTINS
 
 //	export.c
-void			export(t_token_list *token, t_shell_data *data);
+int				export(t_token_list *token, t_shell_data *data);
 
 //	env.c
 void			env(t_list *var_list);
@@ -152,6 +152,6 @@ char			*path_concat(char *basepath, char *relpath);
 char			*n_arr_to_str(char **arr, char *c, int n);
 
 //	error.c
-int	error(char *msg, int exit_method, int value);
+int				error(char *msg, int exit_method, int value);
 
 #endif
