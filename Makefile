@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/31 14:01:53 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/03/31 15:39:26 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -153,7 +153,7 @@ ERROR			=	$(addprefix error/,										\
 						)
 
 # ALL SOURCE FILES
-SRC				=	main.c $(PARSER) $(UTIL) $(SIGNAL) $(BUILTIN) $(EXECUTOR)
+SRC				=	main.c $(PARSER) $(UTIL) $(SIGNAL) $(BUILTIN) $(EXECUTOR) $(ERROR)
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
