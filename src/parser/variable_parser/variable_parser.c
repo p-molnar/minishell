@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 09:15:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/29 14:59:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 12:04:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	is_valid_var_definition(char *s)
 	if (sep != NULL)
 	{
 		len = sep - s;
-		return (is_valid_var_name(s, len));
+		if (is_valid_var_name(s, len))
+			return (1);
 	}
 	return (0);
 }
