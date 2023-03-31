@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 12:08:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 14:56:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@ int	is_valid_var_name(char *s, int n)
 	{
 		if (i == 0 && ft_isdigit(s[i]))
 		{
-			ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
 			return (0);
 		}
 		else if (s[i] != '_' && !ft_isalnum(s[i]))
 		{
-			ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
 			return (0);
 		}
 		i++;
