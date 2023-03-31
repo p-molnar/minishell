@@ -6,15 +6,12 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 14:43:08 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/29 14:27:24 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 12:51:01 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <libft.h>
 #include <ms_data_types.h>
-#include <ms_macros.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 t_command_list	*new_command_node(int symbol, t_token_list *token)

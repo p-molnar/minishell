@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 17:36:57 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 14:48:49 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/30 15:08:24 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*var_to_str(t_var *var)
 	return (str2);
 }
 
-int		count_vars(t_list *var_list)
+int	count_vars(t_list *var_list)
 {
 	int		i;
 

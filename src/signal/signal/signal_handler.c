@@ -6,13 +6,12 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 14:42:26 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/21 15:48:16 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 12:49:29 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <libft.h>
-#include <stdlib.h>
 #include <signal.h>
 #include <termios.h>
 #include <readline/readline.h>
