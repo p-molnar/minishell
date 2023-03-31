@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:23:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 17:25:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void			open_heredoc(char *delimiter, t_redir_data *redir_dat,
 //	BUILTINS
 
 //	export.c
-int				export(t_token_list *token, t_shell_data *data);
+int				export(char **args, t_shell_data *data);
 
 //	env.c
 void			env(t_list *var_list);

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:01:42 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:26:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ void	print_exported_vars(t_list *var_list)
 	}
 }
 
-int	export(t_token_list *token, t_shell_data *data)
+int	export(char **args, t_shell_data *data)
 {
 	t_var	*var;
 	char	*s;
 
-	if (token == NULL)
+	if (++args == NULL)
 		print_exported_vars(data->env_vars);
-	while (token)
+	while (args && *args)
 	{
-		s = token->content;
+		s = *args;
 		if (s && (*s == '\0' || *s == ' '))
 			return (error("not a valid identifier", RETURN, 1));
 		else if (is_valid_var_definition(s))
@@ -50,12 +50,12 @@ int	export(t_token_list *token, t_shell_data *data)
 		{
 			var = get_var(s, data->shell_vars);
 			if (!var)
-				var = create_var(ft_strdup(token->content), NULL);
+				var = create_var(ft_strdup(*args), NULL);
 		}
 		else
 			return (error("not a valid identifier", RETURN, 1));
 		add_var(var, &data->env_vars);
-		token = token->next;
+		args++;
 	}
 	return (0);
 }
