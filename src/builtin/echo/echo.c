@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:41:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/30 12:36:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 15:40:24 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <minishell.h>
 #include <unistd.h>
 
-void	echo(char **args)
+int		echo(char **args)
 {
 	int	i;
 	int	n_flag;
@@ -38,4 +38,5 @@ void	echo(char **args)
 		if (!n_flag)
 			ft_putchar_fd('\n', STDOUT_FILENO);
 	}
+	return (0);
 }

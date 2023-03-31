@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 15:00:45 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 15:41:32 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ void	execute_builtin(char *cmd, t_shell_data *data, char **args)
 	else if (ft_strncmp(cmd, "cd", ft_strlen("cd") + 1) == 0)
 		exit (0);
 	else if (ft_strncmp(cmd, "exit", ft_strlen("exit") + 1) == 0)
-	{
-		builtin_exit (args);
-		exit (1);
-	}
+		exit (builtin_exit(args));
 	else if (ft_strncmp(cmd, "env", ft_strlen("env") + 1) == 0)
 	{
 		env(data->env_vars);
@@ -39,10 +36,7 @@ void	execute_builtin(char *cmd, t_shell_data *data, char **args)
 		exit (0);
 	}
 	else if (ft_strncmp(cmd, "echo", ft_strlen("echo") + 1) == 0)
-	{
-		echo(args);
-		exit (0);
-	}
+		exit (echo(args));
 }
 
 void	execute_parent_builtin(t_command_list *current, t_shell_data *data)

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 13:55:12 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 14:44:08 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 15:37:49 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	is_number(char *arg)
 	return (1);
 }
 
-void	builtin_exit(char **args)
+int		builtin_exit(char **args)
 {
 	if (!args)
 		exit(0);
@@ -56,7 +56,7 @@ void	builtin_exit(char **args)
 		if (args[2])
 		{
 			ft_putendl_fd("too many arguments", STDERR_FILENO);
-			return ;
+			return (1);
 		}
 		exit(ft_atoi(args[1]));
 	}
