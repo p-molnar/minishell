@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 13:55:12 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 18:17:54 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/03/31 23:45:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,20 @@ int	is_number(char *arg)
 	int	i;
 
 	i = 0;
-	while (ft_isspace(arg[i]))
-		i++;
-	if (arg[i] == '-' || (arg[i] == '+'))
+	if (arg[i] == '-' || arg[i] == '+')
 		i++;
 	while (arg[i] != '\0')
 	{
-		if (!ft_isdigit(arg[i]) && !ft_isspace(arg[i]))
+		if (!ft_isdigit(arg[i]))
 			return (0);
-		if (ft_isspace(arg[i]))
-		{
-			while (ft_isspace(arg[i]))
-				i++;
-			if (arg[i] == '\0')
-				return (1);
-			else
-				return (0);
-		}
 		i++;
 	}
+	if (arg[i] == '-' || arg[i] == '+')
+		return (0);
 	return (1);
 }
+
+#include <stdio.h>
 
 int	builtin_exit(char **args)
 {
