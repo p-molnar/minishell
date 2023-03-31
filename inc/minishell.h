@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/30 17:31:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 13:58:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,8 @@ int				update_wdirs(char *dir, t_var *var[ENV_SIZE],
 int				get_arr_size(void **arr);
 char			*path_concat(char *basepath, char *relpath);
 char			*n_arr_to_str(char **arr, char *c, int n);
+
+//	error.c
+int	error(char *msg, int exit_method, int value);
 
 #endif
