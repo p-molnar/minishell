@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 11:57:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/03/31 16:19:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,12 @@ void	update_pwd(char *dir, t_var *var[ENV_SIZE])
 
 int	update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data)
 {
-	if (access(dir, (X_OK)) != -1)
+	if (chdir(dir) != -1)
 	{
 		update_oldpwd(var, data);
 		update_pwd(dir, var);
 		return (0);
 	}
 	else
-	{
-		printf("error: %s\n", strerror(errno));
-		return (1);
-	}
+		return (error(strerror(errno), RETURN, 1));
 }
