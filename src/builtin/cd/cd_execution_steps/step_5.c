@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:03:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 18:20:57 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/02 21:58:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,10 @@ char	*yield_valid_cdpath(char *dir, char **path_comp)
 	while (path_comp && path_comp[i])
 	{
 		new_path = path_concat(path_comp[i], dir);
-		printf("test new_path: %s\n", new_path);
 		if (access(new_path, (F_OK)) != -1)
-		{
-			printf("step5: file exists\n");
 			return (new_path);
-		}
 		else
-		{
-			printf("step5: file doesn't exist\n");
 			i++;
-		}
 	}
 	return (NULL);
 }
@@ -79,7 +72,7 @@ void	exec_step_5(char *dir, char **curpath, t_var **var, int *step)
 	else
 	{
 		new_path = path_concat("./", dir);
-		if (access(new_path, (F_OK | X_OK)) != -1) // test it!
+		if (access(new_path, (F_OK)) != -1)
 		{
 			*curpath = new_path;
 			*step = 7;
