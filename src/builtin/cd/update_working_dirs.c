@@ -6,16 +6,15 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:20:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/02 21:54:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <ms_macros.h>
 #include <libft.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 
@@ -25,11 +24,7 @@ void	update_oldpwd(t_var	*var[ENV_SIZE], t_shell_data *data)
 
 	if (!var[OLDPWD])
 	{
-		new_var = ft_calloc(1, sizeof(t_var));
-		if (!new_var)
-			return ;
-		new_var->name = ft_strdup("OLDPWD");
-		new_var->val = ft_strdup(var[PWD]->val);
+		new_var = create_var(ft_strdup("OLDPWD"), ft_strdup(var[PWD]->val));
 		add_var(new_var, &data->env_vars);
 	}
 	else
