@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 15:28:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/26 22:47:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/02 22:33:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	**remove_dot_comp(char **arr, int size)
 		}
 		j++;
 	}
-	free_arr((void **)arr);
 	return (new_arr);
 }
 
@@ -130,8 +129,10 @@ char	*process_dotdot_comp(char **arr)
 {
 	int		i;
 	char	*path;
+	char	**tmp;
 
 	i = 0;
+	tmp = NULL;
 	while (arr && arr[i])
 	{
 		if (ft_strncmp(arr[i], "..", 3) == 0)
@@ -139,7 +140,10 @@ char	*process_dotdot_comp(char **arr)
 			path = n_arr_to_str(arr, "/", i - 1);
 			if (access(path, F_OK) != -1)
 			{
+				if (tmp != NULL)
+					free(tmp);
 				arr = move_up_dir(arr, i);
+				tmp = arr;
 				i = 0;
 				continue ;
 			}
@@ -153,9 +157,12 @@ char	*process_dotdot_comp(char **arr)
 int	exec_step_8(char **curpath, int *step)
 {
 	char	**comps;
+	char	**tmp;
 
 	comps = ft_split(*curpath, '/');
+	tmp = comps;
 	comps = remove_dot_comp(comps, get_arr_size((void **)comps));
+	free(tmp);
 	*curpath = process_dotdot_comp(comps);
 	if (curpath == NULL)
 		return (1);
