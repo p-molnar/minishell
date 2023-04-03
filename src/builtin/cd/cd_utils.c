@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:18:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/02 22:45:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 11:15:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,20 @@
 
 char	*path_concat(char *basepath, char *relpath)
 {
-	int		len[2];
 	char	*joined_str;
+	char	*basepath_postfixed;
 
-	if (basepath)
-		len[0] = ft_strlen(basepath);
-	if (relpath)
-		len[1] = ft_strlen(relpath);
-	if (basepath[len[0] - 1] != '/')
+	joined_str = NULL;
+	if (basepath && basepath[ft_strlen(basepath)- 1] != '/')
 	{
-		basepath = ft_strjoin(basepath, "/");
-		if (!basepath)
+		basepath_postfixed = ft_strjoin(basepath, "/");
+		if (!basepath_postfixed)
+			return (NULL);
+		joined_str = ft_strjoin(basepath_postfixed, relpath);
+		free(basepath_postfixed);
+		if (!joined_str)
 			return (NULL);
 	}
-	joined_str = ft_strjoin(basepath, relpath);
-	if (!joined_str)
-		return (NULL);
 	return (joined_str);
 }
 
@@ -44,26 +42,22 @@ int	get_arr_size(void **arr)
 	return (i);
 }
 
-char	*n_arr_to_str(char **arr, char *el_delim, int n)
+char	*strnjoin(char **arr, char *el_delim, int n)
 {
 	int		i;
 	char	*str;
 	char	*tmp;
-	char	*tmp2;
 
 	i = 0;
 	str = ft_strdup("");
 	while (arr && arr[i] && n-- > 0)
 	{
-		if (i > 0)
-		{
-			free(tmp);
-			free(tmp2);
-		}
 		tmp = str;
 		str = ft_strjoin(tmp, el_delim);
-		tmp2 = str;
-		str = ft_strjoin(tmp2, arr[i++]);
+		free(tmp);
+		tmp = str;
+		str = ft_strjoin(tmp, arr[i++]);
+		free(tmp);
 	}
 	if (str[0] == '\0')
 	{
