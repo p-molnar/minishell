@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 13:55:12 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 13:41:18 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,13 @@ int	is_number(char *arg)
 	while (arg[i] != '\0')
 	{
 		if (!ft_isdigit(arg[i]))
-			return (EXIT_SUCCESS);
+			return (0);
 		i++;
 	}
 	if (arg[i] == '-' || arg[i] == '+')
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
+		return (0);
+	return (1);
 }
-
-#include <stdio.h>
 
 int	builtin_exit(char **args)
 {
