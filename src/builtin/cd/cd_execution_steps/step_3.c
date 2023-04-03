@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 10:16:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/21 12:07:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 09:02:36 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ curpath to the operand and proceed to step 7.
 
 void	exec_step_3(char *dir, char **curpath, int *step)
 {
-	if (dir[0] == '/')
+	if (dir && dir[0] == '/')
 	{
 		*curpath = dir;
 		*step = 7;
