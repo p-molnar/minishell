@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 13:44:19 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/03 14:19:21 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)
 	signal(SIGINT, SIG_DFL);
 	tcsetattr(0, 0, &data->original_termios);
 	if (redirect_files(current, &redir_data, data))
-		return (EXIT_FAILURE);
+		return (1);
 	execute_parent_builtin(current, data);
 	dup2(redir_data.og_stdin, STDIN_FILENO);
 	dup2(original_stdout, STDOUT_FILENO);
@@ -73,7 +73,7 @@ int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)
 	close(redir_data.og_stdin);
 	close(redir_data.heredoc_pipe_out);
 	close(original_stdout);
-	return (EXIT_FAILURE);
+	return (1);
 }
 
 int	check_parent_builtin(t_command_list *current, t_shell_data *data)
@@ -81,10 +81,10 @@ int	check_parent_builtin(t_command_list *current, t_shell_data *data)
 	t_token_list	*cmd;
 
 	if (!current)
-		return (EXIT_SUCCESS);
+		return (0);
 	cmd = get_next_command(current);
 	if (!cmd)
-		return (EXIT_SUCCESS);
+		return (0);
 	if (ft_strncmp(cmd->content, "export", ft_strlen("export") + 1) == 0)
 		return (prepare_parent_builtin(current, data));
 	else if (ft_strncmp(cmd->content, "unset", ft_strlen("unset") + 1) == 0)
@@ -93,5 +93,5 @@ int	check_parent_builtin(t_command_list *current, t_shell_data *data)
 		return (prepare_parent_builtin(current, data));
 	else if (ft_strncmp(cmd->content, "exit", ft_strlen("exit") + 1) == 0)
 		return (prepare_parent_builtin(current, data));
-	return (EXIT_SUCCESS);
+	return (0);
 }

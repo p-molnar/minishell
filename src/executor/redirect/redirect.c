@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 14:15:23 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,17 @@ void	initialise_redirection_data(t_redir_data *redir_data)
 	redir_data->heredoc_pipe_out = -1;
 }
 
-int	open_redirect_infile(t_command_list *current, t_redir_data *redir_dat)
+int	open_redirect_infile(t_command_list *list, t_redir_data *redir_dat)
 {
+	char	*err_msg;
+	
 	close(redir_dat->fd_in);
-	redir_dat->fd_in = open(current->token->content, O_RDONLY);
+	redir_dat->fd_in = open(list->token->content, O_RDONLY);
 	if (redir_dat->fd_in < 0)
 	{
-		ft_putstr_fd("Could not open file ", STDERR_FILENO);
-		ft_putendl_fd(current->token->content, STDERR_FILENO);
+		err_msg = ft_strjoin("Could not open file ", list->token->content);
+		error(err_msg, RETURN, EXIT_FAILURE);
+		free(err_msg);
 		return (EXIT_FAILURE);
 	}
 	dup2(redir_dat->fd_in, STDIN_FILENO);
@@ -39,6 +42,8 @@ int	open_redirect_infile(t_command_list *current, t_redir_data *redir_dat)
 
 int	open_redirect_outfile(t_command_list *list, t_redir_data *redir_dat)
 {
+	char	*err_msg;
+
 	close(redir_dat->fd_out);
 	if (list->symbol == OUTFILE)
 		redir_dat->fd_out = open(list->token->content,
@@ -48,8 +53,9 @@ int	open_redirect_outfile(t_command_list *list, t_redir_data *redir_dat)
 				O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (redir_dat->fd_out < 0)
 	{
-		ft_putstr_fd("Could not open file ", STDERR_FILENO);
-		ft_putendl_fd(list->token->content, STDERR_FILENO);
+		err_msg = ft_strjoin("Could not open file ", list->token->content);
+		error(err_msg, RETURN, EXIT_FAILURE);
+		free(err_msg);
 		return (EXIT_FAILURE);
 	}
 	dup2(redir_dat->fd_out, STDOUT_FILENO);
