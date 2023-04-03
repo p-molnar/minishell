@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/28 10:58:48 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 08:58:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 15:02:23 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	is_valid_operator_seq(char *s)
 
 	len = ft_strlen(s);
 	if (len < 1 || len > 2)
-		return (EXIT_SUCCESS);
+		return (0);
 	return (ft_strncmp(DLESS, s, len) == 0
 		|| ft_strncmp(DGREAT, s, len) == 0
 		|| ft_strncmp("||", s, len) == 0);
