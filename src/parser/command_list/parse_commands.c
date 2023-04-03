@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:33:38 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 15:57:48 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ int	add_command(t_command_list **command_list, t_token_list *token)
 	if (is_valid_var_definition(token->content))
 	{
 		add_command_back(command_list, new_command_node(ASSIGNMENT, token));
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	else
 		add_command_back(command_list, new_command_node(CMD, token));
-	return (1);
+	return (EXIT_FAILURE);
 }
 
 int	add_simple_command(t_command_list **command_list, t_token_list *token)

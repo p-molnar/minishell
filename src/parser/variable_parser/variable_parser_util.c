@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 14:56:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@ int	is_valid_var_name(char *s, int n)
 
 	i = 0;
 	if (s[i] == '\0' || n == 0)
-		return (0);
+		return (EXIT_SUCCESS);
 	while (s && s[i] != '\0' && n)
 	{
 		if (i == 0 && ft_isdigit(s[i]))
 		{
-			return (0);
+			return (EXIT_SUCCESS);
 		}
 		else if (s[i] != '_' && !ft_isalnum(s[i]))
 		{
-			return (0);
+			return (EXIT_SUCCESS);
 		}
 		i++;
 		n--;
 	}
-	return (1);
+	return (EXIT_FAILURE);
 }
 
 t_var	*get_var(char *lookup_name, t_list *var_list)

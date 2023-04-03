@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/02 22:36:09 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	exec_steps(char *dir, char **curpath, t_var **env_var)
 	if (step == 1)
 	{
 		if (exec_step_1_2(env_var, &dir, &step))
-			return (1);
+			return (EXIT_FAILURE);
 	}
 	if (step == 3)
 		exec_step_3(dir, curpath, &step);
@@ -47,7 +47,7 @@ static int	exec_steps(char *dir, char **curpath, t_var **env_var)
 		exec_step_7(curpath, env_var, &step);
 	if (step == 8)
 		exec_step_8(curpath, &step);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	builtin_cd(char **args, t_shell_data *data)
@@ -58,7 +58,7 @@ int	builtin_cd(char **args, t_shell_data *data)
 	curpath = NULL;
 	init_env_vars(env_var, data);
 	if (args[1] && exec_steps(args[1], &curpath, env_var))
-		return (1);
+		return (EXIT_FAILURE);
 	return (update_wdirs(curpath, env_var, data));
 	free(curpath);
 }

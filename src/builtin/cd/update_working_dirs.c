@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/02 21:54:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data)
 	{
 		update_oldpwd(var, data);
 		update_pwd(dir, var);
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	else
 		return (error(strerror(errno), RETURN, 1));

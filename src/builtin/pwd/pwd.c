@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 10:22:01 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:30:04 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ int	builtin_pwd(t_shell_data *data)
 		printf("%s\n", var->val);
 	else
 		return (error("", RETURN, 1));
-	return (0);
+	return (EXIT_SUCCESS);
 }

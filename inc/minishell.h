@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:52:37 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/03 08:58:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <ms_data_types.h>
 # include <ms_macros.h>
 # include <termios.h>
+# include <stdlib.h>
 
 # define PROMPT_MSG "minishell$ "
 

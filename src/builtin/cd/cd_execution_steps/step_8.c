@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 15:28:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/02 22:33:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int	exec_step_8(char **curpath, int *step)
 	free(tmp);
 	*curpath = process_dotdot_comp(comps);
 	if (curpath == NULL)
-		return (1);
+		return (EXIT_FAILURE);
 	*step += 1;
-	return (0);
+	return (EXIT_SUCCESS);
 }

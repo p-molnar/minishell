@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/31 18:35:04 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	open_redirect_infile(t_command_list *current, t_redir_data *redir_dat)
 	{
 		ft_putstr_fd("Could not open file ", STDERR_FILENO);
 		ft_putendl_fd(current->token->content, STDERR_FILENO);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	dup2(redir_dat->fd_in, STDIN_FILENO);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	open_redirect_outfile(t_command_list *list, t_redir_data *redir_dat)
@@ -50,10 +50,10 @@ int	open_redirect_outfile(t_command_list *list, t_redir_data *redir_dat)
 	{
 		ft_putstr_fd("Could not open file ", STDERR_FILENO);
 		ft_putendl_fd(list->token->content, STDERR_FILENO);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	dup2(redir_dat->fd_out, STDOUT_FILENO);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	redirect_files(t_command_list *current, t_redir_data *redir_dat,

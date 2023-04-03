@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 17:34:34 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,5 @@ int	main(int argc, char *argv[], char *envp[])
 	cleanup_before_exit(&data);
 	free_var_list(data.env_vars);
 	free_var_list(data.shell_vars);
-	return (0);
+	return (EXIT_SUCCESS);
 }
