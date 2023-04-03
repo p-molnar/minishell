@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/20 13:28:32 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 10:10:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 int	exec_step_1_2(t_var **env_var, char **dir, int *step)
 {
-	if (*dir == NULL)
+	if (dir && *dir == NULL)
 	{
 		if (env_var[HOME] == NULL
 			|| env_var[HOME]->val[0] == '\0'
