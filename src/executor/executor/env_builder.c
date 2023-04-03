@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 17:36:57 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 15:08:24 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/03 14:27:25 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ char	**env_builder(t_list *var_list)
 		i++;
 	}
 	env[i] = NULL;
-	return (NULL);
+	return (env);
 }
