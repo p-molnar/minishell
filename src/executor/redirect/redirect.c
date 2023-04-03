@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 14:15:23 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/03 16:26:06 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	initialise_redirection_data(t_redir_data *redir_data)
 int	open_redirect_infile(t_command_list *list, t_redir_data *redir_dat)
 {
 	char	*err_msg;
-	
+
 	close(redir_dat->fd_in);
 	redir_dat->fd_in = open(list->token->content, O_RDONLY);
 	if (redir_dat->fd_in < 0)

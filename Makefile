@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/03/31 16:22:17 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/03 16:58:58 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ VAR_INTERPRETER	=	$(addprefix	variable_parser/,							\
 CMD_PARSER		=	$(addprefix	command_list/,								\
 						parse_commands.c									\
 						parse_operators.c									\
+						parser_utils.c										\
 						)
 
 PARSER			=	$(addprefix parser/,									\

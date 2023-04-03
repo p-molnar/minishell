@@ -6,32 +6,13 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:33:38 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 16:14:18 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/03 16:58:07 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <libft.h>
 #include <ms_macros.h>
-
-t_command_list	*syntax_error(t_command_list **list, t_token_list *token)
-{
-	char	*err_tkn;
-	char	*err_msg;
-
-	if (!token)
-		error("Syntax error: unexpected end of token list", RETURN, 258);
-	else
-	{
-		err_tkn = ft_strjoin(token->content, "'");
-		err_msg = ft_strjoin("Syntax error near unexpected token '", err_tkn);
-		error(err_msg, RETURN, 258);
-		free(err_tkn);
-		free(err_msg);
-	}
-	free_command_list(list);
-	return (NULL);
-}
 
 int	add_command(t_command_list **command_list, t_token_list *token)
 {
@@ -43,6 +24,27 @@ int	add_command(t_command_list **command_list, t_token_list *token)
 	else
 		add_command_back(command_list, new_command_node(CMD, token));
 	return (RET_PIPE);
+}
+
+int	add_arguments(t_command_list **command_list, t_token_list *token)
+{
+	int	ret;
+
+	ret = RET_END;
+	while (token)
+	{
+		if (token->type == OPERATOR)
+		{
+			ret = parse_operator(command_list, token);
+			if (ret)
+				return (ret);
+			token = token->next;
+		}
+		else if (token->type == WORD)
+			add_command_back(command_list, new_command_node(ARG, token));
+		token = token->next;
+	}
+	return (ret);
 }
 
 int	add_simple_command(t_command_list **command_list, t_token_list *token)
@@ -65,20 +67,19 @@ int	add_simple_command(t_command_list **command_list, t_token_list *token)
 			command_flag = (add_command(command_list, token));
 		token = token->next;
 	}
-	while (token)
-	{
-		if (token->type == OPERATOR)
-		{
-			ret = parse_operator(command_list, token);
-			if (ret)
-				return (ret);
-			token = token->next;
-		}
-		else if (token->type == WORD)
-			add_command_back(command_list, new_command_node(ARG, token));
-		token = token->next;
-	}
+	add_arguments(command_list, token);
 	return (ret);
+}
+
+t_command_list	*check_token(t_command_list **command_list, t_token_list *token)
+{
+	if (token->type == OPERATOR && ft_strncmp(token->content, "|", 1) == 0)
+		return (syntax_error(command_list, token));
+	if (token->type == INVALID || token->type == UNDEFINED)
+		return (syntax_error(command_list, token));
+	if (add_simple_command(command_list, token) == RET_SYNTAX_ERR)
+		return (NULL);
+	return (*command_list);
 }
 
 t_command_list	*parse_commands(t_token_list *token)
@@ -88,11 +89,7 @@ t_command_list	*parse_commands(t_token_list *token)
 	command_list = NULL;
 	while (token)
 	{
-		if (token->type == OPERATOR && ft_strncmp(token->content, "|", 1) == 0)
-			return (syntax_error(&command_list, token));
-		if (token->type == INVALID || token->type == UNDEFINED)
-			return (syntax_error(&command_list, token));
-		if (add_simple_command(&command_list, token) == RET_SYNTAX_ERR)
+		if (!check_token(&command_list, token))
 			return (NULL);
 		while (token->next)
 		{
