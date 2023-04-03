@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 14:21:33 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/03 15:16:22 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	env = env_builder(data->env_vars);
 	i = 0;
 	if (*command == '\0')
-		error("", EXIT, 127);
+		error("Command not found", EXIT, 127);
 	if (path)
 	{
 		while (path[i])

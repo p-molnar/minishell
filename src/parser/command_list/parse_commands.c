@@ -6,18 +6,29 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:33:38 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 15:02:23 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/03 16:14:18 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <libft.h>
 #include <ms_macros.h>
-#include <stdio.h>
 
-t_command_list	*syntax_error(t_command_list **list)
+t_command_list	*syntax_error(t_command_list **list, t_token_list *token)
 {
-	printf("Syntax error, unexpected end of token list\n");
+	char	*err_tkn;
+	char	*err_msg;
+
+	if (!token)
+		error("Syntax error: unexpected end of token list", RETURN, 258);
+	else
+	{
+		err_tkn = ft_strjoin(token->content, "'");
+		err_msg = ft_strjoin("Syntax error near unexpected token '", err_tkn);
+		error(err_msg, RETURN, 258);
+		free(err_tkn);
+		free(err_msg);
+	}
 	free_command_list(list);
 	return (NULL);
 }
@@ -78,9 +89,9 @@ t_command_list	*parse_commands(t_token_list *token)
 	while (token)
 	{
 		if (token->type == OPERATOR && ft_strncmp(token->content, "|", 1) == 0)
-			return (syntax_error(&command_list));
+			return (syntax_error(&command_list, token));
 		if (token->type == INVALID || token->type == UNDEFINED)
-			return (syntax_error(&command_list));
+			return (syntax_error(&command_list, token));
 		if (add_simple_command(&command_list, token) == RET_SYNTAX_ERR)
 			return (NULL);
 		while (token->next)
@@ -95,7 +106,7 @@ t_command_list	*parse_commands(t_token_list *token)
 		{
 			add_command_back(&command_list, new_command_node(D_PIPE, NULL));
 			if (!token->next)
-				return (syntax_error(&command_list));
+				return (syntax_error(&command_list, NULL));
 		}
 		token = token->next;
 	}
