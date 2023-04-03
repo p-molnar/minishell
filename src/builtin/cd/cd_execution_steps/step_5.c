@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:03:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/02 22:50:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 09:13:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ char	*yield_valid_cdpath(char *dir, char **path_comp)
 		if (access(new_path, (F_OK)) != -1)
 			return (new_path);
 		else
+		{
+			free(new_path);
 			i++;
+		}
 	}
 	return (NULL);
 }
@@ -57,13 +60,13 @@ void	exec_step_5(char *dir, char **curpath, t_var **var, int *step)
 	if (var[CDPATH])
 	{
 		path_comps = ft_split(var[CDPATH]->val, ':');
-		if (path_comps && (get_arr_size((void **)path_comps) > 0))
+		if (path_comps && get_arr_size((void **)path_comps) > 0)
 		{
 			new_path = yield_valid_cdpath(dir, path_comps);
 			if (new_path)
 			{
-				if (curpath)
-					free(curpath);
+				if (curpath && *curpath)
+					free(*curpath);
 				*curpath = new_path;
 				*step = 7;
 				free_arr((void **)path_comps);
@@ -77,12 +80,13 @@ void	exec_step_5(char *dir, char **curpath, t_var **var, int *step)
 		new_path = path_concat("./", dir);
 		if (access(new_path, (F_OK)) != -1)
 		{
-			if (curpath)
-				free(curpath);
+			if (curpath && *curpath)
+				free(*curpath);
 			*curpath = new_path;
 			*step = 7;
 			return ;
 		}
+		free(new_path);
 	}
 	*step += 1;
 }
