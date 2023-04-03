@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 14:12:38 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/30 13:39:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 12:18:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	free_var_list(t_list *var_list)
 		next = (*list)->next;
 		if ((*list)->content)
 			free_var((t_var **)&(*list)->content);
+		free(*list);
 		*list = next;
 	}
 }
