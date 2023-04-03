@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 10:16:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 09:02:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 09:04:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	exec_step_3(char *dir, char **curpath, int *step)
 {
 	if (dir && dir[0] == '/')
 	{
-		*curpath = dir;
+		if (curpath)
+			*curpath = dir;
 		*step = 7;
 	}
 	else
