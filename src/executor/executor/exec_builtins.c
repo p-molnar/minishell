@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/03 13:44:19 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 	t_token_list	*cmd;
 	char			**args;
 
+	args = NULL;
 	cmd = get_next_command(current);
 	if (!cmd)
 		return ;
@@ -50,6 +51,7 @@ void	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 		builtin_cd(args, data);
 	else if (ft_strncmp(cmd->content, "exit", ft_strlen("exit") + 1) == 0)
 		builtin_exit(args);
+	free(args);
 }
 
 int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)
