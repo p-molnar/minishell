@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 14:12:38 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 12:18:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 16:04:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,31 +80,4 @@ void	free_var(t_var **var)
 		free(*var);
 		*var = NULL;
 	}
-}
-
-void	free_var_list(t_list *var_list)
-{
-	t_list	**list;
-	t_list	*next;
-
-	list = &var_list;
-	while (list && *list)
-	{
-		next = (*list)->next;
-		if ((*list)->content)
-			free_var((t_var **)&(*list)->content);
-		free(*list);
-		*list = next;
-	}
-}
-
-void	free_arr(void **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr && arr[i])
-		free (arr[i++]);
-	if (arr)
-		free (arr);
 }
