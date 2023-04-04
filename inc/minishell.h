@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 12:52:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 15:22:53 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int				builtin_env(t_list *var_list);
 void			builtin_unset(char **args, t_shell_data *data);
 
 //	pwd.c
-int				builtin_pwd(t_shell_data *data);
+int				builtin_pwd(void);
 
 //	echo.c
 int				builtin_echo(char **args);

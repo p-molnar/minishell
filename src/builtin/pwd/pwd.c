@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 10:22:01 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 15:25:08 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int	builtin_pwd(t_shell_data *data)
+int	builtin_pwd(void)
 {
-	t_var	*var;
+	char	*pwd;
 
-	var = get_var("PWD", data->env_vars);
-	if (var && var->val)
-		printf("%s\n", var->val);
-	else
-		return (error("", RETURN, 1));
+	pwd = getcwd(NULL, 0);
+	printf("%s\n", pwd);
+	free(pwd);
 	return (EXIT_SUCCESS);
 }
