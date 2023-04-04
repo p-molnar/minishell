@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 15:01:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 16:19:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 23:35:58 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_var
 {
 	char	*name;
 	char	*val;
+	int		type;
 }	t_var;
 
 typedef struct s_shell_data
@@ -56,8 +57,7 @@ typedef struct s_shell_data
 	char			**argv;
 	char			*prompt;
 	t_token_list	*tokens;
-	t_list			*env_vars;
-	t_list			*shell_vars;
+	t_list			*variables;
 	t_command_list	*commands;
 	struct termios	original_termios;
 }	t_shell_data;
