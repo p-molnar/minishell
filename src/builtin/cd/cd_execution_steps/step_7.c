@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 15:08:59 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 12:48:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 15:56:33 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 
 void	exec_step_7(char **curpath, t_var **env_var, int *step)
 {
-
 	if (curpath && *curpath && *curpath[0] != '/')
 		*curpath = path_concat(env_var[PWD]->val, *curpath);
 	*step += 1;

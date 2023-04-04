@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:03:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 12:06:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 15:11:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ pathname in CDPATH until all pathnames have been tested.
 #include <string.h>
 #include <errno.h>
 
-char	*yield_valid_cdpath(char *dir, char **path_comp)
+char	*yield_valid_path(char *dir, char **path_comp)
 {
 	int		i;
 	char	*new_path;
@@ -43,11 +43,8 @@ char	*yield_valid_cdpath(char *dir, char **path_comp)
 		new_path = path_concat(path_comp[i], dir);
 		if (access(new_path, (F_OK)) != -1)
 			return (new_path);
-		else
-		{
-			free(new_path);
-			i++;
-		}
+		free(new_path);
+		i++;
 	}
 	return (NULL);
 }
@@ -63,31 +60,19 @@ void	exec_step_5(char *dir, char **curpath, t_var **var, int *step)
 		path_comps = ft_split(var[CDPATH]->val, ':');
 		if (path_comps && get_arr_size((void **)path_comps) > 0)
 		{
-			new_path = yield_valid_cdpath(dir, path_comps);
+			new_path = yield_valid_path(dir, path_comps);
 			if (new_path)
 			{
-				if (curpath && *curpath)
+				if (*curpath)
 					free(*curpath);
 				*curpath = new_path;
+				printf("%s\n", *curpath);
 				*step = 7;
 				free_arr((void **)path_comps);
 				return ;
 			}
 			free_arr((void **)path_comps);
 		}
-	}
-	else
-	{
-		new_path = path_concat("./", dir);
-		if (access(new_path, (F_OK)) != -1)
-		{
-			if (curpath && *curpath)
-				free(*curpath);
-			*curpath = new_path;
-			*step = 7;
-			return ;
-		}
-		free(new_path);
 	}
 	*step += 1;
 }

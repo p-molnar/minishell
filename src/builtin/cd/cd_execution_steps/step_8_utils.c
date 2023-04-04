@@ -6,10 +6,9 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 09:29:44 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 12:50:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 15:57:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <minishell.h>
 #include <stdlib.h>
@@ -110,5 +109,6 @@ char	*process_dotdot_comp(char **arr)
 		i++;
 	}
 	path = strnjoin(arr, "/", get_arr_size((void **) arr));
+	free(tmp_ptr);
 	return (path);
 }

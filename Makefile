@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/04 12:52:59 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/04 16:04:42 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ EXPANDER 		=	$(addprefix	expander/,									\
 VAR_INTERPRETER	=	$(addprefix	variable_parser/,							\
 						variable_parser.c									\
 						variable_parser_util.c								\
+						variable_operations.c								\
 						)
 
 CMD_PARSER		=	$(addprefix	command_list/,								\
@@ -147,6 +148,7 @@ UTIL			=	$(addprefix $(UTIL_PATH),								\
 						token_list_util.c									\
 						command_list_util.c									\
 						free_objects.c										\
+						free_objects_2.c									\
 						list_util.c											\
 						)
 

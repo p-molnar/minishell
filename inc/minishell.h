@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 15:48:43 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 16:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void			free_var_list(t_list *var_list);
 void			free_token(t_token_list *token);
 void			free_token_list(t_token_list *list);
 void			free_arr(void **arr);
+void			cleanup_before_exit(t_shell_data *data);
 
 //	character_reader.c
 char			*read_prompt(const char *prompt);
