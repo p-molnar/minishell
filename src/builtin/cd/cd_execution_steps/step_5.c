@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:03:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 09:13:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 12:06:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	exec_step_5(char *dir, char **curpath, t_var **var, int *step)
 	char	**path_comps;
 	char	*new_path;
 
+	new_path = NULL;
 	if (var[CDPATH])
 	{
 		path_comps = ft_split(var[CDPATH]->val, ':');
