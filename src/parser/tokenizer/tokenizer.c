@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/31 23:33:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 11:10:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	*delimit_token(char *prompt)
 	char	quote;
 
 	curr = prompt;
+	quote = 0;
 	while (curr && *curr != '\0')
 	{
 		update_prev_ptr(&prev, curr, prompt);

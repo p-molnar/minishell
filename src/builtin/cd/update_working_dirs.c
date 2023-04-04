@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 12:28:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	update_oldpwd(t_var	*var[ENV_SIZE], t_shell_data *data)
 
 void	update_pwd(char *dir, t_var *var[ENV_SIZE])
 {
-	free(var[PWD]->val);
+	free(var[PWD]->val); // terjunk vissza
 	var[PWD]->val = ft_strdup(dir);
 }
 
@@ -49,5 +49,7 @@ int	update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data)
 		return (EXIT_SUCCESS);
 	}
 	else
+	{
 		return (error(strerror(errno), RETURN, 1));
+	}
 }

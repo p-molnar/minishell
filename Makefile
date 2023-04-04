@@ -6,14 +6,14 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/03 16:58:58 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/04/04 12:52:59 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix readline)/lib
-# CFLAGS			+=	-g # debug
+CFLAGS			+=	-g # debug
 # CFLAGS			+=	-fsanitize=address
 NAME			=	minishell
 INCL			=	inc libft/inc
@@ -127,6 +127,7 @@ CD_STEPS		=	$(addprefix	cd_execution_steps/,						\
 						step_6.c											\
 						step_7.c											\
 						step_8.c											\
+						step_8_utils.c										\
 						)
 
 

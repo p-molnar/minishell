@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 12:42:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,8 @@ static int	exec_steps(char *dir, char **curpath, t_var **env_var)
 	int		step;
 
 	step = 1;
-	if (step == 1)
-	{
-		if (exec_step_1_2(env_var, &dir, &step))
-			return (EXIT_FAILURE);
-	}
+	if (step == 1 && exec_step_1_2(env_var, &dir, &step))
+		return (EXIT_FAILURE);
 	if (step == 3)
 		exec_step_3(dir, curpath, &step);
 	if (step == 4)
@@ -53,12 +50,14 @@ static int	exec_steps(char *dir, char **curpath, t_var **env_var)
 int	builtin_cd(char **args, t_shell_data *data)
 {
 	t_var	*env_var[ENV_SIZE];
+	int		ret;
 	char	*curpath;
 
 	curpath = NULL;
 	init_env_vars(env_var, data);
-	if (args[1] && exec_steps(args[1], &curpath, env_var))
+	if (exec_steps(args[1], &curpath, env_var))
 		return (EXIT_FAILURE);
-	return (update_wdirs(curpath, env_var, data));
-	free(curpath);
+	ret = update_wdirs(curpath, env_var, data);
+	free (curpath);
+	return (ret);
 }

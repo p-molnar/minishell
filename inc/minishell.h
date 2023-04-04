@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 16:07:05 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 12:52:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ int				builtin_echo(char **args);
 int				builtin_exit(char **args);
 
 //	CD
-//	cd.c
+
+
 int				builtin_cd(char **args, t_shell_data *data);
 int				exec_step_1_2(t_var **env_var, char **dir, int *step);
 void			exec_step_3(char *dir, char **curpath, int *step);
@@ -142,6 +143,10 @@ void			exec_step_5(char *dir, char **curpath, t_var **var, int *step);
 void			exec_step_6(char *dir, char **curpath, int *step);
 void			exec_step_7(char **curpath, t_var **env_var, int *step);
 int				exec_step_8(char **curpath, int *step);
+char			**remove_dot_comp(char **arr, int size);
+char			*process_dotdot_comp(char **arr);
+char			**dir_move_up(char **arr, int dd_comp_index);
+char			**move_up_dir(char **arr, int curr_comp_idx);
 
 //	update_working_dirs.c
 int				update_wdirs(char *dir, t_var *var[ENV_SIZE],
