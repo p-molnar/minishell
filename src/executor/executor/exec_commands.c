@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/04 14:17:36 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 17:48:49 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,25 @@
 #include <sys/stat.h>
 #include <stdio.h>
 
-void	check_path(char *path)
+void	check_path(char *path, char *cmd)
 {
 	struct stat	path_stat;
 
 	stat(path, &path_stat);
-	if (S_ISDIR(path_stat.st_mode))
+	if (S_ISDIR(path_stat.st_mode) && *cmd != '\0')
+	{
+		free(path);
 		error("is a directory", EXIT, 126);
-	if (access(path, X_OK) == -1)
+	}
+	else if (access(path, X_OK) == -1)
 	{
 		if (errno == EACCES)
+		{
+			free(path);
 			error(strerror(errno), EXIT, 126);
+		}
 	}
+	free(path);
 }
 
 void	execute_bin(char *command, t_shell_data *data, char	**arguments)
@@ -45,19 +52,21 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 
 	path = path_builder(data, command);
 	env = env_builder(data->env_vars);
+	check_path(ft_strjoin(path[0], command), command);
 	i = 0;
-	check_path(ft_strjoin(path[0], command));
 	if (path)
 	{
 		while (path[i])
 		{
 			commandpath = ft_strjoin(path[i], command);
 			execve(commandpath, arguments, env);
+			free(path[i]);
 			free(commandpath);
 			commandpath = NULL;
 			i++;
 		}
 	}
+	free(path);
 	error("command not found", EXIT, 127);
 }
 

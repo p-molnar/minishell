@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:46:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/30 17:31:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 17:55:37 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	add_variable(t_list **str_list, char **s, t_shell_data *data)
 	t_var	*var;
 
 	var_name = parse_var_name(*s);
-	var = get_var(var_name, data->env_vars);
-	if (var == NULL)
 		var = get_var(var_name, data->shell_vars);
+	if (var == NULL)
+	var = get_var(var_name, data->env_vars);
 	if (var)
 	{
 		if (!var->val)

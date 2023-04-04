@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/04 15:36:48 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 17:21:47 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*get_full_path(t_shell_data *data, char *cmd)
 {
 	t_var		*var;
 	char		*pwd;
+	char		*tmp;
 	char		*join;
 	const char	folder_indicator = '/';
 
@@ -37,7 +38,9 @@ char	*get_full_path(t_shell_data *data, char *cmd)
 	var = get_var("PATH", data->env_vars);
 	if (!var)
 		return (join);
+	tmp = join;
 	join = ft_strjoin(join, var->val);
+	free(tmp);
 	return (join);
 }
 
@@ -45,10 +48,13 @@ char	**path_builder(t_shell_data *data, char *cmd)
 {
 	char	**path;
 	char	*finalpath;
+	char	*tmp;
 	int		i;
 
 	i = 0;
-	path = ft_split(get_full_path(data, cmd), ':');
+	tmp = get_full_path(data, cmd);
+	path = ft_split(tmp, ':');
+	free(tmp);
 	while (path[i])
 	{
 		finalpath = ft_strjoin(path[i], "/");
