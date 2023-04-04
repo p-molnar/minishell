@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 23:41:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 00:51:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@
 static void	init_env_vars(t_var **env_var, t_list *var_list)
 {
 	env_var[HOME] = get_var("HOME", var_list, ENV);
-	env_var[PWD] = get_var("PWD", var_list, ENV);
 	env_var[OLDPWD] = get_var("OLDPWD", var_list, ENV);
 	env_var[CDPATH] = get_var("CDPATH", var_list, ENV);
+	env_var[PWD] = create_var(ft_strdup("PWD"),
+			getcwd(NULL, 0),
+			UNDEFINED);
 }
 
 // Below 8 steps follow the man page
@@ -59,5 +61,6 @@ int	builtin_cd(char **args, t_shell_data *data)
 		return (EXIT_FAILURE);
 	ret = update_wdirs(curpath, env_var, data);
 	free (curpath);
+	free_var(&env_var[PWD]);
 	return (ret);
 }
