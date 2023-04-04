@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 16:37:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 00:18:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void			parse_env_variable(char **env, t_list **list);
 int				is_valid_var_name(char *s, int n);
 
 //	variable_parser_util.c
-t_var			*create_var(char *name, char *val);
+t_var			*create_var(char *name, char *val, int type);
 t_var			*parse_var_def(char *s);
 int				is_valid_var_definition(char *s);
-t_var			*get_var(char *lookup_name, t_list *list);
+t_var			*get_var(char *lookup_name, t_list *var_list, int type);
 
 //	executor
 void			executor(t_shell_data *data, t_command_list *commands);
@@ -93,9 +93,9 @@ void			execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
 int				check_parent_builtin(t_command_list *current,
 					t_shell_data *data);
 void			execute_builtin(t_shell_data *data, char **args);
-char			**env_builder(t_list *var_list);
+char			**env_builder(t_list *var_list, int var_type);
 void			close_pipe(t_pipe_fd *pipe);
-void			add_var(t_var *new_var, t_list **list);
+void			add_var(t_var *new_var, t_list **list) ;
 
 //	executor utilities
 t_token_list	*get_next_command(t_command_list *current);
