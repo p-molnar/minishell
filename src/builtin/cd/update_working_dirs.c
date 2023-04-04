@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 10:03:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 12:28:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data)
 	}
 	else
 	{
-		free(dir);
 		return (error(strerror(errno), RETURN, 1));
 	}
 }
