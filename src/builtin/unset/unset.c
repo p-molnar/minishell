@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:17:39 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 23:54:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 00:24:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ void	builtin_unset(char **args, t_shell_data *data)
 		name = *args;
 		if (!name || !data)
 			return ;
-		var_node = get_node(get_var(name, data->variables, ENV), data->variables);
+		var_node = get_node(
+				get_var(name, data->variables, ENV),
+				data->variables
+				);
 		if (var_node)
 			del_node(var_node, &data->variables);
 		args++;
