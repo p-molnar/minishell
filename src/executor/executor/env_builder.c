@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 17:36:57 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 14:27:25 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 23:23:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	count_vars(t_list *var_list)
 	return (i);
 }
 
-char	**env_builder(t_list *var_list)
+char	**env_builder(t_list *var_list, int var_type)
 {
 	char	**env;
 	t_var	*var;
@@ -49,7 +49,7 @@ char	**env_builder(t_list *var_list)
 	while (var_list)
 	{
 		var = var_list->content;
-		if (var->name && var->val)
+		if (var->name && var->val && var->type & var_type)
 			env[i] = var_to_str(var);
 		var_list = var_list->next;
 		i++;

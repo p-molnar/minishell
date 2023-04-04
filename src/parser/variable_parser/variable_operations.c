@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 16:00:06 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 16:03:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 00:10:38 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,29 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-t_var	*get_var(char *lookup_name, t_list *var_list)
+t_var	*get_var(char *lookup_name, t_list *var_list, int var_type)
 {
 	t_var	*var;
-	char	*var_name;
 	int		len;
 
 	while (lookup_name && var_list)
 	{
 		var = var_list->content;
-		if (var && var->name)
+		if (var->name)
 		{
-			var_name = var->name;
-			len = ft_strlen(var_name);
-			if (ft_strncmp(var_name, lookup_name, len + 1) == 0)
-				return (var_list->content);
+			len = ft_strlen(var->name);
+			if (ft_strncmp(var->name, lookup_name, len + 1) == 0
+				&& (var->type & var_type))
+			{
+				return (var);
+			}
 		}
 		var_list = var_list->next;
 	}
 	return (NULL);
 }
 
-t_var	*create_var(char *name, char *val)
+t_var	*create_var(char *name, char *val, int type)
 {
 	t_var	*var;
 
@@ -49,6 +50,7 @@ t_var	*create_var(char *name, char *val)
 		return (NULL);
 	var->name = name;
 	var->val = val;
+	var->type = type;
 	return (var);
 }
 
@@ -68,6 +70,7 @@ void	update_var(t_var *old_var, t_var *new_var)
 			}
 			free(old_var->val);
 			old_var->val = new_var->val;
+			old_var->type |= new_var->type;
 			free(new_var->name);
 			free(new_var);
 		}
@@ -81,7 +84,7 @@ void	add_var(t_var *new_var_def, t_list **var_list)
 
 	if (!new_var_def || !var_list)
 		return ;
-	var_defined = get_var(new_var_def->name, *var_list);
+	var_defined = get_var(new_var_def->name, *var_list, SHL | ENV); // tbf!
 	if (var_defined)
 	{
 		old_var_def = var_defined;

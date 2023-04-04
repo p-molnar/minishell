@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 16:37:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 00:03:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 
 void	initialise_data(t_shell_data *data)
 {
-	data->env_vars = NULL;
-	data->shell_vars = NULL;
+	data->variables = NULL;
 	data->prompt = NULL;
 	data->tokens = NULL;
 	tcgetattr(0, &data->original_termios);
@@ -54,7 +53,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	ignore_fn_arg(argc, argv);
 	initialise_data(&data);
-	parse_env_variable(envp, &data.env_vars);
+	parse_env_variable(envp, &data.variables);
 	while (1)
 	{
 		setup_signal_handler(&data);
@@ -71,7 +70,6 @@ int	main(int argc, char *argv[], char *envp[])
 		free(data.prompt);
 	}
 	cleanup_before_exit(&data);
-	free_var_list(data.env_vars);
-	free_var_list(data.shell_vars);
+	free_var_list(data.variables);
 	return (EXIT_SUCCESS);
 }

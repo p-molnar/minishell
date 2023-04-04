@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 12:42:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 23:41:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	init_env_vars(t_var **env_var, t_shell_data *data)
+static void	init_env_vars(t_var **env_var, t_list *var_list)
 {
-	env_var[HOME] = get_var("HOME", data->env_vars);
-	env_var[PWD] = get_var("PWD", data->env_vars);
-	env_var[OLDPWD] = get_var("OLDPWD", data->env_vars);
-	env_var[CDPATH] = get_var("CDPATH", data->env_vars);
+	env_var[HOME] = get_var("HOME", var_list, ENV);
+	env_var[PWD] = get_var("PWD", var_list, ENV);
+	env_var[OLDPWD] = get_var("OLDPWD", var_list, ENV);
+	env_var[CDPATH] = get_var("CDPATH", var_list, ENV);
 }
 
 // Below 8 steps follow the man page
@@ -54,7 +54,7 @@ int	builtin_cd(char **args, t_shell_data *data)
 	char	*curpath;
 
 	curpath = NULL;
-	init_env_vars(env_var, data);
+	init_env_vars(env_var, data->variables);
 	if (exec_steps(args[1], &curpath, env_var))
 		return (EXIT_FAILURE);
 	ret = update_wdirs(curpath, env_var, data);

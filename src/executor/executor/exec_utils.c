@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/04 17:21:47 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 23:42:14 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*get_full_path(t_shell_data *data, char *cmd)
 	}
 	else
 		join = ft_strdup("");
-	var = get_var("PATH", data->env_vars);
+	var = get_var("PATH", data->variables, ENV);
 	if (!var)
 		return (join);
 	tmp = join;

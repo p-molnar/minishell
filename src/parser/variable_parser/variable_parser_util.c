@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 15:03:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 16:03:30 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 23:04:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ t_var	*parse_var_def(char *s)
 	s += size + 1;
 	size = ft_strlen(s);
 	val = ft_substr(s, 0, size);
-	return (create_var(name, val));
+	return (create_var(name, val, UNDEFINED));
 }
