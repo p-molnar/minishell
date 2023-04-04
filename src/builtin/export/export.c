@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 00:01:54 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 00:39:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,44 @@ void	print_exported_vars(t_list *var_list)
 	}
 }
 
-int	builtin_export(char **args, t_shell_data *data)
+int	export_vars(char *arg, t_list *var_list)
 {
 	t_var	*var;
-	char	*s;
 
-	++args;
-	if (*args == NULL)
-		print_exported_vars(data->variables);
-	while (args && *args)
+	var = NULL;
+	if (*arg == '\0' || *arg == ' ')
+		return (error("not a valid identifier", RETURN, 1));
+	else if (is_valid_var_definition(arg))
 	{
-		s = *args;
-		if (s && (*s == '\0' || *s == ' '))
-			return (error("not a valid identifier", RETURN, 1));
-		else if (is_valid_var_definition(s))
-		{
-			var = parse_var_def(s);
-			var->type = SHL | ENV;
-		}
-		else if (is_valid_var_name(s, ft_strlen(s)))
-		{
-			var = get_var(s, data->variables, SHL);
-			if (var)
-				var->type |= ENV;
-			else
-				var = create_var(ft_strdup(*args), NULL, SHL | ENV);
-		}
+		var = parse_var_def(arg);
+		var->type = SHL | ENV;
+	}
+	else if (is_valid_var_name(arg, ft_strlen(arg)))
+	{
+		var = get_var(arg, var_list, SHL);
+		if (var)
+			var->type |= ENV;
 		else
-			return (error("not a valid identifier", RETURN, 1));
-		add_var(var, &data->variables);
-		args++;
+			var = create_var(ft_strdup(arg), NULL, SHL | ENV);
+	}
+	else
+		return (error("not a valid identifier", RETURN, 1));
+	add_var(var, &var_list);
+	return (EXIT_SUCCESS);
+}
+
+int	builtin_export(char **args, t_shell_data *data)
+{
+	int	i;
+
+	i = 1;
+	if (args[i] == NULL)
+		print_exported_vars(data->variables);
+	while (args && args[i])
+	{
+		if (export_vars(args[i], data->variables))
+			return (EXIT_FAILURE);
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }
