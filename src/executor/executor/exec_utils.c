@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/29 17:33:31 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 15:36:48 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,23 @@
 #include <ms_data_types.h>
 #include <ms_macros.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 char	*get_full_path(t_shell_data *data, char *cmd)
 {
 	t_var		*var;
+	char		*pwd;
 	char		*join;
 	const char	folder_indicator = '/';
 
 	if (ft_strnstr(cmd, &folder_indicator, ft_strlen(cmd)))
 	{
-		var = get_var("PWD", data->env_vars);
-		if (!var)
+		pwd = getcwd(NULL, 0);
+		if (!pwd)
 			join = ft_strdup("");
 		else
-			join = ft_strjoin(var->val, ":");
+			join = ft_strjoin(pwd, ":");
+		free(pwd);
 	}
 	else
 		join = ft_strdup("");
