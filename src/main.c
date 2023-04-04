@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 11:35:20 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	main(int argc, char *argv[], char *envp[])
 	(void) argc;
 
 	prog_running = 1;
+	commands = NULL;
 	initialise_data(&data);
 	parse_env_variable(envp, &data.env_vars);
 	// print_variables(data.env_vars, "ENV VARS");
