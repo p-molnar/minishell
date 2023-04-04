@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 16:00:06 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 00:10:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 00:23:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	add_var(t_var *new_var_def, t_list **var_list)
 
 	if (!new_var_def || !var_list)
 		return ;
-	var_defined = get_var(new_var_def->name, *var_list, SHL | ENV); // tbf!
+	var_defined = get_var(new_var_def->name, *var_list, SHL | ENV);
 	if (var_defined)
 	{
 		old_var_def = var_defined;
