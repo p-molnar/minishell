@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 15:22:53 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 15:48:43 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ int				builtin_echo(char **args);
 int				builtin_exit(char **args);
 
 //	CD
-
 
 int				builtin_cd(char **args, t_shell_data *data);
 int				exec_step_1_2(t_var **env_var, char **dir, int *step);
