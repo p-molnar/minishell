@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/04 15:22:53 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 16:06:07 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,18 @@ void	execute_parent_builtin(t_command_list *current, t_shell_data *data)
 	free(args);
 }
 
+void	close_redirection_data(t_redir_data *redir_data)
+{
+	if (redir_data->fd_in >= 0)
+		close(redir_data->fd_in);
+	if (redir_data->fd_out >= 0)
+		close(redir_data->fd_out);
+	if (redir_data->og_stdin >= 0)
+		close(redir_data->og_stdin);
+	if (redir_data->heredoc_pipe_out >= 0)
+		close(redir_data->heredoc_pipe_out);
+}
+
 int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)
 {
 	int				original_stdout;
@@ -68,10 +80,7 @@ int	prepare_parent_builtin(t_command_list *current, t_shell_data *data)
 	execute_parent_builtin(current, data);
 	dup2(redir_data.og_stdin, STDIN_FILENO);
 	dup2(original_stdout, STDOUT_FILENO);
-	close(redir_data.fd_in);
-	close(redir_data.fd_out);
-	close(redir_data.og_stdin);
-	close(redir_data.heredoc_pipe_out);
+	close_redirection_data(&redir_data);
 	close(original_stdout);
 	return (1);
 }
