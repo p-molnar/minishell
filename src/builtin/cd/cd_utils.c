@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:18:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 11:15:02 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 14:18:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ char	*path_concat(char *basepath, char *relpath)
 	char	*basepath_postfixed;
 
 	joined_str = NULL;
+	basepath_postfixed = NULL;
 	if (basepath && basepath[ft_strlen(basepath)- 1] != '/')
 	{
 		basepath_postfixed = ft_strjoin(basepath, "/");
-		if (!basepath_postfixed)
+		if (basepath_postfixed == NULL)
 			return (NULL);
 		joined_str = ft_strjoin(basepath_postfixed, relpath);
 		free(basepath_postfixed);
-		if (!joined_str)
-			return (NULL);
 	}
+	else
+		joined_str = ft_strjoin(basepath, relpath);
 	return (joined_str);
 }
 
