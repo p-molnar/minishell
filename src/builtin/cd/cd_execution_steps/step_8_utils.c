@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 09:29:44 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 09:57:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/04 12:50:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**move_up_dir(char **arr, int dd_comp_idx)
 	int		j;
 	int		k;
 
-	new_arr = ft_calloc(get_arr_size((void **)arr) + 1, sizeof(char *));
+	new_arr = ft_calloc(get_arr_size((void **) arr) + 1, sizeof(char *));
 	if (!new_arr)
 		return (NULL);
 	j = 0;
@@ -92,28 +92,23 @@ char	*process_dotdot_comp(char **arr)
 {
 	int		i;
 	char	*path;
-	char	**tmp_arr;
+	char	**tmp_ptr;
 
 	i = 0;
-	tmp_arr = arr;
-	while (tmp_arr && tmp_arr[i])
+	tmp_ptr = NULL;
+	while (arr && arr[i])
 	{
-		tmp_arr = arr;
-		if (ft_strncmp(tmp_arr[i], "..", 3) == 0)
+		if (ft_strncmp(arr[i], "..", 3) == 0)
 		{
-			path = strnjoin(tmp_arr, "/", i - 1);
-			if (access(path, F_OK) != -1)
-			{
-				free(path);
-				tmp_arr = move_up_dir(tmp_arr, i);
-				free
-				i = 0;
-				continue ;
-			}
+			if (tmp_ptr)
+				free(tmp_ptr);
+			arr = move_up_dir(arr, i);
+			tmp_ptr = arr;
+			i = 0;
+			continue ;
 		}
 		i++;
 	}
-	path = strnjoin(tmp_arr, "/", get_arr_size((void **)tmp_arr));
-	// free_arr((void **) arr);
+	path = strnjoin(arr, "/", get_arr_size((void **) arr));
 	return (path);
 }
