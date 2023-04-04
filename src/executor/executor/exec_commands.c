@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 15:16:22 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 14:17:36 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,22 @@
 #include <signal.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/stat.h>
 #include <stdio.h>
+
+void	check_path(char *path)
+{
+	struct stat	path_stat;
+
+	stat(path, &path_stat);
+	if (S_ISDIR(path_stat.st_mode))
+		error("is a directory", EXIT, 126);
+	if (access(path, X_OK) == -1)
+	{
+		if (errno == EACCES)
+			error(strerror(errno), EXIT, 126);
+	}
+}
 
 void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 {
@@ -31,8 +46,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	path = path_builder(data, command);
 	env = env_builder(data->env_vars);
 	i = 0;
-	if (*command == '\0')
-		error("Command not found", EXIT, 127);
+	check_path(ft_strjoin(path[0], command));
 	if (path)
 	{
 		while (path[i])
@@ -44,7 +58,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 			i++;
 		}
 	}
-	error("Command not found", EXIT, 127);
+	error("command not found", EXIT, 127);
 }
 
 void	execute_cmd(t_command_list *current, t_shell_data *data,
@@ -67,7 +81,7 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 		execute_builtin(data, arguments);
 		execute_bin(command->content, data, arguments);
 	}
-	exit(127);
+	exit(EXIT_FAILURE);
 }
 
 t_command_list	*get_next_simple_cmd(t_command_list *start)
