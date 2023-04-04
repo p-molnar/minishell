@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 15:01:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/03/30 15:01:08 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/04 16:19:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_shell_data
 	t_token_list	*tokens;
 	t_list			*env_vars;
 	t_list			*shell_vars;
+	t_command_list	*commands;
 	struct termios	original_termios;
 }	t_shell_data;
 
