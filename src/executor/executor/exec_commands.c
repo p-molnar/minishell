@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/05 12:53:27 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/05 16:25:26 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	path = path_builder(data, command);
 	env = env_builder(data->variables, ENV);
 	check_path(ft_strjoin(path[0], command), command);
+	execve(command, arguments, env);
 	i = 0;
 	if (path)
 	{

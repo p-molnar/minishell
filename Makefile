@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/04 17:25:34 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/04/05 16:28:33 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -194,4 +194,4 @@ fclean:	clean
 
 re: fclean all
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re
