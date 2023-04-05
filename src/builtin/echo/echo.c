@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:41:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/03 08:57:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 16:31:53 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ int	builtin_echo(char **args)
 		if (!n_flag)
 			ft_putchar_fd('\n', STDOUT_FILENO);
 	}
+	else
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
