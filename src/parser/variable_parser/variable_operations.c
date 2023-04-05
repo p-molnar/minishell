@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 16:00:06 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 00:23:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 22:18:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	update_var(t_var *old_var, t_var *new_var)
 			else if (ft_strncmp(old_var->val, new_var->val,
 					ft_strlen(old_var->val)) == 0)
 			{
+				old_var->type |= new_var->type;
 				free_var(&new_var);
 				return ;
 			}
