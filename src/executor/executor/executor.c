@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:48:13 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/05 12:56:39 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/05 17:00:25 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_pipe_fd	*setup_pipes(int pipe_n)
 	if (pipe_n <= 0)
 		return (NULL);
 	pipe_fd = malloc(sizeof(t_pipe_fd) * pipe_n);
+	if (!pipe_fd)
+		return (NULL);
 	while (i < pipe_n)
 	{
 		pipe(pipe_fd[i].pipe_end);
@@ -65,6 +67,8 @@ void	executor(t_shell_data *data, t_command_list *commands)
 	pipe_n = count_symbols(D_PIPE, commands);
 	pipe_fd = setup_pipes(pipe_n);
 	process = malloc(sizeof(pid_t) * (pipe_n + 1));
+	if (!process)
+		return ;
 	if (pipe_n == 0)
 		ret = check_parent_builtin(commands, data);
 	if (ret == 0)

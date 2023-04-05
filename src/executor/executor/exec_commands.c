@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/05 16:25:26 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/05 18:40:22 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,47 +28,37 @@ void	check_path(char *path, char *cmd)
 
 	stat(path, &path_stat);
 	if (S_ISDIR(path_stat.st_mode) && *cmd != '\0')
-	{
-		free(path);
 		error("is a directory", EXIT, 126);
-	}
 	else if (access(path, X_OK) == -1)
 	{
 		if (errno == EACCES)
-		{
-			free(path);
 			error(strerror(errno), EXIT, 126);
-		}
 	}
-	free(path);
 }
 
 void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 {
 	char	**path;
 	char	**env;
-	char	*commandpath;
 	int		i;
 
 	path = path_builder(data, command);
 	env = env_builder(data->variables, ENV);
-	check_path(ft_strjoin(path[0], command), command);
-	execve(command, arguments, env);
+	if (*command == '.' || *command == '/')
+		execve(command, arguments, env);
 	i = 0;
 	if (path)
 	{
 		while (path[i])
 		{
-			commandpath = ft_strjoin(path[i], command);
-			execve(commandpath, arguments, env);
-			free(path[i]);
-			free(commandpath);
-			commandpath = NULL;
+			printf("%s\n", path[i]);
+			check_path(path[0], command);
+			execve(path[i], arguments, env);
 			i++;
 		}
 	}
-	free(path);
-	error("command not found", EXIT, 127);
+	free_arr((void **) path);
+	free_arr((void **) env);
 }
 
 void	execute_cmd(t_command_list *current, t_shell_data *data,
@@ -91,7 +81,8 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 		execute_builtin(data, arguments);
 		execute_bin(command->content, data, arguments);
 	}
-	exit(EXIT_FAILURE);
+	free(arguments);
+	error("command not found", EXIT, 127);
 }
 
 t_command_list	*get_next_simple_cmd(t_command_list *start)

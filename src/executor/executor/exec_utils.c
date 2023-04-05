@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/04 23:42:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 18:52:46 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <ms_macros.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 char	*get_full_path(t_shell_data *data, char *cmd)
 {
@@ -24,23 +25,27 @@ char	*get_full_path(t_shell_data *data, char *cmd)
 	char		*join;
 	const char	folder_indicator = '/';
 
+	join = ft_strdup("");
+	printf("%s, %c\n", cmd, folder_indicator);
+	//ft_strnstr seems to be failing me, maybe I call it wrong or smt, will fix soon
 	if (ft_strnstr(cmd, &folder_indicator, ft_strlen(cmd)))
 	{
+		printf("HIIIIII\n");
 		pwd = getcwd(NULL, 0);
-		if (!pwd)
-			join = ft_strdup("");
-		else
+		if (pwd)
+		{
+			free(join);
 			join = ft_strjoin(pwd, ":");
-		free(pwd);
+			free(pwd);
+		}
 	}
-	else
-		join = ft_strdup("");
 	var = get_var("PATH", data->variables, ENV);
 	if (!var)
 		return (join);
 	tmp = join;
 	join = ft_strjoin(join, var->val);
 	free(tmp);
+	printf("%s\n", join);
 	return (join);
 }
 
@@ -55,9 +60,11 @@ char	**path_builder(t_shell_data *data, char *cmd)
 	tmp = get_full_path(data, cmd);
 	path = ft_split(tmp, ':');
 	free(tmp);
+	if (!path)
+		return (NULL);
 	while (path[i])
 	{
-		finalpath = ft_strjoin(path[i], "/");
+		finalpath = path_concat(path[i], cmd);
 		free(path[i]);
 		path[i] = finalpath;
 		i++;

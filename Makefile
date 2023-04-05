@@ -6,14 +6,14 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/05 16:28:33 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/04/05 18:34:18 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix readline)/lib
-CFLAGS			+=	-g # debug
+# CFLAGS			+=	-g # debug
 # CFLAGS			+=	-fsanitize=address
 NAME			=	minishell
 INCL			=	inc libft/inc
