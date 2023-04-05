@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/04 23:36:18 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/05 12:53:27 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
 			execute_cmd(start_of_simple_cmd, data, in_pipe, out_pipe);
 		i++;
 		close_pipe(in_pipe);
-		start_of_simple_cmd = get_next_simple_cmd(current);
+		start_of_simple_cmd = get_next_simple_cmd(start_of_simple_cmd);
 		if (out_pipe)
 			in_pipe = out_pipe;
 	}
