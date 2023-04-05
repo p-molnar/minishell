@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/04 12:21:11 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/05 16:46:20 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	open_redirect_outfile(t_command_list *list, t_redir_data *redir_dat)
 	close(redir_dat->fd_out);
 	if (list->symbol == OUTFILE)
 		redir_dat->fd_out = open(list->token->content,
-				O_WRONLY | O_CREAT, 0644);
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		redir_dat->fd_out = open(list->token->content,
 				O_WRONLY | O_CREAT | O_APPEND, 0644);
