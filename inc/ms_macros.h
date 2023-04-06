@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 22:31:17 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/06 12:02:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 
 //	exit/return methods of error function
 enum e_var_type{
-	UNDEF = 0, 
+	UNDEF = 0,
 	ENV = 1 << 0,
 	SHL = 1 << 1,
 };
