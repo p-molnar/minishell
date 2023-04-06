@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/31 13:38:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 12:07:39 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/06 11:15:33 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ int	error(char *msg, int exit_method, int value)
 		g_exit_status = value << 8;
 		return (value);
 	}
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
