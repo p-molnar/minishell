@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 16:04:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 16:30:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/06 14:38:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ void	free_arr(void **arr)
 		free (arr[i++]);
 	if (arr)
 		free (arr);
+}
+
+void	free_obj(void **obj)
+{
+	if (obj && *obj)
+	{
+		free(*obj);
+		*obj = NULL;
+	}
 }
 
 void	cleanup_before_exit(t_shell_data *data)
