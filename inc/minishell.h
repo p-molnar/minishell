@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 00:23:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/06 14:26:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <ms_macros.h>
 # include <termios.h>
 # include <stdlib.h>
+# include <stdarg.h>
 
 # define PROMPT_MSG "minishell$ "
 
@@ -27,6 +28,7 @@ void			rl_replace_line(const char *text, int clear_undo);
 
 //	free_objects.c
 void			free_node(t_list **node);
+void			free_obj(void **obj);
 void			free_list(t_list **list);
 void			free_var(t_var **var);
 void			free_var_list(t_list *var_list);
@@ -41,6 +43,9 @@ char			*read_prompt(const char *prompt);
 //	tokenizer.c
 t_token_list	*tokenizer(const char *prompt);
 
+//	str_utils.c
+char			*nstrconcat(int n, ...);
+
 //	token_list_util.c
 t_token_list	*new_node(char *content, int token_type);
 void			add_node_last(t_token_list **list, t_token_list *node);
@@ -51,6 +56,10 @@ t_list			*get_node(void *lookup_content, t_list *list);
 
 //	token_classifier.c
 void			classify_tokens(t_token_list *list);
+
+//	tokenizer_utils.c
+int				is_valid_operator_seq(char *s);
+int				is_valid_quotation(char *s, char *delim);
 
 //	parse_commands
 t_command_list	*parse_commands(t_token_list *token);
