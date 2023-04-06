@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/04 17:25:34 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/04/06 16:48:44 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix readline)/lib
 CFLAGS			+=	-g # debug
-# CFLAGS			+=	-fsanitize=address
+CFLAGS			+=	-fsanitize=address
 NAME			=	minishell
 INCL			=	inc libft/inc
 SUBMODULE		=	libft
@@ -37,6 +37,7 @@ CHAR_READER		=	$(addprefix	character_reader/,							\
 
 TOKENIZER		=	$(addprefix	tokenizer/,									\
 						tokenizer.c											\
+						tokenizer_utils.c									\
 						token_classifier.c									\
 						)
 
@@ -143,13 +144,13 @@ BUILTIN			=	$(addprefix builtin/,									\
 						)
 
 # UTILS
-UTIL_PATH		=	util/
-UTIL			=	$(addprefix $(UTIL_PATH),								\
+UTIL			=	$(addprefix util/,										\
 						token_list_util.c									\
 						command_list_util.c									\
 						free_objects.c										\
 						free_objects_2.c									\
 						list_util.c											\
+						str_utils.c											\
 						)
 
 ERROR			=	$(addprefix error/,										\
