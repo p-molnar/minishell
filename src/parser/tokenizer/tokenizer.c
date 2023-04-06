@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 11:10:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/06 16:47:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include <minishell.h>
 #include <ms_macros.h>
 #include <stdlib.h>
+
+#include <readline/readline.h>
+#include <readline/history.h>
 
 static void	update_prev_ptr(char **prev, char *curr, char *s)
 {
@@ -62,12 +65,53 @@ char	*delimit_token(char *prompt)
 	return (curr - 1);
 }
 
+char	*read_more(char *s, char delim, int *delim_found)
+{
+	char	*prompt;
+	char	*tmp;
+
+	tmp = NULL;
+	prompt = readline("> ");
+	printf("prompt: %s\n", prompt);
+	if (!prompt || *prompt == '\0')
+		return (ft_strdup(s));
+	if (ft_strchr(prompt, delim))
+		*delim_found = 1;
+	if (!tmp)
+		s = nstrconcat(4, s, "\n", prompt);
+	else
+		s = nstrconcat(3, "\n", s, "\n", prompt);
+	free_obj((void **)&prompt);
+	return (s);
+}
+
+char	*read_until_delim(char *s, char delim)
+{
+	char	*tmp;
+	int		matching_quote_found;
+
+	matching_quote_found = 0;
+	tmp = NULL;
+	if (!s)
+		return (NULL);
+	while (!matching_quote_found)
+	{
+		s = read_more(s, delim, &matching_quote_found);
+		free_obj((void **)&tmp);
+		tmp = s;
+	}
+	add_history(s);
+	return (s);
+}
+
 t_token_list	*tokenizer(const char *prompt)
 {
 	char			*start_ptr;
 	char			*end_ptr;
 	char			*content;
+	char			*tmp;
 	t_token_list	*tokens;
+	char			delim;
 
 	start_ptr = (char *)prompt;
 	tokens = NULL;
@@ -77,6 +121,12 @@ t_token_list	*tokenizer(const char *prompt)
 		{
 			end_ptr = delimit_token(start_ptr);
 			content = ft_substr(start_ptr, 0, end_ptr - start_ptr + 1);
+			if (!is_valid_quotation(content, &delim))
+			{
+				tmp = content;
+				content = read_until_delim(content, delim);
+				free_obj((void **)&tmp);
+			}
 			if (*content == '\0')
 				free(content);
 			else
