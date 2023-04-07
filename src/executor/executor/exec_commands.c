@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 13:21:00 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 15:03:40 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/stat.h>
+
+#include <stdio.h>
 
 void	check_path(char *path, char *cmd)
 {
@@ -40,20 +42,44 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	char	**path;
 	char	**env;
 	int		i;
+	int		err;
 
-	path = path_builder(data, command);
-	env = env_builder(data->variables, ENV);
-	if (*command == '.' || *command == '/')
-		execve(command, arguments, env);
-	i = 0;
-	if (path)
+	path = get_path_to_bin(data, command);
+	env = convert_list_to_arr(data->variables, ENV);
+	if (*command == '.')
 	{
+		command = ft_strjoin(get_var("PWD", data->variables, SHL)->val, command);
+		printf("cmd: %s\n", command);
+		err = execve(command, arguments, env);
+		if (err)
+			error(strerror(errno), EXIT, err);
+	}
+	else if (*command == '/')
+	{
+			err = execve(command, arguments, env);
+			if (err)
+			{
+				printf("%s\n", command);
+				error(strerror(errno), EXIT, err);
+			}
+	}
+	else
+	{
+		i = 0;
 		while (path[i])
 		{
-			check_path(path[0], command);
-			execve(path[i], arguments, env);
+			// check_path(path[0], command);
+			err = execve(path[i], arguments, env);
+			
+			if (err == 0)
+			{
+				free_arr((void **) path);
+				free_arr((void **) env);
+				return ;
+			}
 			i++;
 		}
+		error(strerror(errno), RETURN, err);
 	}
 	free_arr((void **) path);
 	free_arr((void **) env);
