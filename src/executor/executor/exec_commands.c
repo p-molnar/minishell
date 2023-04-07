@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 15:03:40 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 15:44:07 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,21 @@
 
 #include <stdio.h>
 
-void	check_path(char *path, char *cmd)
+void	test_path(char *path, char *cmd)
 {
 	struct stat	path_stat;
+	int			err_code;
 
 	stat(path, &path_stat);
 	if (S_ISDIR(path_stat.st_mode) && *cmd != '\0')
 		error("is a directory", EXIT, 126);
-	else if (access(path, X_OK) == -1)
+	else 
 	{
-		if (errno == EACCES)
-			error(strerror(errno), EXIT, 126);
+		err_code = access(path, F_OK | X_OK);
+		if (err_code != 0)
+		{
+				error(strerror(errno), EXIT, err_code);
+		}
 	}
 }
 
@@ -46,10 +50,11 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 
 	path = get_path_to_bin(data, command);
 	env = convert_list_to_arr(data->variables, ENV);
-	if (*command == '.')
+	if (*command == '/' && *command == '.')
 	{
 		command = ft_strjoin(get_var("PWD", data->variables, SHL)->val, command);
 		printf("cmd: %s\n", command);
+		test_path(command, " ");
 		err = execve(command, arguments, env);
 		if (err)
 			error(strerror(errno), EXIT, err);
@@ -68,7 +73,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 		i = 0;
 		while (path[i])
 		{
-			// check_path(path[0], command);
+			test_path(path[0], command);
 			err = execve(path[i], arguments, env);
 			
 			if (err == 0)
