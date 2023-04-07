@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 13:29:09 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 16:52:14 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	redirect_files(t_command_list *current, t_redir_data *redir_dat,
 		if (current->symbol == INFILE)
 			ret = open_redirect_infile(current, redir_dat);
 		if (current->symbol == HEREDOC_DELIMITER)
-			open_heredoc(current->token->content, redir_dat, data);
+			open_heredoc(current->token, redir_dat, data);
 		current = current->next;
 		if (ret != 0)
 			return (ret);
