@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/06 12:02:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 14:50:50 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ enum e_token_type {
 enum e_exit_methods {
 	EXIT = 1,
 	RETURN = 2,
+	PRINT = 3,
 };
 
 //	command list symbols
