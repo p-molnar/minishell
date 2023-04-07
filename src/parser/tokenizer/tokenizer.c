@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/06 16:47:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 10:30:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,15 @@ char	*read_more(char *s, char delim, int *delim_found)
 
 	tmp = NULL;
 	prompt = readline("> ");
-	printf("prompt: %s\n", prompt);
+	// printf("prompt: %s\n", prompt);
 	if (!prompt || *prompt == '\0')
-		return (ft_strdup(s));
+		return (ft_strdup(s)); // revise this
 	if (ft_strchr(prompt, delim))
 		*delim_found = 1;
 	if (!tmp)
-		s = nstrconcat(4, s, "\n", prompt);
+		s = strconcat(3, s, "\n", prompt);
 	else
-		s = nstrconcat(3, "\n", s, "\n", prompt);
+		s = strconcat(4, "\n", s, "\n", prompt);
 	free_obj((void **)&prompt);
 	return (s);
 }

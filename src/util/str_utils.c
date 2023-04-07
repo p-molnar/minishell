@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/06 13:56:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/06 16:10:04 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 10:30:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <minishell.h>
 
-char	*nstrconcat(int n, ...)
+char	*strconcat(int n, ...)
 {
 	va_list	ap;
 	char	*tmp;

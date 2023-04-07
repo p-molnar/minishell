@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/06 14:26:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 10:30:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char			*read_prompt(const char *prompt);
 t_token_list	*tokenizer(const char *prompt);
 
 //	str_utils.c
-char			*nstrconcat(int n, ...);
+char			*strconcat(int n, ...);
 
 //	token_list_util.c
 t_token_list	*new_node(char *content, int token_type);
