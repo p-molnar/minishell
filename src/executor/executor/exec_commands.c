@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 19:00:28 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 19:29:33 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 		path = strconcat(3, get_var("PWD", data->variables, SHL)->val, "/", command);
 		test_path(path);
 		err = execve(path, arguments, env);
-		if (err)
-			error(strerror(errno), EXIT, err);
+		error(strerror(errno), EXIT, err);
 	}
 	else if (*command == '/')
 	{
@@ -69,7 +68,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 		if (err)
 			error(strerror(errno), EXIT, err);
 	}
-	else
+	else if (path_arr)
 	{
 		//execute from PATH variable
 		i = 0;
