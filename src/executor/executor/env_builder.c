@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 17:36:57 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 13:23:11 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 14:40:19 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	count_vars(t_list *var_list)
 	return (i);
 }
 
-char	**env_builder(t_list *var_list, int var_type)
+char	**convert_list_to_arr(t_list *var_list, int var_type)
 {
 	char	**env;
 	t_var	*var;
