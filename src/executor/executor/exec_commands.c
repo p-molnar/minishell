@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 15:44:07 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 19:00:28 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,72 +21,65 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-#include <stdio.h>
-
-void	test_path(char *path, char *cmd)
+void	test_path(char *path)
 {
 	struct stat	path_stat;
 	int			err_code;
 
 	stat(path, &path_stat);
-	if (S_ISDIR(path_stat.st_mode) && *cmd != '\0')
+	if (S_ISDIR(path_stat.st_mode))
 		error("is a directory", EXIT, 126);
-	else 
+	else
 	{
 		err_code = access(path, F_OK | X_OK);
 		if (err_code != 0)
-		{
-				error(strerror(errno), EXIT, err_code);
-		}
+			error(strerror(errno), EXIT, err_code);
 	}
 }
 
 void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 {
-	char	**path;
-	char	**env;
-	int		i;
-	int		err;
+	char		**path_arr;
+	char		**env;
+	char		*path;
+	int			i;
+	int			err;
+	const char	*folder_char = "/";
 
-	path = get_path_to_bin(data, command);
+	path_arr = get_path_to_bin(data, command);
 	env = convert_list_to_arr(data->variables, ENV);
-	if (*command == '/' && *command == '.')
+	if (*command == '.' || (ft_strnstr(command, folder_char, ft_strlen(command)) && *command != '/'))
 	{
-		command = ft_strjoin(get_var("PWD", data->variables, SHL)->val, command);
-		printf("cmd: %s\n", command);
-		test_path(command, " ");
-		err = execve(command, arguments, env);
+		//execute from current directory
+		if (*command == '.')
+			command++;
+		while (*command == '/')
+			command++;
+		path = strconcat(3, get_var("PWD", data->variables, SHL)->val, "/", command);
+		test_path(path);
+		err = execve(path, arguments, env);
 		if (err)
 			error(strerror(errno), EXIT, err);
 	}
 	else if (*command == '/')
 	{
-			err = execve(command, arguments, env);
-			if (err)
-			{
-				printf("%s\n", command);
-				error(strerror(errno), EXIT, err);
-			}
+		//execute from absolute path
+		test_path(command);
+		err = execve(command, arguments, env);
+		if (err)
+			error(strerror(errno), EXIT, err);
 	}
 	else
 	{
+		//execute from PATH variable
 		i = 0;
-		while (path[i])
+		while (path_arr[i])
 		{
-			test_path(path[0], command);
-			err = execve(path[i], arguments, env);
-			
-			if (err == 0)
-			{
-				free_arr((void **) path);
-				free_arr((void **) env);
-				return ;
-			}
+			execve(path_arr[i], arguments, env);
 			i++;
 		}
-		error(strerror(errno), RETURN, err);
 	}
-	free_arr((void **) path);
+	free_arr((void **) path_arr);
 	free_arr((void **) env);
 }
 

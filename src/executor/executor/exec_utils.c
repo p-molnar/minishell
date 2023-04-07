@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 14:54:07 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 18:39:16 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ char	*canonicalize_path(char *s)
 	return (NULL);
 }
 
-#include <stdio.h>
-
 char	**get_path_to_bin(t_shell_data *data, char *cmd)
 {
 	t_var	*var;
@@ -66,7 +64,6 @@ char	**get_path_to_bin(t_shell_data *data, char *cmd)
 	bin_path = ft_split(var->val, ':');
 	if (!bin_path)
 		return (NULL);
-
 	while (bin_path[i])
 	{
 		finalpath = path_concat(bin_path[i], cmd);

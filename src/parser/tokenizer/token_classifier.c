@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/28 10:58:48 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 17:21:10 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 18:36:12 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ static int	classify_token(char *s)
 		flags |= S_QUOTED;
 	if (ft_strchr(s, DQUOTE))
 		flags |= D_QUOTED;
-	if (ft_strchr(OPERATORS, *s) && !(ft_strchr(s, QUOTE) || ft_strchr(s, DQUOTE)))
+	if (ft_strchr(OPERATORS, *s) && !(ft_strchr(s, QUOTE)
+			|| ft_strchr(s, DQUOTE)))
+	{
 		flags = OPERATOR;
+	}
 	if (flags & OPERATOR && !is_valid_operator_seq(s))
 		flags = INVALID;
 	return (flags);
@@ -42,7 +45,6 @@ void	classify_tokens(t_token_list *list)
 	{
 		type = classify_token(list->content);
 		list->type = type;
-		// printf("content: %s, type: %i\n", list->content, list->type);
 		list = list->next;
 	}
 }

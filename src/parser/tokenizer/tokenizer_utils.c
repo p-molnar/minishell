@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/06 13:11:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 17:19:38 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 18:35:32 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <ms_macros.h>
 #include <minishell.h>
 #include <libft.h>
-
 
 int	is_valid_operator_seq(char *s)
 {
