@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 14:59:33 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/03 16:08:56 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 17:29:01 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parse_redirect_out(t_command_list **cmd_list,
 		return (RET_SYNTAX_ERR);
 	}
 	token = token->next;
-	if (token->type != WORD)
+	if (!(token->type & WORD))
 	{
 		syntax_error(cmd_list, token);
 		return (RET_SYNTAX_ERR);
@@ -45,7 +45,7 @@ int	parse_redirect_in(t_command_list **cmd_list,
 		return (RET_SYNTAX_ERR);
 	}
 	token = token->next;
-	if (token->type != WORD)
+	if (!(token->type & WORD))
 	{
 		syntax_error(cmd_list, token);
 		return (RET_SYNTAX_ERR);
