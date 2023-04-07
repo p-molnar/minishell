@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/06 13:11:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 11:41:56 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 11:43:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_valid_operator_seq(char *s)
 		|| ft_strncmp("||", s, len) == 0);
 }
 
-int	is_quote_closed(char *s, char *quote_type)
+int	is_quote_closed(char *s, char *quote_to_be_closed)
 {
 	int	in_quote;
 
@@ -40,7 +40,7 @@ int	is_quote_closed(char *s, char *quote_type)
 			in_quote = 0;
 		s++;
 	}
-	if (quote_type)
-		*quote_type = in_quote;
+	if (quote_to_be_closed)
+		*quote_to_be_closed = in_quote;
 	return (in_quote == 0);
 }

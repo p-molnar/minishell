@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:40:20 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 11:41:56 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 11:49:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ char	*read_prompt(const char *prompt)
 	prompt_read = readline(prompt);
 	if (prompt_read)
 	{
-		if (!is_quote_closed(prompt_read, &delimiter))
+		while (!is_quote_closed(prompt_read, &delimiter))
 		{
 			tmp = prompt_read;
 			prompt_read = read_until_delim(prompt_read, delimiter);
 			free_obj((void **)&tmp);
 		}
-		if (prompt_read && prompt_read[0] == '\0')
+		if (prompt_read && prompt_read[0] != '\0')
 			add_history(prompt_read);
 	}	
 	return (prompt_read);
