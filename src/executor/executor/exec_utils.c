@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 13:58:28 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 14:54:07 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,56 +16,68 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-char	*get_abs_path(t_shell_data *data, char *cmd)
+char	*canonicalize_path(char *s)
 {
-	t_var		*var;
-	char		*pwd;
-	char		*tmp;
-	char		*join;
-	const char	*folder_indicator = "/";
+	char	*new_path;
+	int		on_slash;
+	int		i;
+	int		j;
 
-	join = ft_strdup("");
-	if (ft_strnstr(cmd, folder_indicator, ft_strlen(cmd)))
+	on_slash = 0;
+	i = 0;
+	j = 0;
+	if (s)
 	{
-		pwd = getcwd(NULL, 0);
-		if (pwd)
+		new_path = ft_calloc(ft_strlen(s) + 1, sizeof(s));
+		while (s[i])
 		{
-			free(join);
-			join = ft_strjoin(pwd, ":");
-			free(pwd);
+			if (s[i] == '/' && !on_slash)
+			{
+				on_slash = 1;
+				new_path[j++] = s[i++];
+			}
+			else if (s[i] == '/' && on_slash)
+				i++;
+			else
+			{
+				new_path[j++] = s[i++];
+				on_slash = 0;
+			}
 		}
+		return (new_path);
 	}
-	var = get_var("PATH", data->variables, ENV);
-	if (!var)
-		return (join);
-	tmp = join;
-	join = ft_strjoin(join, var->val);
-	free(tmp);
-	return (join);
+	return (NULL);
 }
 
-char	**path_builder(t_shell_data *data, char *cmd)
+#include <stdio.h>
+
+char	**get_path_to_bin(t_shell_data *data, char *cmd)
 {
-	char	**path;
+	t_var	*var;
+	char	**bin_path;
 	char	*finalpath;
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	tmp = get_abs_path(data, cmd);
-	path = ft_split(tmp, ':');
-	free(tmp);
-	if (!path)
+	var = get_var("PATH", data->variables, ENV);
+	if (!var)
+		return (NULL);
+	bin_path = ft_split(var->val, ':');
+	if (!bin_path)
 		return (NULL);
 
-	while (path[i])
+	while (bin_path[i])
 	{
-		finalpath = path_concat(path[i], cmd);
-		free(path[i]);
-		path[i] = finalpath;
+		finalpath = path_concat(bin_path[i], cmd);
+		tmp = finalpath;
+		finalpath = canonicalize_path(finalpath);
+		free(tmp);
+		free(bin_path[i]);
+		bin_path[i] = finalpath;
 		i++;
 	}
-	return (path);
+	return (bin_path);
 }
 
 char	**compound_args(t_command_list *current)
