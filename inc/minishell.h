@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 00:23:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 13:21:00 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void			execute_commands(t_command_list *current, t_pipe_fd *pipe_fd,
 					pid_t *process, t_shell_data *data);
 int				check_parent_builtin(t_command_list *current,
 					t_shell_data *data);
-void			execute_builtin(t_shell_data *data, char **args);
+void			execute_builtin(char *cmd, t_shell_data *data, char **args);
 char			**env_builder(t_list *var_list, int var_type);
 void			close_pipe(t_pipe_fd *pipe);
 void			add_var(t_var *new_var, t_list **list);

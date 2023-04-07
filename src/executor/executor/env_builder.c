@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 17:36:57 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/05 17:15:51 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 13:23:11 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ char	*var_to_str(t_var *var)
 	str2 = NULL;
 	str1 = ft_strjoin(var->name, "=");
 	if (str1)
+	{
 		str2 = ft_strjoin(str1, var->val);
-	if (str1)
 		free(str1);
+	}
 	return (str2);
 }
 
@@ -49,6 +50,8 @@ char	**env_builder(t_list *var_list, int var_type)
 
 	i = 0;
 	env = ft_calloc((count_vars(var_list) + 1), sizeof(char *));
+	if (!env)
+		return (NULL);
 	while (var_list)
 	{
 		var = var_list->content;

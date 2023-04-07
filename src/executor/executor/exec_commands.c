@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 12:55:02 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 13:21:00 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/stat.h>
-#include <stdio.h>
 
 void	check_path(char *path, char *cmd)
 {
@@ -77,7 +76,7 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 	arguments = compound_args(current);
 	if (command)
 	{
-		execute_builtin(data, arguments);
+		execute_builtin(command->content, data, arguments);
 		execute_bin(command->content, data, arguments);
 	}
 	free(arguments);

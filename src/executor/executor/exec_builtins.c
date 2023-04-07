@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/23 13:47:18 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/04 23:35:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 13:21:00 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	execute_builtin(t_shell_data *data, char **args)
+void	execute_builtin(char *cmd, t_shell_data *data, char **args)
 {
-	if (ft_strncmp(args[0], "export", ft_strlen("export") + 1) == 0)
+	if (ft_strncmp(cmd, "export", ft_strlen("export") + 1) == 0)
 		exit (builtin_export(args, data));
-	else if (ft_strncmp(args[0], "unset", ft_strlen("unset") + 1) == 0)
+	else if (ft_strncmp(cmd, "unset", ft_strlen("unset") + 1) == 0)
 		exit (0);
-	else if (ft_strncmp(args[0], "cd", ft_strlen("cd") + 1) == 0)
+	else if (ft_strncmp(cmd, "cd", ft_strlen("cd") + 1) == 0)
 		exit (builtin_cd(args, data));
-	else if (ft_strncmp(args[0], "exit", ft_strlen("exit") + 1) == 0)
+	else if (ft_strncmp(cmd, "exit", ft_strlen("exit") + 1) == 0)
 		exit (builtin_exit(args));
-	else if (ft_strncmp(args[0], "env", ft_strlen("env") + 1) == 0)
+	else if (ft_strncmp(cmd, "env", ft_strlen("env") + 1) == 0)
 		exit (builtin_env(data->variables));
-	else if (ft_strncmp(args[0], "pwd", ft_strlen("pwd") + 1) == 0)
+	else if (ft_strncmp(cmd, "pwd", ft_strlen("pwd") + 1) == 0)
 		exit (builtin_pwd());
-	else if (ft_strncmp(args[0], "echo", ft_strlen("echo") + 1) == 0)
+	else if (ft_strncmp(cmd, "echo", ft_strlen("echo") + 1) == 0)
 		exit (builtin_echo(args));
 }
 
