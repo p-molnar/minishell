@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 10:30:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 11:41:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void			classify_tokens(t_token_list *list);
 
 //	tokenizer_utils.c
 int				is_valid_operator_seq(char *s);
-int				is_valid_quotation(char *s, char *delim);
+int				is_quote_closed(char *s, char *delim);
 
 //	parse_commands
 t_command_list	*parse_commands(t_token_list *token);
