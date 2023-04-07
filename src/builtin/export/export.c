@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 00:39:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 12:45:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	export_vars(char *arg, t_list *var_list)
 	{
 		var = parse_var_def(arg);
 		var->type = SHL | ENV;
+		add_var(var, &var_list);
 	}
 	else if (is_valid_var_name(arg, ft_strlen(arg)))
 	{
@@ -53,11 +54,13 @@ int	export_vars(char *arg, t_list *var_list)
 		if (var)
 			var->type |= ENV;
 		else
+		{
 			var = create_var(ft_strdup(arg), NULL, SHL | ENV);
+			add_var(var, &var_list);
+		}
 	}
 	else
 		return (error("not a valid identifier", RETURN, 1));
-	add_var(var, &var_list);
 	return (EXIT_SUCCESS);
 }
 

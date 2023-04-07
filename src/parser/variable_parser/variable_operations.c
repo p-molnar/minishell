@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 16:00:06 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 22:18:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 12:38:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,19 @@ t_var	*create_var(char *name, char *val, int type)
 	return (var);
 }
 
-void	update_var(t_var *old_var, t_var *new_var)
+void	update_var(t_var *var, t_var *new_var)
 {
-	if (old_var && new_var)
+	char	*tmp;
+
+	tmp = NULL;
+	if (var && new_var)
 	{
-		if (old_var->val && new_var->val)
-		{
-			if (old_var == new_var)
-				return ;
-			else if (ft_strncmp(old_var->val, new_var->val,
-					ft_strlen(old_var->val)) == 0)
-			{
-				old_var->type |= new_var->type;
-				free_var(&new_var);
-				return ;
-			}
-			free(old_var->val);
-			old_var->val = new_var->val;
-			old_var->type |= new_var->type;
-			free(new_var->name);
-			free(new_var);
-		}
+		tmp = var->val;
+		var->val = new_var->val;
+		var->type |= new_var->type;
+		free_obj((void **)&tmp);
+		free_obj((void **)&new_var->name);
+		free_obj((void **)&new_var);
 	}
 }
 
