@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 14:40:19 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 16:52:02 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void			classify_tokens(t_token_list *list);
 //	tokenizer_utils.c
 int				is_valid_operator_seq(char *s);
 int				is_quote_closed(char *s, char *delim);
+int				is_quoted_seq(char *s);
 
 //	parse_commands
 t_command_list	*parse_commands(t_token_list *token);
@@ -119,7 +120,7 @@ void			initialise_redirection_data(t_redir_data *redir_data);
 int				redirect_files(t_command_list *current,
 					t_redir_data *redir_dat, t_shell_data *data);
 void			redirect_pipes(t_pipe_fd *in_pipe, t_pipe_fd *out_pipe);
-void			open_heredoc(char *delimiter, t_redir_data *redir_dat,
+void			open_heredoc(t_token_list *delimiter, t_redir_data *redir_dat,
 					t_shell_data *data);
 
 //	BUILTINS
