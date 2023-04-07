@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 14:13:40 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 14:50:50 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 17:34:30 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define OPERATORS "|<>"
 # define SPACES	" \t\n"
 # define QUOTES "'\"" // QUOTE and DQUOTE
-# define DELIM_CHARS " \t\n|&;()<>'\""
+# define DELIM_CHARS " \t\n|<>"
 
 //	argument symbol
 # define DASH '-'
@@ -57,10 +57,12 @@ enum e_var_type{
 
 //	token type classifiers
 enum e_token_type {
-	UNDEFINED = -1,
-	INVALID,
-	WORD,
-	OPERATOR,
+	UNDEFINED = 0,
+	INVALID = 1 << 1,
+	WORD = 1 << 2,
+	OPERATOR = 1 << 3,
+	S_QUOTED = 1 << 4,
+	D_QUOTED = 1 << 5,
 };
 
 //	exit/return methods of error function
