@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/05 18:40:22 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 12:55:02 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	{
 		while (path[i])
 		{
-			printf("%s\n", path[i]);
 			check_path(path[0], command);
 			execve(path[i], arguments, env);
 			i++;

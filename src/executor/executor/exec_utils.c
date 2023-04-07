@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/05 18:52:46 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 12:51:38 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,11 @@ char	*get_full_path(t_shell_data *data, char *cmd)
 	char		*pwd;
 	char		*tmp;
 	char		*join;
-	const char	folder_indicator = '/';
+	const char	*folder_indicator = "/";
 
 	join = ft_strdup("");
-	printf("%s, %c\n", cmd, folder_indicator);
-	//ft_strnstr seems to be failing me, maybe I call it wrong or smt, will fix soon
-	if (ft_strnstr(cmd, &folder_indicator, ft_strlen(cmd)))
+	if (ft_strnstr(cmd, folder_indicator, ft_strlen(cmd)))
 	{
-		printf("HIIIIII\n");
 		pwd = getcwd(NULL, 0);
 		if (pwd)
 		{
@@ -45,7 +42,6 @@ char	*get_full_path(t_shell_data *data, char *cmd)
 	tmp = join;
 	join = ft_strjoin(join, var->val);
 	free(tmp);
-	printf("%s\n", join);
 	return (join);
 }
 
