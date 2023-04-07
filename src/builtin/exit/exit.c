@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 13:55:12 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/04 16:01:44 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/06 11:32:54 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ int	builtin_exit(char **args)
 			ft_putendl_fd("too many arguments", STDERR_FILENO);
 			return (1);
 		}
+		ft_putendl_fd("exit", STDOUT_FILENO);
 		exit(ft_atoi(args[1]));
 	}
+	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit(0);
 }

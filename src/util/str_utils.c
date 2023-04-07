@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   error.c                                            :+:    :+:            */
+/*   str_utils.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/03/31 13:38:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/06 11:15:33 by pmolnar       ########   odam.nl         */
+/*   Created: 2023/04/06 13:56:43 by pmolnar       #+#    #+#                 */
+/*   Updated: 2023/04/07 13:02:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdarg.h>
 #include <libft.h>
-#include <ms_macros.h>
-#include <minishell.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <minishell.h>
 
-int	error(char *msg, int exit_method, int value)
+char	*strconcat(int n, ...)
 {
-	if (msg)
+	va_list	ap;
+	char	*tmp;
+	char	*r;
+	char	*arg;
+
+	va_start(ap, n);
+	r = "";
+	tmp = NULL;
+	while (n-- > 0)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putendl_fd(msg, STDERR_FILENO);
+		arg = va_arg(ap, char *);
+		if (!arg)
+			arg = "";
+		r = ft_strjoin(r, arg);
+		free_obj((void **)&tmp);
+		tmp = r;
+		if (!r)
+			return (NULL);
 	}
-	if (exit_method == EXIT)
-		exit(value);
-	else if (exit_method == RETURN)
-	{
-		g_exit_status = value << 8;
-		return (value);
-	}
-	return (EXIT_FAILURE);
+	va_end(ap);
+	return (r);
 }

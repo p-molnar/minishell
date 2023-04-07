@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 11:10:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 12:56:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include <minishell.h>
 #include <ms_macros.h>
 #include <stdlib.h>
+
+#include <readline/readline.h>
+#include <readline/history.h>
 
 static void	update_prev_ptr(char **prev, char *curr, char *s)
 {
@@ -64,13 +67,13 @@ char	*delimit_token(char *prompt)
 
 t_token_list	*tokenizer(const char *prompt)
 {
+	t_token_list	*tokens;
 	char			*start_ptr;
 	char			*end_ptr;
 	char			*content;
-	t_token_list	*tokens;
 
-	start_ptr = (char *)prompt;
 	tokens = NULL;
+	start_ptr = (char *)prompt;
 	while (start_ptr && *start_ptr != '\0')
 	{
 		if (!ft_strchr(SPACES, *start_ptr))
