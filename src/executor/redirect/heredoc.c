@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/16 17:50:14 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/03/30 15:03:16 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 16:50:19 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,22 @@ char	*replace_variables(char *s, t_shell_data *data)
 	return (expanded_s);
 }
 
-void	open_heredoc(char *delimiter, t_redir_data *redir_dat,
+void	open_heredoc(t_token_list *delimiter, t_redir_data *redir_dat,
 			t_shell_data *data)
 {
 	int				here_pipe[2];
 	int				d_len;
 	char			*buf;
 
-	d_len = ft_strlen(delimiter);
+	d_len = ft_strlen(delimiter->content);
 	buf = NULL;
 	pipe(here_pipe);
 	dup2(redir_dat->og_stdin, STDIN_FILENO);
 	buf = readline("> ");
-	while (buf && ft_strncmp(buf, delimiter, d_len + 1))
+	while (buf && ft_strncmp(buf, delimiter->content, d_len + 1))
 	{
-		buf = replace_variables(buf, data);
+		if (!(delimiter->type & S_QUOTED || delimiter->type & D_QUOTED))
+			buf = replace_variables(buf, data);
 		ft_putendl_fd(buf, here_pipe[1]);
 		free(buf);
 		buf = readline("> ");
