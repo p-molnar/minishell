@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 13:14:36 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/07 13:58:28 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-char	*get_full_path(t_shell_data *data, char *cmd)
+char	*get_abs_path(t_shell_data *data, char *cmd)
 {
 	t_var		*var;
 	char		*pwd;
@@ -52,11 +52,12 @@ char	**path_builder(t_shell_data *data, char *cmd)
 	int		i;
 
 	i = 0;
-	tmp = get_full_path(data, cmd);
+	tmp = get_abs_path(data, cmd);
 	path = ft_split(tmp, ':');
 	free(tmp);
 	if (!path)
 		return (NULL);
+
 	while (path[i])
 	{
 		finalpath = path_concat(path[i], cmd);
