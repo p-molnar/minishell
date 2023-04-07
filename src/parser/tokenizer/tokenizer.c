@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 13:49:17 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 10:30:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 11:30:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,68 +65,21 @@ char	*delimit_token(char *prompt)
 	return (curr - 1);
 }
 
-char	*read_more(char *s, char delim, int *delim_found)
-{
-	char	*prompt;
-	char	*tmp;
-
-	tmp = NULL;
-	prompt = readline("> ");
-	// printf("prompt: %s\n", prompt);
-	if (!prompt || *prompt == '\0')
-		return (ft_strdup(s)); // revise this
-	if (ft_strchr(prompt, delim))
-		*delim_found = 1;
-	if (!tmp)
-		s = strconcat(3, s, "\n", prompt);
-	else
-		s = strconcat(4, "\n", s, "\n", prompt);
-	free_obj((void **)&prompt);
-	return (s);
-}
-
-char	*read_until_delim(char *s, char delim)
-{
-	char	*tmp;
-	int		matching_quote_found;
-
-	matching_quote_found = 0;
-	tmp = NULL;
-	if (!s)
-		return (NULL);
-	while (!matching_quote_found)
-	{
-		s = read_more(s, delim, &matching_quote_found);
-		free_obj((void **)&tmp);
-		tmp = s;
-	}
-	add_history(s);
-	return (s);
-}
-
 t_token_list	*tokenizer(const char *prompt)
 {
+	t_token_list	*tokens;
 	char			*start_ptr;
 	char			*end_ptr;
 	char			*content;
-	char			*tmp;
-	t_token_list	*tokens;
-	char			delim;
 
-	start_ptr = (char *)prompt;
 	tokens = NULL;
-	while (start_ptr && *start_ptr != '\0')
+	start_ptr = (char *)prompt;
+	while (start_ptr && *start_ptr!= '\0')
 	{
 		if (!ft_strchr(SPACES, *start_ptr))
 		{
 			end_ptr = delimit_token(start_ptr);
 			content = ft_substr(start_ptr, 0, end_ptr - start_ptr + 1);
-			if (!is_valid_quotation(content, &delim))
-			{
-				tmp = content;
-				content = read_until_delim(content, delim);
-				free_obj((void **)&tmp);
-			}
 			if (*content == '\0')
 				free(content);
 			else
