@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/06 13:11:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 11:43:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/07 17:19:38 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <ms_macros.h>
 #include <minishell.h>
 #include <libft.h>
+
 
 int	is_valid_operator_seq(char *s)
 {
@@ -24,7 +25,23 @@ int	is_valid_operator_seq(char *s)
 		return (0);
 	return (ft_strncmp(DLESS, s, len) == 0
 		|| ft_strncmp(DGREAT, s, len) == 0
-		|| ft_strncmp("||", s, len) == 0);
+		|| ft_strncmp("|", s, len) == 0);
+}
+
+int	is_quoted_seq(char *s)
+{
+	int	in_quote;
+
+	in_quote = 0;
+	while (s && *s)
+	{
+		if (!in_quote && ft_strchr(QUOTES, *s))
+			in_quote = *s;
+		else if (in_quote && in_quote == *s)
+			in_quote = 0;
+		s++;
+	}
+	return (in_quote == 0);
 }
 
 int	is_quote_closed(char *s, char *quote_to_be_closed)
