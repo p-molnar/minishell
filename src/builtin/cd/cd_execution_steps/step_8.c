@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 15:28:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 12:39:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/09 23:23:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,68 @@
 		further steps shall be taken.
 */
 
+void	remove_consecutive_slashes(char *dst, char *src)
+{
+	int		on_slash;
+	int		i;
+	int		j;
+
+	on_slash = 0;
+	i = 0;
+	j = 0;
+	while (src[i] != '\0')
+	{
+		if (src[i] == '/' && !on_slash)
+		{
+			on_slash = 1;
+			dst[j] = src[i];
+			j++;
+		}
+		else if (src[i] == '/' && on_slash)
+			;
+		else
+		{
+			dst[j] = src[i];
+			on_slash = 0;
+			j++;
+		}
+		i++;
+	}
+}
+
+char	*canonicalize_path(char *s)
+{
+	char	*new_path;
+
+	new_path = ft_calloc(ft_strlen(s) + 1, sizeof(s));
+	if (!new_path)
+		return (NULL);
+	if (!s)
+	{
+		free_obj((void **)&new_path);
+		return (NULL);
+	}
+	remove_consecutive_slashes(new_path, s);
+	return (new_path);
+}
+
 int	exec_step_8(char **curpath, int *step)
 {
 	char	**comps;
-	char	**tmp;
+	char	*ptr_tmp;
+	char	**dptr_tmp;
 
 	comps = ft_split(*curpath, '/');
-	tmp = comps;
-	free(*curpath);
+	dptr_tmp = comps;
+	free_obj((void **)&(*curpath));
 	comps = remove_dot_comp(comps, get_arr_size((void **)comps));
-	free_arr((void **)tmp);
-	tmp = comps;
+	free_arr((void **)dptr_tmp);
+	dptr_tmp = comps;
 	*curpath = process_dotdot_comp(comps);
-	free_arr((void **)tmp);
+	free_arr((void **)dptr_tmp);
+	ptr_tmp = *curpath;
+	*curpath = canonicalize_path(*curpath);
+	free_obj((void **)&ptr_tmp);
 	*step += 1;
 	if (curpath == NULL)
 		return (EXIT_FAILURE);
