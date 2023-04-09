@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 16:52:02 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/09 22:50:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ char			**remove_dot_comp(char **arr, int size);
 char			*process_dotdot_comp(char **arr);
 char			**dir_move_up(char **arr, int dd_comp_index);
 char			**move_up_dir(char **arr, int curr_comp_idx);
-
+char			*canonicalize_path(char *s);
 //	update_working_dirs.c
 int				update_wdirs(char *dir, t_var *var[ENV_SIZE],
 					t_shell_data *data);
