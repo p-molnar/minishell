@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 18:39:16 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/09 22:27:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,6 @@
 #include <ms_macros.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-char	*canonicalize_path(char *s)
-{
-	char	*new_path;
-	int		on_slash;
-	int		i;
-	int		j;
-
-	on_slash = 0;
-	i = 0;
-	j = 0;
-	if (s)
-	{
-		new_path = ft_calloc(ft_strlen(s) + 1, sizeof(s));
-		while (s[i])
-		{
-			if (s[i] == '/' && !on_slash)
-			{
-				on_slash = 1;
-				new_path[j++] = s[i++];
-			}
-			else if (s[i] == '/' && on_slash)
-				i++;
-			else
-			{
-				new_path[j++] = s[i++];
-				on_slash = 0;
-			}
-		}
-		return (new_path);
-	}
-	return (NULL);
-}
 
 char	**get_path_to_bin(t_shell_data *data, char *cmd)
 {
