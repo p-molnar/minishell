@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 15:28:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/09 23:23:09 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 11:48:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ char	*canonicalize_path(char *s)
 int	exec_step_8(char **curpath, int *step)
 {
 	char	**comps;
-	char	*ptr_tmp;
 	char	**dptr_tmp;
 
 	comps = ft_split(*curpath, '/');
@@ -107,9 +106,6 @@ int	exec_step_8(char **curpath, int *step)
 	dptr_tmp = comps;
 	*curpath = process_dotdot_comp(comps);
 	free_arr((void **)dptr_tmp);
-	ptr_tmp = *curpath;
-	*curpath = canonicalize_path(*curpath);
-	free_obj((void **)&ptr_tmp);
 	*step += 1;
 	if (curpath == NULL)
 		return (EXIT_FAILURE);
