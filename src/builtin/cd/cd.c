@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 00:51:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 10:18:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	init_env_vars(t_var **env_var, t_list *var_list)
 
 // Below 8 steps follow the man page
 // https://man7.org/linux/man-pages/man1/cd.1p.html
-static int	exec_steps(char *dir, char **curpath, t_var **env_var)
+static int	get_abs_path(char *dir, char **curpath, t_var **env_var)
 {
 	int		step;
 
@@ -57,7 +57,7 @@ int	builtin_cd(char **args, t_shell_data *data)
 
 	curpath = NULL;
 	init_env_vars(env_var, data->variables);
-	if (exec_steps(args[1], &curpath, env_var))
+	if (get_abs_path(args[1], &curpath, env_var))
 		return (EXIT_FAILURE);
 	ret = update_wdirs(curpath, env_var, data);
 	free (curpath);
