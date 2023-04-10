@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/10 10:50:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 12:48:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	test_path(char *path)
 
 	stat(path, &path_stat);
 	if (S_ISDIR(path_stat.st_mode))
-		error("is a directory", EXIT, 126);
+		error(strconcat(2, path, ": is a directory"), EXIT, 126);
 	else
 	{
 		err_code = access(path, F_OK | X_OK);
@@ -40,9 +40,9 @@ void	test_path(char *path)
 
 void	set_up_env_vars(t_var **env_vars, t_list *var_list)
 {
-	env_vars[HOME] = get_var("HOME", var_list, ENV);
+	env_vars[HOME] = NULL;
 	env_vars[OLDPWD] = NULL;
-	env_vars[CDPATH] = NULL;
+	env_vars[ITERABLE_PATH] = get_var("PATH", var_list, ENV);
 	env_vars[PWD] = create_var(ft_strdup("PWD"),
 			getcwd(NULL, 0),
 			UNDEFINED);
@@ -50,46 +50,21 @@ void	set_up_env_vars(t_var **env_vars, t_list *var_list)
 
 void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 {
-	char		**path_arr;
-	char		**env;
+	char		**env_arr;
 	char		*bin_path;
-	// int			i;
-	int			err;
 	t_var		*default_env_vars[ENV_SIZE];
+	t_error		err;
 
-	set_up_env_vars(default_env_vars, data->variables);
-	path_arr = get_path_to_binary(data, command);
-	env = convert_list_to_arr(data->variables, ENV);
 	bin_path = NULL;
-	if (*command == '.')
-	{
-		//execute from current directory
-		get_abs_path(command, &bin_path, default_env_vars, 3);
-		// printf("bin: %s\n", bin_path);
-		test_path(bin_path);
-		err = execve(bin_path, arguments, env);
-		error(strerror(errno), EXIT, err);
-	}
-// 	else if (*command == '/')
-// 	{
-// 		//execute from absolute path
-// 		test_path(command);
-// 		err = execve(command, arguments, env);
-// 		if (err)
-// 			error(strerror(errno), EXIT, err);
-// 	}
-// 	else if (path_arr)
-// 	{
-// 		//execute from PATH variable
-// 		i = 0;
-// 		while (path_arr[i])
-// 		{
-// 			execve(path_arr[i], arguments, env);
-// 			i++;
-// 		}
-// 	}
-// 	free_arr((void **) path_arr);
-// 	free_arr((void **) env);
+	set_up_env_vars(default_env_vars, data->variables);
+	env_arr = convert_list_to_arr(data->variables, ENV);
+	get_abs_path(command, &bin_path, default_env_vars, 3);
+	test_path(bin_path);
+	err.code = execve(bin_path, arguments, env_arr);
+	err.msg = strconcat(3, bin_path, ": ", strerror(errno));
+	free_arr((void **) env_arr);
+	error(err.msg, EXIT, err.code);
+	free_obj((void **)&bin_path);
 }
 
 void	execute_cmd(t_command_list *current, t_shell_data *data,
