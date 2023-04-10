@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/10 12:19:58 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 15:22:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,25 @@ static void	init_env_vars(t_var **env_var, t_list *var_list)
 
 // Below 8 steps follow the man page
 // https://man7.org/linux/man-pages/man1/cd.1p.html
-int	get_abs_path(char *dir, char **curpath, t_var **env_var, int step)
+int	get_abs_path(char *dir, char **curpath, t_var **env_var, int stop)
 {
 	char	*tmp;
+	int		step;
 
-	if ((step == 1 || step == 2) && exec_step_1_2(env_var, &dir, &step))
+	step = 1;
+	if (step == 1 && step <= stop && exec_step_1_2(env_var, &dir, &step))
 		return (EXIT_FAILURE);
-	if (step == 3)
+	if (step == 3 && step <= stop)
 		exec_step_3(dir, curpath, &step);
-	if (step == 4)
+	if (step == 4 && step <= stop)
 		exec_step_4(dir, &step);
-	if (step == 5)
+	if (step == 5 && step <= stop)
 		exec_step_5(dir, curpath, env_var, &step);
-	if (step == 6)
+	if (step == 6 && step <= stop)
 		exec_step_6(dir, curpath, &step);
-	if (step == 7)
+	if (step == 7 && step <= stop)
 		exec_step_7(curpath, env_var, &step);
-	if (step == 8)
+	if (step == 8 && step <= stop)
 		exec_step_8(curpath, &step);
 	if (dir && dir[ft_strlen(dir) - 1] != '/' && curpath)
 		return (EXIT_SUCCESS);
@@ -56,14 +58,12 @@ int	get_abs_path(char *dir, char **curpath, t_var **env_var, int step)
 int	builtin_cd(char **args, t_shell_data *data)
 {
 	t_var	*env_var[ENV_SIZE];
-	int		start_step;
 	int		ret;
 	char	*curpath;
 
 	curpath = NULL;
-	start_step = 1;
 	init_env_vars(env_var, data->variables);
-	if (get_abs_path(args[1], &curpath, env_var, start_step))
+	if (get_abs_path(args[1], &curpath, env_var, 8))
 		return (EXIT_FAILURE);
 	ret = update_wdirs(curpath, args[1], env_var, data);
 	free (curpath);
