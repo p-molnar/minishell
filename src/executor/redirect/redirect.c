@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 14:00:42 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 16:52:14 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/10 16:25:42 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,13 @@ void	initialise_redirection_data(t_redir_data *redir_data)
 int	open_redirect_infile(t_command_list *list, t_redir_data *redir_dat)
 {
 	char	*err_msg;
-	char	*err_tkn;
 
 	close(redir_dat->fd_in);
 	redir_dat->fd_in = open(list->token->content, O_RDONLY);
 	if (redir_dat->fd_in < 0)
 	{
-		err_tkn = ft_strjoin(list->token->content, ": ");
-		err_msg = ft_strjoin(err_tkn, strerror(errno));
+		err_msg = strconcat(3, list->token->content, ": ", strerror(errno));
 		error(err_msg, RETURN, EXIT_FAILURE);
-		free(err_msg);
-		free(err_tkn);
 		return (EXIT_FAILURE);
 	}
 	dup2(redir_dat->fd_in, STDIN_FILENO);
@@ -48,7 +44,6 @@ int	open_redirect_infile(t_command_list *list, t_redir_data *redir_dat)
 int	open_redirect_outfile(t_command_list *list, t_redir_data *redir_dat)
 {
 	char	*err_msg;
-	char	*err_tkn;
 
 	close(redir_dat->fd_out);
 	if (list->symbol == OUTFILE)
@@ -59,11 +54,8 @@ int	open_redirect_outfile(t_command_list *list, t_redir_data *redir_dat)
 				O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (redir_dat->fd_out < 0)
 	{
-		err_tkn = ft_strjoin(list->token->content, ": ");
-		err_msg = ft_strjoin(err_tkn, strerror(errno));
+		err_msg = strconcat(3, list->token->content, ": ", strerror(errno));
 		error(err_msg, RETURN, EXIT_FAILURE);
-		free(err_msg);
-		free(err_tkn);
 		return (EXIT_FAILURE);
 	}
 	dup2(redir_dat->fd_out, STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 13:40:23 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 12:45:30 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 16:18:12 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	export_vars(char *arg, t_list *var_list)
 
 	var = NULL;
 	if (*arg == '\0' || *arg == ' ')
-		return (error("not a valid identifier", RETURN, 1));
+		return (error(ft_strdup("not a valid identifier"), RETURN, 1));
 	else if (is_valid_var_definition(arg))
 	{
 		var = parse_var_def(arg);
@@ -60,7 +60,7 @@ int	export_vars(char *arg, t_list *var_list)
 		}
 	}
 	else
-		return (error("not a valid identifier", RETURN, 1));
+		return (error(ft_strdup("not a valid identifier"), RETURN, 1));
 	return (EXIT_SUCCESS);
 }
 
