@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/21 13:59:42 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/07 18:43:49 by jzaremba      ########   odam.nl          #
+#    Updated: 2023/04/10 16:29:28 by jzaremba      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ EXECUTE			=	$(addprefix executor/,									\
 						exec_commands.c										\
 						exec_builtins.c										\
 						exec_builtin_utils.c								\
+						exec_bin.c										\
 						env_builder.c										\
 						exec_utils.c										\
 						)
