@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 15:01:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 23:35:58 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 12:37:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,17 @@ typedef struct s_token_list
 	struct s_token_list	*next;
 }	t_token_list;
 
+typedef struct s_error
+{
+	int		code;
+	char	*msg;
+}	t_error;
+
 typedef struct s_command_list
 {
 	int						symbol;
 	struct s_token_list		*token;
-	struct s_command_list	*next;	
+	struct s_command_list	*next;
 }	t_command_list;
 
 typedef struct s_pipe_fd
