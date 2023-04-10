@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/10 16:03:37 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/10 16:28:15 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,55 +20,6 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/stat.h>
-#include <stdio.h>
-
-void	test_path(char *path)
-{
-	struct stat	path_stat;
-	int			err_code;
-
-	stat(path, &path_stat);
-	if (S_ISDIR(path_stat.st_mode))
-		error(strconcat(2, path, ": is a directory"), EXIT, 126);
-	else
-	{
-		err_code = access(path, F_OK);
-		if (err_code != 0)
-			error(strconcat(3, path, ": ", strerror(errno)), EXIT, 127);
-		err_code = access(path, X_OK);
-		if (err_code != 0)
-			error(strconcat(3, path, ": ", strerror(errno)), EXIT, 126);
-	}
-}
-
-void	execute_bin(char *command, t_shell_data *data, char	**arguments)
-{
-	char		**env_arr;
-	char		*bin_path;
-	t_var		*default_env_vars[ENV_SIZE];
-	t_error		err;
-
-	bin_path = NULL;
-	set_up_env_vars(default_env_vars, data->variables);
-	env_arr = convert_list_to_arr(data->variables, ENV);
-	if (command && (*command == '.' || *command == '/'))
-		get_abs_path(command, &bin_path, default_env_vars, 8);
-	else if (command && *command == '\0')
-		exit(0);
-	else
-	{
-		get_abs_path(command, &bin_path, default_env_vars, 5);
-		if (access(bin_path, F_OK) != 0)
-			return ;
-	}
-	test_path(bin_path);
-	err.code = execve(bin_path, arguments, env_arr);
-	err.msg = strconcat(3, bin_path, ": ", strerror(errno));
-	free_obj((void **)&bin_path);
-	free_arr((void **)env_arr);
-	if (err.code != 0)
-		error(err.msg, EXIT, errno);
-}
 
 void	execute_cmd(t_command_list *current, t_shell_data *data,
 						t_pipe_fd *in_pipe, t_pipe_fd *out_pipe)
@@ -92,7 +43,7 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 		execute_bin(command->content, data, arguments);
 	}
 	free(arguments);
-	error("command not found", EXIT, 127);
+	error(ft_strdup("command not found"), EXIT, 127);
 }
 
 t_command_list	*get_next_simple_cmd(t_command_list *start)
