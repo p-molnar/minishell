@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 11:03:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/04 15:11:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 12:31:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,16 @@ void	exec_step_5(char *dir, char **curpath, t_var **var, int *step)
 	char	*new_path;
 
 	new_path = NULL;
-	if (var[CDPATH])
+	if (var[ITERABLE_PATH])
 	{
-		path_comps = ft_split(var[CDPATH]->val, ':');
+		path_comps = ft_split(var[ITERABLE_PATH]->val, ':');
 		if (path_comps && get_arr_size((void **)path_comps) > 0)
 		{
 			new_path = yield_valid_path(dir, path_comps);
 			if (new_path)
 			{
-				if (*curpath)
-					free(*curpath);
+				free_obj((void **) curpath);
 				*curpath = new_path;
-				printf("%s\n", *curpath);
 				*step = 7;
 				free_arr((void **)path_comps);
 				return ;
