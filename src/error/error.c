@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/31 13:38:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/10 10:51:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 11:06:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	error(char *msg, int exit_method, int value)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putendl_fd(msg, STDERR_FILENO);
-		free_obj((void **)&msg);
 	}
 	if (exit_method == EXIT)
 		exit(value);
