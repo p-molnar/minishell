@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/10 12:48:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 15:46:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ void	test_path(char *path)
 		error(strconcat(2, path, ": is a directory"), EXIT, 126);
 	else
 	{
-		err_code = access(path, F_OK | X_OK);
+		err_code = access(path, F_OK);
 		if (err_code != 0)
-			error(strerror(errno), EXIT, err_code);
+			error(strconcat(3, path, ": ", strerror(errno)), EXIT, 127);
+		err_code = access(path, X_OK);
+		if (err_code != 0)
+			error(strconcat(3, path, ": ", strerror(errno)), EXIT, 126);
 	}
 }
 
@@ -58,13 +61,23 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	bin_path = NULL;
 	set_up_env_vars(default_env_vars, data->variables);
 	env_arr = convert_list_to_arr(data->variables, ENV);
-	get_abs_path(command, &bin_path, default_env_vars, 3);
+	if (command && (*command == '.' || *command == '/'))
+		get_abs_path(command, &bin_path, default_env_vars, 8);
+	else if (command && *command == '\0')
+		exit(0);
+	else
+	{
+		get_abs_path(command, &bin_path, default_env_vars, 5);
+		if (access(bin_path, F_OK) != 0)
+			return ;
+	}
 	test_path(bin_path);
 	err.code = execve(bin_path, arguments, env_arr);
 	err.msg = strconcat(3, bin_path, ": ", strerror(errno));
-	free_arr((void **) env_arr);
-	error(err.msg, EXIT, err.code);
 	free_obj((void **)&bin_path);
+	free_arr((void **)env_arr);
+	if (err.code != 0)
+		error(err.msg, EXIT, errno);
 }
 
 void	execute_cmd(t_command_list *current, t_shell_data *data,
