@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/10 16:03:20 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/10 16:51:11 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void			execute_builtin(char *cmd, t_shell_data *data, char **args);
 char			**convert_list_to_arr(t_list *var_list, int var_type);
 void			close_pipe(t_pipe_fd *pipe);
 void			add_var(t_var *new_var, t_list **list);
+void			execute_bin(char *cmd,  t_shell_data *data, char **args);
 void			set_up_env_vars(t_var **env_vars, t_list *var_list);
 
 //	executor utilities

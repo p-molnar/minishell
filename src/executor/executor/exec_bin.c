@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/10 16:27:43 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/10 16:33:18 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/10 16:51:43 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_up_env_vars(t_var **env_vars, t_list *var_list)
 			UNDEFINED);
 }
 
-void	execute_bin(char *command, t_shell_data *data, char	**arguments)
+void	execute_bin(char *cmd, t_shell_data *data, char	**args)
 {
 	char		**env_arr;
 	char		*bin_path;
@@ -60,18 +60,18 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	bin_path = NULL;
 	set_up_env_vars(default_env_vars, data->variables);
 	env_arr = convert_list_to_arr(data->variables, ENV);
-	if (command && (*command == '.' || *command == '/'))
-		get_abs_path(command, &bin_path, default_env_vars, 8);
-	else if (command && *command == '\0')
+	if (cmd && (*cmd == '.' || *cmd == '/'))
+		get_abs_path(cmd, &bin_path, default_env_vars, 8);
+	else if (cmd && *cmd == '\0')
 		exit(0);
 	else
 	{
-		get_abs_path(command, &bin_path, default_env_vars, 5);
+		get_abs_path(cmd, &bin_path, default_env_vars, 5);
 		if (access(bin_path, F_OK) != 0)
 			return ;
 	}
 	test_path(bin_path);
-	err.code = execve(bin_path, arguments, env_arr);
+	err.code = execve(bin_path, args, env_arr);
 	free_obj((void **)&bin_path);
 	free_arr((void **)env_arr);
 	if (err.code != 0)
