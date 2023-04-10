@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/10 10:18:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 10:43:31 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,9 @@ static void	init_env_vars(t_var **env_var, t_list *var_list)
 
 // Below 8 steps follow the man page
 // https://man7.org/linux/man-pages/man1/cd.1p.html
-static int	get_abs_path(char *dir, char **curpath, t_var **env_var)
+int	get_abs_path(char *dir, char **curpath, t_var **env_var, int step)
 {
-	int		step;
-
-	step = 1;
-	if (step == 1 && exec_step_1_2(env_var, &dir, &step))
+	if ((step == 1 || step == 2) && exec_step_1_2(env_var, &dir, &step))
 		return (EXIT_FAILURE);
 	if (step == 3)
 		exec_step_3(dir, curpath, &step);
@@ -52,12 +49,14 @@ static int	get_abs_path(char *dir, char **curpath, t_var **env_var)
 int	builtin_cd(char **args, t_shell_data *data)
 {
 	t_var	*env_var[ENV_SIZE];
+	int		start_step;
 	int		ret;
 	char	*curpath;
 
 	curpath = NULL;
+	start_step = 1;
 	init_env_vars(env_var, data->variables);
-	if (get_abs_path(args[1], &curpath, env_var))
+	if (get_abs_path(args[1], &curpath, env_var, start_step))
 		return (EXIT_FAILURE);
 	ret = update_wdirs(curpath, env_var, data);
 	free (curpath);
