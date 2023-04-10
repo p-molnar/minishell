@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/10 10:15:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 15:53:40 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,14 @@ int	count_symbols_simple_cmd(int symbol, t_command_list *current)
 		current = current->next;
 	}
 	return (count);
+}
+
+void	set_up_env_vars(t_var **env_vars, t_list *var_list)
+{
+	env_vars[HOME] = NULL;
+	env_vars[OLDPWD] = NULL;
+	env_vars[ITERABLE_PATH] = get_var("PATH", var_list, ENV);
+	env_vars[PWD] = create_var(ft_strdup("PWD"),
+			getcwd(NULL, 0),
+			UNDEFINED);
 }

@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/10 15:46:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 15:53:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ void	test_path(char *path)
 		if (err_code != 0)
 			error(strconcat(3, path, ": ", strerror(errno)), EXIT, 126);
 	}
-}
-
-void	set_up_env_vars(t_var **env_vars, t_list *var_list)
-{
-	env_vars[HOME] = NULL;
-	env_vars[OLDPWD] = NULL;
-	env_vars[ITERABLE_PATH] = get_var("PATH", var_list, ENV);
-	env_vars[PWD] = create_var(ft_strdup("PWD"),
-			getcwd(NULL, 0),
-			UNDEFINED);
 }
 
 void	execute_bin(char *command, t_shell_data *data, char	**arguments)
