@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/10 16:53:24 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/11 00:19:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void			rl_replace_line(const char *text, int clear_undo);
 //	free_objects.c
 void			free_node(t_list **node);
 void			free_obj(void **obj);
+void			free_obj2(char *obj);
 void			free_list(t_list **list);
 void			free_var(t_var **var);
 void			free_var_list(t_list *var_list);
@@ -164,7 +165,7 @@ char			**dir_move_up(char **arr, int dd_comp_index);
 char			**move_up_dir(char **arr, int curr_comp_idx);
 char			*canonicalize_path(char *s);
 //	update_working_dirs.c
-int				update_wdirs(char *dir, char *og_dir, t_var *var[ENV_SIZE],
+int				update_wdirs(char *dir, char *og_dir, t_var **var,
 					t_shell_data *data);
 
 //	cd_utils.c
