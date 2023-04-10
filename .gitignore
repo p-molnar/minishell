@@ -58,3 +58,4 @@ minishell
 *.vscode*
 notes
 minishell_tester
+eval_sheet
