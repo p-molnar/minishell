@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:48:13 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/05 17:00:25 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/10 14:34:08 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ void	wait_for_each_process(pid_t *process, int command_n)
 	int		i;
 
 	i = 0;
+	waitpid(process[command_n -1], &g_exit_status, 0);
 	while (i < command_n)
 	{
-		waitpid(process[i], &g_exit_status, 0);
+		waitpid(process[i], NULL, 0);
 		i++;
 	}
 }
