@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 00:25:29 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 11:43:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,16 @@ void	update_pwd(char *dir, t_var *var[ENV_SIZE])
 	var[PWD]->val = ft_strdup(dir);
 }
 
-int	update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data)
+int	update_wdirs(char *dir, char *og_dir,
+		t_var *var[ENV_SIZE], t_shell_data *data)
 {
 	char	*err_msg;
+	int		err_code;
 	int		ret_val;
 
 	err_msg = NULL;
-	if (chdir(dir) != -1)
+	err_code = chdir(dir);
+	if (err_code == 0)
 	{
 		update_oldpwd(var, data);
 		update_pwd(dir, var);
@@ -58,10 +61,9 @@ int	update_wdirs(char *dir, t_var *var[ENV_SIZE], t_shell_data *data)
 	}
 	else
 	{
-		err_msg = ft_strjoin(strerror(errno), dir);
-		ret_val = error(err_msg, RETURN, 1);
-		if (err_msg)
-			free (err_msg);
+		err_msg = strconcat(3, og_dir, " ", strerror(errno));
+		ret_val = error(err_msg, RETURN, err_code);
+		free_obj((void **)&err_msg);
 		return (ret_val);
 	}
 }
