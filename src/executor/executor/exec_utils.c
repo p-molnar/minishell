@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/10 10:15:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 15:28:35 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,19 @@
 #include <ms_macros.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
+
+void	close_all_fd(void)
+{
+	int	i;
+
+	i = 3;
+	while (i <= OPEN_MAX)
+	{
+		close(i);
+		i++;
+	}
+}
 
 char	**get_path_to_binary(t_shell_data *data, char *cmd)
 {
