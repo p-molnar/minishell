@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/10 16:27:43 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/10 16:51:43 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/10 16:59:37 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@
 #include <sys/stat.h>
 #include <stdio.h>
 
-void	test_path(char *path)
+void	test_path(char *path, char *og_path)
 {
 	struct stat	path_stat;
 	int			err_code;
 
 	stat(path, &path_stat);
 	if (S_ISDIR(path_stat.st_mode))
-		error(strconcat(2, path, ": is a directory"), EXIT, 126);
+		error(strconcat(2, og_path, ": is a directory"), EXIT, 126);
 	else
 	{
 		err_code = access(path, F_OK);
 		if (err_code != 0)
-			error(strconcat(3, path, ": ", strerror(errno)), EXIT, 127);
+			error(strconcat(3, og_path, ": ", strerror(errno)), EXIT, 127);
 		err_code = access(path, X_OK);
 		if (err_code != 0)
-			error(strconcat(3, path, ": ", strerror(errno)), EXIT, 126);
+			error(strconcat(3, og_path, ": ", strerror(errno)), EXIT, 126);
 	}
 }
 
@@ -70,7 +70,7 @@ void	execute_bin(char *cmd, t_shell_data *data, char	**args)
 		if (access(bin_path, F_OK) != 0)
 			return ;
 	}
-	test_path(bin_path);
+	test_path(bin_path, cmd);
 	err.code = execve(bin_path, args, env_arr);
 	free_obj((void **)&bin_path);
 	free_arr((void **)env_arr);
