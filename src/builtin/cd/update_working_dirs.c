@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/10 17:34:27 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/11 00:31:54 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <string.h>
 #include <errno.h>
 
-void	update_oldpwd(t_var	*var[ENV_SIZE], t_shell_data *data)
+void	update_oldpwd(t_var	**var, t_shell_data *data)
 {
 	t_var		*new_var;
 	static int	var_been_set;
@@ -35,19 +35,21 @@ void	update_oldpwd(t_var	*var[ENV_SIZE], t_shell_data *data)
 	}
 	else
 	{
-		free_obj((void **)&(var[OLDPWD]->val));
-		var[OLDPWD]->val = ft_strdup(var[PWD]->val);
+		if (var[OLDPWD])
+			free(var[OLDPWD]->val);
+		if (var[OLDPWD])
+			var[OLDPWD]->val = ft_strdup(var[PWD]->val);
 	}
 }
 
-void	update_pwd(char *dir, t_var *var[ENV_SIZE])
+void	update_pwd(char *dir, t_var **var)
 {
 	free(var[PWD]->val);
 	var[PWD]->val = ft_strdup(dir);
 }
 
 int	update_wdirs(char *dir, char *og_dir,
-		t_var *var[ENV_SIZE], t_shell_data *data)
+		t_var **var, t_shell_data *data)
 {
 	char	*err_msg;
 	int		err_code;
