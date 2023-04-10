@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/10 10:15:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 10:31:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ int				builtin_exit(char **args);
 //	CD
 
 int				builtin_cd(char **args, t_shell_data *data);
+int				get_abs_path(char *dir, char **curpath,
+					t_var **env_var, int step);
 int				exec_step_1_2(t_var **env_var, char **dir, int *step);
 void			exec_step_3(char *dir, char **curpath, int *step);
 void			exec_step_4(char *dir, int *step);
