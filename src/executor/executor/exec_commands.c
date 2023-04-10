@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/07 19:29:33 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/10 10:15:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	execute_bin(char *command, t_shell_data *data, char	**arguments)
 	int			err;
 	const char	*folder_char = "/";
 
-	path_arr = get_path_to_bin(data, command);
+	path_arr = get_path_to_binary(data, command);
 	env = convert_list_to_arr(data->variables, ENV);
 	if (*command == '.' || (ft_strnstr(command, folder_char, ft_strlen(command)) && *command != '/'))
 	{

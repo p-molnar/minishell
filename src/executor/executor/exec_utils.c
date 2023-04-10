@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 13:43:17 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/09 22:27:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/10 10:15:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-char	**get_path_to_bin(t_shell_data *data, char *cmd)
+char	**get_path_to_binary(t_shell_data *data, char *cmd)
 {
 	t_var	*var;
 	char	**bin_path;
