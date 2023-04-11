@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 15:10:22 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/10 15:22:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/11 11:18:06 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	get_abs_path(char *dir, char **curpath, t_var **env_var, int stop)
 		exec_step_7(curpath, env_var, &step);
 	if (step == 8 && step <= stop)
 		exec_step_8(curpath, &step);
-	if (dir && dir[ft_strlen(dir) - 1] != '/' && curpath)
+	if ((dir && dir[ft_strlen(dir) - 1] != '/' && curpath)
+		|| ft_strncmp(*curpath, "/", 2) == 0)
 		return (EXIT_SUCCESS);
 	tmp = *curpath;
 	*curpath = strconcat(2, *curpath, "/");

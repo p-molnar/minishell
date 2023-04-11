@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 15:01:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/10 12:37:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/11 10:53:11 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,11 @@ typedef struct s_var
 
 typedef struct s_shell_data
 {
-	int				argc;
-	char			**argv;
 	char			*prompt;
 	t_token_list	*tokens;
 	t_list			*variables;
 	t_command_list	*commands;
+	int				oldpwd_set;
 	struct termios	original_termios;
 }	t_shell_data;
 

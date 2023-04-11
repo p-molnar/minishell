@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 13:47:47 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/05 00:03:30 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/11 10:54:40 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	initialise_data(t_shell_data *data)
 	tcgetattr(0, &data->original_termios);
 	g_exit_status = 0;
 	data->commands = NULL;
+	data->oldpwd_set = get_var("OLDPWD", data->variables, ENV) > 0;
 }
 
 void	parse_prompt(t_shell_data *data)

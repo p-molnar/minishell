@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/15 14:21:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/11 00:31:54 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/11 11:23:30 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 void	update_oldpwd(t_var	**var, t_shell_data *data)
 {
 	t_var		*new_var;
-	static int	var_been_set;
 
-	if (!var[OLDPWD] && !var_been_set)
+	if (!var[OLDPWD] && !data->oldpwd_set)
 	{
 		new_var = create_var(
 				ft_strdup("OLDPWD"),
@@ -31,10 +30,10 @@ void	update_oldpwd(t_var	**var, t_shell_data *data)
 				SHL | ENV
 				);
 		add_var(new_var, &data->variables);
-		var_been_set = 1;
 	}
 	else
 	{
+		data->oldpwd_set = 1;
 		if (var[OLDPWD])
 			free(var[OLDPWD]->val);
 		if (var[OLDPWD])
@@ -42,10 +41,16 @@ void	update_oldpwd(t_var	**var, t_shell_data *data)
 	}
 }
 
-void	update_pwd(char *dir, t_var **var)
+void	update_pwd(char *dir, t_shell_data *data)
 {
-	free(var[PWD]->val);
-	var[PWD]->val = ft_strdup(dir);
+	t_var	*pwd;
+
+	pwd = get_var("PWD", data->variables, ENV);
+	if (pwd)
+	{
+		free(pwd->val);
+		pwd->val = ft_strdup(dir);
+	}
 }
 
 int	update_wdirs(char *dir, char *og_dir,
@@ -60,7 +65,7 @@ int	update_wdirs(char *dir, char *og_dir,
 	if (err_code == 0)
 	{
 		update_oldpwd(var, data);
-		update_pwd(dir, var);
+		update_pwd(dir, data);
 		return (EXIT_SUCCESS);
 	}
 	else
