@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/21 15:28:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/10 11:48:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/11 10:11:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,8 @@ int	exec_step_8(char **curpath, int *step)
 	free_obj((void **)&(*curpath));
 	comps = remove_dot_comp(comps, get_arr_size((void **)comps));
 	free_arr((void **)dptr_tmp);
-	dptr_tmp = comps;
 	*curpath = process_dotdot_comp(comps);
-	free_arr((void **)dptr_tmp);
+	free_arr((void **)comps);
 	*step += 1;
 	if (curpath == NULL)
 		return (EXIT_FAILURE);
