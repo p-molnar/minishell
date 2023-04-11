@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/11 13:52:44 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/11 16:04:09 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 		exit (EXIT_FAILURE);
 	close_all_fd();
 	tcsetattr(0, 0, &data->original_termios);
+	signal(SIGQUIT, SIG_DFL);
 	command = get_next_command(current);
 	arguments = compound_args(current);
 	if (command)
