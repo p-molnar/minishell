@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 16:00:06 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 12:38:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/11 09:48:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_var	*get_var(char *lookup_name, t_list *var_list, int var_type)
 	while (lookup_name && var_list)
 	{
 		var = var_list->content;
-		if (var->name)
+		if (var && var->name)
 		{
 			len = ft_strlen(var->name);
 			if (ft_strncmp(var->name, lookup_name, len + 1) == 0
