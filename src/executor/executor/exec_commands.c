@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 16:34:30 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/10 16:28:15 by jzaremba      ########   odam.nl         */
+/*   Updated: 2023/04/11 13:52:44 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	execute_cmd(t_command_list *current, t_shell_data *data,
 
 	initialise_redirection_data(&redir_data);
 	signal(SIGINT, SIG_DFL);
-	tcsetattr(0, 0, &data->original_termios);
 	redirect_pipes(in_pipe, out_pipe);
 	if (redirect_files(current, &redir_data, data))
 		exit (EXIT_FAILURE);
 	close_all_fd();
+	tcsetattr(0, 0, &data->original_termios);
 	command = get_next_command(current);
 	arguments = compound_args(current);
 	if (command)

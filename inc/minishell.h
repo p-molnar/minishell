@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:38:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/11 00:19:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/11 14:03:10 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char			*list_to_str(t_list *l);
 //  signal_handler.c
 void			setup_signal_handler(t_shell_data *data);
 void			handle_int_signal(int signum);
+void			handle_quote_int_signal(int signum);
 
 //	variable_parser.c
 void			parse_shell_variable(t_shell_data *data);

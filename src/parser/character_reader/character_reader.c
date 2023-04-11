@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/21 14:40:20 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/07 11:49:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/11 14:03:10 by jzaremba      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*read_until_delim(char *s, char delim)
 
 	matching_quote_found = 0;
 	tmp = NULL;
+	signal(SIGINT, handle_quote_int_signal);
 	if (!s)
 		return (NULL);
 	while (!matching_quote_found)
