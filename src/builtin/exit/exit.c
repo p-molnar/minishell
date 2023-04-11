@@ -6,7 +6,7 @@
 /*   By: jzaremba <jzaremba@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/28 13:55:12 by jzaremba      #+#    #+#                 */
-/*   Updated: 2023/04/06 11:32:54 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/11 10:20:47 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,9 @@ int	builtin_exit(char **args)
 	if (args[1])
 	{
 		if (!is_number(args[1]))
-		{
-			ft_putendl_fd("numeric argument required", STDERR_FILENO);
-			exit(255);
-		}
+			error(ft_strdup("numeric argument required"), EXIT, 255);
 		if (args[2])
-		{
-			ft_putendl_fd("too many arguments", STDERR_FILENO);
-			return (1);
-		}
+			return (error(ft_strdup("too many arguments"), RETURN, 1));
 		ft_putendl_fd("exit", STDOUT_FILENO);
 		exit(ft_atoi(args[1]));
 	}
